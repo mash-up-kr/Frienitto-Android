@@ -1,7 +1,8 @@
-package com.mashup.frienitto
+package com.mashup.frienitto.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.mashup.frienitto.R
 
 class MainActivity : AppCompatActivity() {
 
