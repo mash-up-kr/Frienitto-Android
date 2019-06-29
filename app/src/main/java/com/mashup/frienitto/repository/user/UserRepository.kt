@@ -5,7 +5,6 @@ import com.mashup.frienitto.data.*
 import io.reactivex.Single
 
 object UserRepository {
-
     private var token: String = ""
 
     // User
