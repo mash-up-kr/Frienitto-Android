@@ -1,15 +1,13 @@
-package com.mashup.frienitto.login
+package com.mashup.frienitto.room.entry
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.mashup.frienitto.R
-import org.koin.android.viewmodel.ext.android.viewModel
 
-class LoginActivity : AppCompatActivity() {
-
+class RoomEnteryActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.activity_room_entery)
     }
 }

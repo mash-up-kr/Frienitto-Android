@@ -2,6 +2,7 @@ package com.mashup.frienitto
 
 import com.mashup.frienitto.login.LoginViewModel
 import com.mashup.frienitto.register.RegisterViewModel
+import com.mashup.frienitto.room.creation.RoomCreationViewModel
 import com.mashup.frienitto.select.SelectViewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -11,4 +12,5 @@ val module : Module = module {
     viewModel{LoginViewModel()}
     viewModel { SelectViewModel() }
     viewModel { RegisterViewModel() }
+    viewModel { RoomCreationViewModel() }
 }
