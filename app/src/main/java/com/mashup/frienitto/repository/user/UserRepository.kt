@@ -32,7 +32,7 @@ object UserRepository {
     fun getTokenizer() = token
 
     fun setTokenizer(token: String) {
-        this.token = token
+        UserRepository.token = token
     }
 
 }
