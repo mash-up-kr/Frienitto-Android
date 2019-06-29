@@ -1,6 +1,9 @@
 package com.mashup.frienitto.room.creation
 
+import android.graphics.Color
 import android.os.Bundle
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import com.mashup.frienitto.R
 import com.mashup.frienitto.base.BaseActivity
@@ -18,19 +21,28 @@ class RoomCreationActivity(override val layoutResourceId: Int = R.layout.activit
         super.onCreate(savedInstanceState)
         setContentView(viewDataBinding.root)
         viewDataBinding.viewModel = viewModel
-        
+
         compositeDisposable.add(
             viewModel.endDateSubject
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     when (it) {
                         1 -> {
-                            btn_end_date_2.setBackgroundResource(R.color.gray)
-                            btn_end_date_1.setBackgroundResource(R.color.orange)
+                            ViewCompat.setBackgroundTintList(btn_end_date_1, ContextCompat.getColorStateList(this, R.color.navy))
+                            ViewCompat.setBackgroundTintList(btn_end_date_2, ContextCompat.getColorStateList(this, R.color.lightGray))
+                            btn_end_date_1.setTextColor(resources.getColor(R.color.white))
+                            btn_end_date_2.setTextColor(resources.getColor(R.color.lightGray2))
+                          //  btn_end_date_1.setBackgroundTintList(button, ContextCompat.getColorStateList(this, android.R.color.white))
+                        //    btn_end_date_2.setBackgroundResource(R.color.gray)
+                         //   btn_end_date_1.setBackgroundResource(R.color.orange)
                         }
                         2 -> {
-                            btn_end_date_1.setBackgroundResource(R.color.gray)
-                            btn_end_date_2.setBackgroundResource(R.color.orange)
+                            ViewCompat.setBackgroundTintList(btn_end_date_1, ContextCompat.getColorStateList(this, R.color.lightGray))
+                            ViewCompat.setBackgroundTintList(btn_end_date_2, ContextCompat.getColorStateList(this, R.color.navy))
+                            btn_end_date_1.setTextColor(resources.getColor(R.color.lightGray2))
+                            btn_end_date_2.setTextColor(resources.getColor(R.color.white))
+//                            btn_end_date_1.setBackgroundResource(R.color.gray)
+////                            btn_end_date_2.setBackgroundResource(R.color.orange)
                         }
                     }
                 }, {})
@@ -40,10 +52,10 @@ class RoomCreationActivity(override val layoutResourceId: Int = R.layout.activit
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({isActive->
                     if(isActive){
-                        btn_room_creation.setBackgroundResource(R.color.orange)
+                        ViewCompat.setBackgroundTintList(btn_room_creation, ContextCompat.getColorStateList(this, R.color.orange))
                         btn_room_creation.isClickable = true
                     }else{
-                        btn_room_creation.setBackgroundResource(R.color.gray)
+                        ViewCompat.setBackgroundTintList(btn_room_creation, ContextCompat.getColorStateList(this, R.color.gray))
                         btn_room_creation.isClickable = false
                     }
 
