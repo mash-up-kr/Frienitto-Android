@@ -14,27 +14,56 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="24dp">
 
-        <androidx.appcompat.widget.AppCompatEditText
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
-            android:onTextChanged="@{(text, start, before, count) -> viewModel.onNameTextChange(text)}" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center|left"
+            android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="44dp"
-            android:onTextChanged="@{(text, start, before, count) -> viewModel.onInfoTextChange(text)}" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/name"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                style="@style/FrenttoEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/write_real_name"
+                android:onTextChanged="@{(text, start, before, count) -> viewModel.onNameTextChange(text)}" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/introduce"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                style="@style/FrenttoEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/write_your_info"
+                android:onTextChanged="@{(text, start, before, count) -> viewModel.onInfoTextChange(text)}" />
+        </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:background="@drawable/round"
-            android:backgroundTint="@color/gray"
+            android:backgroundTint="@{viewModel.isWriteAllData ? @color/orange : @color/gray}"
+            android:enabled="@{viewModel.isWriteAllData}"
             android:onClick="@{(view) -> viewModel.signIn()}"
             android:text="@string/complete"
             android:textColor="@color/white" />

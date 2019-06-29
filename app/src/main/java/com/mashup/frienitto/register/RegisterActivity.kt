@@ -15,6 +15,13 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     fun setCurrentPage(position: Int) {
+        when (position) {
+            0 -> tv_signin_info.text = getString(R.string.sign_in_1)
+            1 -> tv_signin_info.text = getString(R.string.sign_in_2)
+            2 -> tv_signin_info.text = getString(R.string.sign_in_3)
+            3 -> tv_signin_info.text = getString(R.string.sign_in_4)
+        }
+
         tv_pager_position.text = (position + 1).toString()
         viewPager.currentItem = position
     }
