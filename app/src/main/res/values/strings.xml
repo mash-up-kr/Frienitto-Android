@@ -9,4 +9,8 @@
     <string name="error_room_pw">비밀번호는 4자 이내로 설정해주세요!</string>
     <string name="room_code">방 코드</string>
     <string name="expires_date">종료일</string>
+    <string name="email_auth">이메일 인증하기</string>
+    <string name="email_reauth">이메일 재인증하기</string>
+    <string name="complete">완료하기</string>
+    <string name="ok">확인</string>
 </resources>
