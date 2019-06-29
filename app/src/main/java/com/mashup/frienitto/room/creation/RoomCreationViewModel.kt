@@ -1,10 +1,12 @@
 package com.mashup.frienitto.room.creation
 
+import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.mashup.frienitto.EditType
 import com.mashup.frienitto.base.BaseViewModel
+import io.reactivex.internal.operators.observable.ObservableFilter
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
@@ -18,6 +20,15 @@ class RoomCreationViewModel : BaseViewModel(), AnkoLogger {
         get() = _submitName
 
 
+    private val _roomName = MutableLiveData<String>()
+    val roomName: LiveData<String>
+        get() = _roomName
+
+    private val _roomCode = MutableLiveData<String>()
+    val roomCode: LiveData<String>
+        get() = _roomCode
+
+
     private val _commonError = MutableLiveData<Int>()
     val commonError: LiveData<Int>
         get() = _commonError
@@ -27,11 +38,10 @@ class RoomCreationViewModel : BaseViewModel(), AnkoLogger {
         get() = _isEditable
 
 
-    private val roomName = BehaviorSubject.createDefault<String>("")
-    private val roomCode = BehaviorSubject.createDefault<String>("")
-    private val endDate = BehaviorSubject.createDefault<Int>(-1)
+     val roomNameSubject = BehaviorSubject.createDefault<String>("")
+     val roomCodeSubject = BehaviorSubject.createDefault<String>("")
+    val endDateSubject = BehaviorSubject.createDefault<Int>(-1)
 
-    val endDateSubject = PublishSubject.create<Int>()
     val submitBtnSubject = PublishSubject.create<Boolean>()
 
     private val _btnActive = MediatorLiveData<Boolean>()
@@ -44,15 +54,15 @@ class RoomCreationViewModel : BaseViewModel(), AnkoLogger {
         _isEditable.value = true
 
         addDisposable(
-            Observables.combineLatest(roomName, roomCode, endDate).subscribe {
+            Observables.combineLatest(roomNameSubject, roomCodeSubject, endDateSubject).subscribe {
                 val name = it.first
                 val code = it.second
                 val end = it.third
                 info { "tag1 combine $it" }
-                if(name.isNotBlank()&&code.isNotBlank()&&end!=-1){
+                if (name.isNotBlank() && code.isNotBlank() && end != -1) {
                     //버튼을 활성화하고 버튼 색상을 변경
                     submitBtnSubject.onNext(true)
-                }else{
+                } else {
                     submitBtnSubject.onNext(false)
                 }
 
@@ -63,11 +73,16 @@ class RoomCreationViewModel : BaseViewModel(), AnkoLogger {
     }
 
 
-    fun onTextChange(editType:EditType , text: CharSequence) {
+    fun onTextChange(editType: EditType, text: CharSequence) {
         when (editType) {
-            EditType.ROOM_NAME -> roomName.onNext(text.toString())
-            EditType.ROOM_PW ->  roomCode.onNext(text.toString())
-            else -> { }
+            EditType.ROOM_NAME -> {
+                roomNameSubject.onNext(text.toString())
+            }
+            EditType.ROOM_PW -> {
+                roomCodeSubject.onNext(text.toString())
+            }
+            else -> {
+            }
         }
     }
 
@@ -77,9 +92,22 @@ class RoomCreationViewModel : BaseViewModel(), AnkoLogger {
 
     }
 
-    fun onClickEndDate(endDateType:Int){
-        endDate.onNext(endDateType)
+    fun onClickEndDate(endDateType: Int) {
         endDateSubject.onNext(endDateType)
+    }
+
+    fun onDeleteContent(editType: EditType) {
+        when (editType) {
+            EditType.ROOM_NAME -> {
+                roomNameSubject.onNext("")
+
+            }
+            EditType.ROOM_PW -> {
+                roomCodeSubject.onNext("")
+            }
+            else ->{}
+        }
+
     }
 
 }

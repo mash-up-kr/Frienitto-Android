@@ -1,19 +1,21 @@
 package com.mashup.frienitto.room.creation
 
-import android.graphics.Color
 import android.os.Bundle
+import android.widget.EditText
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
-import androidx.lifecycle.Observer
+import com.mashup.frienitto.EditType
 import com.mashup.frienitto.R
 import com.mashup.frienitto.base.BaseActivity
 import com.mashup.frienitto.databinding.ActivityCreationRoomBinding
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_creation_room.*
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class RoomCreationActivity(override val layoutResourceId: Int = R.layout.activity_creation_room) :
-    BaseActivity<ActivityCreationRoomBinding>() {
+    BaseActivity<ActivityCreationRoomBinding>() ,AnkoLogger{
 
     val viewModel: RoomCreationViewModel by viewModel()
 
@@ -32,17 +34,13 @@ class RoomCreationActivity(override val layoutResourceId: Int = R.layout.activit
                             ViewCompat.setBackgroundTintList(btn_end_date_2, ContextCompat.getColorStateList(this, R.color.lightGray))
                             btn_end_date_1.setTextColor(resources.getColor(R.color.white))
                             btn_end_date_2.setTextColor(resources.getColor(R.color.lightGray2))
-                          //  btn_end_date_1.setBackgroundTintList(button, ContextCompat.getColorStateList(this, android.R.color.white))
-                        //    btn_end_date_2.setBackgroundResource(R.color.gray)
-                         //   btn_end_date_1.setBackgroundResource(R.color.orange)
+
                         }
                         2 -> {
                             ViewCompat.setBackgroundTintList(btn_end_date_1, ContextCompat.getColorStateList(this, R.color.lightGray))
                             ViewCompat.setBackgroundTintList(btn_end_date_2, ContextCompat.getColorStateList(this, R.color.navy))
                             btn_end_date_1.setTextColor(resources.getColor(R.color.lightGray2))
                             btn_end_date_2.setTextColor(resources.getColor(R.color.white))
-//                            btn_end_date_1.setBackgroundResource(R.color.gray)
-////                            btn_end_date_2.setBackgroundResource(R.color.orange)
                         }
                     }
                 }, {})
@@ -61,7 +59,30 @@ class RoomCreationActivity(override val layoutResourceId: Int = R.layout.activit
 
                 }, {})
         )
+
+        compositeDisposable.add(
+            viewModel.roomNameSubject
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    if(it.isBlank()){
+                        clearEditText(et_room_name as EditText)
+                    }
+                },{})
+        )
+
+        compositeDisposable.add(
+            viewModel.roomCodeSubject
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    if(it.isBlank()){
+                        clearEditText(et_room_pw as EditText)
+                    }
+                },{})
+        )
     }
 
 
+    private fun clearEditText(edit:EditText){
+        edit.text.clear()
+    }
 }
