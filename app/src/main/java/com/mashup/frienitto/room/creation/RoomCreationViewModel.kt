@@ -39,7 +39,6 @@ class RoomCreationViewModel : BaseViewModel(), AnkoLogger {
         get() = _btnActive
 
 
-
     init {
         _submitName.value = "방 생성하기"
         _isEditable.value = true
@@ -52,7 +51,6 @@ class RoomCreationViewModel : BaseViewModel(), AnkoLogger {
                 info { "tag1 combine $it" }
                 if(name.isNotBlank()&&code.isNotBlank()&&end!=-1){
                     //버튼을 활성화하고 버튼 색상을 변경
-                    info { "tag1 " }
                     submitBtnSubject.onNext(true)
                 }else{
                     submitBtnSubject.onNext(false)
@@ -69,10 +67,7 @@ class RoomCreationViewModel : BaseViewModel(), AnkoLogger {
         when (editType) {
             EditType.ROOM_NAME -> roomName.onNext(text.toString())
             EditType.ROOM_PW ->  roomCode.onNext(text.toString())
-            else -> {
-
-            }
-
+            else -> { }
         }
     }
 
@@ -80,17 +75,12 @@ class RoomCreationViewModel : BaseViewModel(), AnkoLogger {
         info { "tag1 onSubmit" }
         //db
 
-
     }
 
     fun onClickEndDate(endDateType:Int){
         endDate.onNext(endDateType)
         endDateSubject.onNext(endDateType)
     }
-//    private fun isNotBlanks(): Boolean {
-//        return roomName.isNotBlank()&&roomCode.isNotBlank()
-//    }
-
 
 }
 

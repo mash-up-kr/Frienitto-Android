@@ -18,17 +18,7 @@ class RoomCreationActivity(override val layoutResourceId: Int = R.layout.activit
         super.onCreate(savedInstanceState)
         setContentView(viewDataBinding.root)
         viewDataBinding.viewModel = viewModel
-
-//        compositeDisposable.add(
-//            viewModel.buttonSuccess
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe({
-//                    btn_room_creation.setBackgroundResource(R.color.orange)
-//                    btn_room_creation.isClickable = true
-//                }, {})
-//        )
-
-
+        
         compositeDisposable.add(
             viewModel.endDateSubject
                 .observeOn(AndroidSchedulers.mainThread())
