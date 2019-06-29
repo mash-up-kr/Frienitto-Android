@@ -1,7 +1,7 @@
 package com.mashup.frienitto.api
 
-import com.mashup.frienitto.data.RequestEmailCode
-import com.mashup.frienitto.data.ResponseEmailCode
+import android.util.Log
+import com.mashup.frienitto.data.*
 import io.reactivex.Single
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -15,8 +15,7 @@ object DataSource {
 
 
     init {
-
-        baseURL = "http://192.168.43.12:8080"
+        baseURL = "http://192.168.123.26:8080"
 
         val okHttpClient = OkHttpClient.Builder()
             .build()
@@ -30,9 +29,31 @@ object DataSource {
             .create(Service::class.java)
     }
 
-    fun requestEmailCode(request: RequestEmailCode) : Single<ResponseEmailCode> {
-        return service.requestEmailCode(request)
+
+    // User
+    fun requestSignUp(token: String, body: RequestSignUp) : Single<ResponseSignUp> {
+        Log.d("csh", "token:"+token+"body:"+body.toString())
+        return service.requestSignUp(token, body)
     }
+
+    fun requestSignIn(body: RequestSignIn) : Single<ResponseSignIn> {
+        return service.requestSingIn(body)
+    }
+
+    // Room
+
+
+
+    // Email
+
+    fun requestEmailCode(body: RequestEmailCode) : Single<ResponseEmailCode> {
+        return service.requestEmailCode(body)
+    }
+
+    fun requestAuth(body: RequestAuth) : Single<ResponseAuth> {
+        return service.requestAuth(body)
+    }
+
 
 
 }
