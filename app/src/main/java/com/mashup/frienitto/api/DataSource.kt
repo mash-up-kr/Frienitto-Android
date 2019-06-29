@@ -40,7 +40,26 @@ object DataSource {
         return service.requestSingIn(body)
     }
 
+
+
     // Room
+
+    fun requestCreateRoom(token: String, body: RequestCreateRoom) : Single<ResponseCreateRoom> {
+        return service.requestCreateRoom(token, body)
+    }
+
+    fun requestJoinRoom(token: String, id: String) : Single<ResponseCreateRoom> {
+        return service.requestJoinRoom(token, id)
+    }
+
+    fun requestRoomDetail(token: String, id: String) : Single<ResponseCreateRoom> {
+        return service.requestRoomDetail(token, id)
+    }
+
+    fun requestMatchingStart(token: String, body: RequestMatchingStart) : Single<ResponseMatchingStart> {
+        return service.requestMatchingStart(token, body)
+    }
+
 
 
 

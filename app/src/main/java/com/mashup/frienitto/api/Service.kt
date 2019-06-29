@@ -2,9 +2,7 @@ package com.mashup.frienitto.api
 
 import com.mashup.frienitto.data.*
 import io.reactivex.Single
-import retrofit2.http.Body
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface Service {
 
@@ -18,6 +16,21 @@ interface Service {
 
 
     // Room
+    @POST("api/v1/register/room")
+    fun requestCreateRoom(@Header("X-Authorization") token: String,
+                          @Body body: RequestCreateRoom) : Single<ResponseCreateRoom>
+
+    @GET("api/v1/join/room/{id}")
+    fun requestJoinRoom(@Header("X-Authorization") token: String,
+                        @Path("id") id: String) : Single<ResponseCreateRoom>
+
+    @GET("api/v1/room/{id}")
+    fun requestRoomDetail(@Header("X-Authorization") token: String,
+                          @Path("id") id: String) : Single<ResponseCreateRoom>
+
+    @POST("api/v1/matching")
+    fun requestMatchingStart(@Header("X-Authorization") token: String,
+                             @Body body: RequestMatchingStart) : Single<ResponseMatchingStart>
 
 
     // Email
