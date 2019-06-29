@@ -11,18 +11,21 @@
     </data>
 
     <ScrollView android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@drawable/navy_background"
+    >
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+              >
 
 
             <TextView
                     android:textSize="28sp"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     android:letterSpacing="0.03"
-                    tools:text="방 만들기"
+                    android:text="방 만들기"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/textView2"
@@ -37,7 +40,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textSize="13sp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:lineSpacingExtra="9sp"
                     android:id="@+id/textView3"
                     app:layout_constraintTop_toBottomOf="@+id/textView2"
@@ -71,16 +74,29 @@
                         android:textColor="#0c0c0c"
                         android:textSize="16sp"
                 />
-
-                <EditText
-                        android:id="@+id/et_room_name"
-                        android:textSize="14sp"
+                <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/hint_room_name"
-                        android:onTextChanged="@{(text, start, before, count) -> viewModel.onTextChange(editType.ROOM_NAME,text)}"
-                        android:enabled="@{viewModel.isEditable?true:false}"
-                />
+                        android:orientation="horizontal"
+                        android:layout_gravity="center"
+                        android:gravity="center">
+
+                    <EditText
+                            android:id="@+id/et_room_name"
+                            android:textSize="14sp"
+                            android:layout_width="240dp"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/hint_room_name"
+                            android:onTextChanged="@{(text, start, before, count) -> viewModel.onTextChange(editType.ROOM_NAME,text)}"
+                            android:enabled="@{viewModel.isEditable?true:false}"
+                    />
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/email"
+                            android:onClick="@{()-> viewModel.onDeleteContent(editType.ROOM_NAME)}"
+                    />
+                </LinearLayout>
 
                 <TextView
                         android:id="@+id/tv_room_pw"
@@ -93,16 +109,30 @@
                         android:textSize="16sp"
                 />
 
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:gravity="center">
+
                 <EditText
                         android:id="@+id/et_room_pw"
                         android:textSize="14sp"
-                        android:layout_width="match_parent"
+                        android:layout_width="240dp"
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_room_code"
                         android:onTextChanged="@{(text, start, before, count) -> viewModel.onTextChange(editType.ROOM_PW,text)}"
                         android:inputType="number"
                         android:enabled="@{viewModel.isEditable?true:false}"
                 />
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/email"
+                        android:onClick="@{()-> viewModel.onDeleteContent(editType.ROOM_PW)}"
+                />
+            </LinearLayout>
 
 
                 <TextView

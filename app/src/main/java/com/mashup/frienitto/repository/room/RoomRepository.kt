@@ -4,7 +4,7 @@ import com.mashup.frienitto.api.DataSource
 import com.mashup.frienitto.data.*
 import io.reactivex.Single
 
-object RoomRepository {
+class RoomRepository {
 
     fun createRoom(token: String, body: RequestCreateRoom) : Single<ResponseCreateRoom> {
         return DataSource.requestCreateRoom(token, body)
