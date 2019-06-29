@@ -6,6 +6,8 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.mashup.frienitto.EditType
 import com.mashup.frienitto.base.BaseViewModel
+import com.mashup.frienitto.data.RequestCreateRoom
+import com.mashup.frienitto.repository.room.RoomRepository
 import io.reactivex.internal.operators.observable.ObservableFilter
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.subjects.BehaviorSubject
@@ -13,33 +15,18 @@ import io.reactivex.subjects.PublishSubject
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 
-class RoomCreationViewModel : BaseViewModel(), AnkoLogger {
+class RoomCreationViewModel(val repository: RoomRepository) : BaseViewModel(), AnkoLogger {
 
     private val _submitName = MutableLiveData<String>()
     val submitName: LiveData<String>
         get() = _submitName
 
-
-    private val _roomName = MutableLiveData<String>()
-    val roomName: LiveData<String>
-        get() = _roomName
-
-    private val _roomCode = MutableLiveData<String>()
-    val roomCode: LiveData<String>
-        get() = _roomCode
-
-
-    private val _commonError = MutableLiveData<Int>()
-    val commonError: LiveData<Int>
-        get() = _commonError
-
     private val _isEditable = MutableLiveData<Boolean>()
     val isEditable: LiveData<Boolean>
         get() = _isEditable
 
-
-     val roomNameSubject = BehaviorSubject.createDefault<String>("")
-     val roomCodeSubject = BehaviorSubject.createDefault<String>("")
+    val roomNameSubject = BehaviorSubject.createDefault<String>("")
+    val roomCodeSubject = BehaviorSubject.createDefault<String>("")
     val endDateSubject = BehaviorSubject.createDefault<Int>(-1)
 
     val submitBtnSubject = PublishSubject.create<Boolean>()
@@ -58,7 +45,6 @@ class RoomCreationViewModel : BaseViewModel(), AnkoLogger {
                 val name = it.first
                 val code = it.second
                 val end = it.third
-                info { "tag1 combine $it" }
                 if (name.isNotBlank() && code.isNotBlank() && end != -1) {
                     //버튼을 활성화하고 버튼 색상을 변경
                     submitBtnSubject.onNext(true)
@@ -68,10 +54,7 @@ class RoomCreationViewModel : BaseViewModel(), AnkoLogger {
 
             }
         )
-
-
     }
-
 
     fun onTextChange(editType: EditType, text: CharSequence) {
         when (editType) {
@@ -90,6 +73,12 @@ class RoomCreationViewModel : BaseViewModel(), AnkoLogger {
         info { "tag1 onSubmit" }
         //db
 
+        repository.createRoom(
+            "F395BF3DF03AB3E4718BC6D08914DA7B",
+            RequestCreateRoom(
+                roomNameSubject.value!!, roomNameSubject.value!!, "2019-06-30"
+            )
+        )
     }
 
     fun onClickEndDate(endDateType: Int) {
@@ -105,15 +94,10 @@ class RoomCreationViewModel : BaseViewModel(), AnkoLogger {
             EditType.ROOM_PW -> {
                 roomCodeSubject.onNext("")
             }
-            else ->{}
+            else -> {
+            }
         }
 
     }
 
 }
-
-data class RoomCreation(
-    val name: String,
-    val code: String,
-    val expires_date: String
-)
