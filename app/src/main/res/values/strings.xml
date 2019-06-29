@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Frienitto</string>
-    <string name="error_log">
-        Undeliverable exception received, not sure what to do
-    </string>
+    <string name="error_log">Undeliverable exception received, not sure what to do</string>
+    <string name="room_creation">방 만들기</string>
+    <string name="room_entry">방 입장하기</string>
+    <string name="room_name">방이름</string>
+    <string name="frentto">프렌또</string>
+    <string name="error_room_name">방 이름은 최대 8자까지 가능합니다!</string>
+    <string name="error_room_pw">비밀번호는 4자 이내로 설정해주세요!</string>
+    <string name="room_code">방 코드</string>
+    <string name="expires_date">종료일</string>
 </resources>

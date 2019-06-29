@@ -6,7 +6,6 @@ import io.reactivex.exceptions.UndeliverableException
 import io.reactivex.plugins.RxJavaPlugins
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
-import org.koin.android.logger.AndroidLogger
 import org.koin.core.context.startKoin
 import java.io.IOException
 import java.net.SocketException

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable name="editType" type="com.mashup.frienitto.EditType"/>
+        <variable
+                name="viewModel"
+                type="com.mashup.frienitto.room.creation.RoomCreationViewModel"/>
+    </data>
+
+    <ScrollView android:layout_width="match_parent"
+                android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <TextView
+                    android:id="@+id/tv_room_creation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="8dp"
+                    android:text="TextView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:background="@color/orange"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+
+            <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.5"/>
+
+            <LinearLayout
+                    android:id="@+id/container_creation"
+                    android:layout_width="312dp"
+                    android:layout_height="400dp"
+                    android:layout_marginTop="100dp"
+                    android:background="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:orientation="vertical"
+                    android:padding="24dp"
+            >
+
+                <TextView
+                        android:id="@+id/tv_room_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="68dp"
+                        android:text="@string/room_name"
+                        android:textColor="#0c0c0c"
+                        android:textSize="16sp"
+                />
+
+                <EditText
+                        android:id="@+id/et_room_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/frentto"
+                        android:onTextChanged="@{(text, start, before, count) -> viewModel.onTextChange(editType.ROOM_NAME,text)}"
+                        android:enabled="@{viewModel.isEditable?true:false}"
+                />
+
+                <TextView
+                        android:id="@+id/tv_room_pw"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/room_code"
+                        android:textColor="#0c0c0c"
+                        android:textSize="16sp"
+                />
+
+                <EditText
+                        android:id="@+id/et_room_pw"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/frentto"
+                        android:onTextChanged="@{(text, start, before, count) -> viewModel.onTextChange(editType.ROOM_PW,text)}"
+                        android:inputType="number"
+                        android:enabled="@{viewModel.isEditable?true:false}"
+                />
+
+
+                <TextView
+                        android:id="@+id/tv_end_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/expires_date"
+                        android:textColor="#0c0c0c"
+                        android:textSize="16sp"
+                />
+
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:orientation="horizontal">
+
+                    <Button
+                            android:id="@+id/btn_end_date_1"
+                            android:text="3일"
+                            android:onClick="@{()->viewModel.onClickEndDate(1)}"
+                            android:layout_width="100dp"
+                            android:layout_height="40dp"
+                            android:background="@color/gray"
+                    />
+                    <Button
+                            android:id="@+id/btn_end_date_2"
+                            android:text="7일"
+                            android:layout_marginStart="12dp"
+                            android:onClick="@{()->viewModel.onClickEndDate(2)}"
+                            android:layout_width="100dp"
+                            android:layout_height="40dp"
+                            android:background="@color/gray"
+                    />
+                </LinearLayout>
+
+                <Button
+                        android:id="@+id/btn_room_creation"
+                        android:text="@{viewModel.submitName}"
+                        android:onClick="@{()->viewModel.onSubmit()}"
+                        android:layout_width="100dp"
+                        android:layout_height="40dp"
+                        android:background="@color/gray"
+                        android:clickable="@{viewModel.btnActive?true:false}"
+                        android:layout_marginTop="16dp"
+                />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>
