@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Frienitto</string>
+    <string name="app_name">Frentto</string>
     <string name="error_log">Undeliverable exception received, not sure what to do</string>
     <string name="room_creation">방 만들기</string>
     <string name="room_entry">방 입장하기</string>
@@ -9,12 +9,34 @@
     <string name="error_room_pw">비밀번호는 4자 이내로 설정해주세요!</string>
     <string name="room_code">코드번호</string>
     <string name="expires_date">종료일</string>
-    <string name="email_auth">이메일 인증하기</string>
-    <string name="email_reauth">이메일 재인증하기</string>
+    <string name="email_auth_code">이메일 인증 코드</string>
+    <string name="email_auth">인증코드 발송하기</string>
+    <string name="email_reauth">인증코드 재발송하기</string>
+    <string name="hint_email_code">인증코드를 입력해 주세요.</string>
     <string name="complete">완료하기</string>
     <string name="ok">확인</string>
     <string name="hint_room_name">멋진 방이름을 적어주세요.</string>
     <string name="hint_room_code">코드번호를 적어주세요.</string>
     <string name="end_date_1">3일후</string>
     <string name="end_date_2">7일후</string>
+    <string name="welcome_app">프렌또에 오신걸 환영합니다.</string>
+    <string name="require_login">프렌또를 통해 친구와 더욱 돈독해지세요!\n친구를 만나기 위해서 로그인 혹은 회원가입이 필요해요!</string>
+    <string name="login">로그인</string>
+    <string name="login_en">Log In</string>
+    <string name="sign_in">회원가입</string>
+    <string name="sign_in_en">Sign In</string>
+    <string name="email">이메일</string>
+    <string name="password">비밀번호</string>
+    <string name="repassword">비밀번호 재확인</string>
+    <string name="used_email">주로 사용하는 이메일을 적어주세요.</string>
+    <string name="enter_password">비밀번호를 입력해주세요.</string>
+    <string name="re_enter_password">비밀번호를 다시 입력해주세요.</string>
+    <string name="write_real_name">실명을 적어주세요.</string>
+    <string name="write_your_info">자신을 잘 소개해주는 문구를 적어주세요.</string>
+    <string name="name">이름</string>
+    <string name="introduce">자기소개</string>
+    <string name="sign_in_1">프렌또는 마니또를 매칭해주는 서비스입니다.\n회원가입을 위해서 주로 사용하는 이메일을 인증해주세요.</string>
+    <string name="sign_in_2">이메일로 인증코드가 전송되었습니다</string>
+    <string name="sign_in_3">회원가입이 거의 끝났어요!\n프렌또를 통해 친구와 더욱 돈독해지세요!</string>
+    <string name="sign_in_4">회원가입 마지막 페이지에요!\n프렌또를 통해 친구와 더욱 돈독해지세요!</string>
 </resources>
