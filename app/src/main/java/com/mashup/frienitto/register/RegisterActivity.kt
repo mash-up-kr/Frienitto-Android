@@ -9,6 +9,7 @@ class RegisterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left)
         setContentView(R.layout.activity_register)
         val adapter = RegisterPagerAdapter(supportFragmentManager)
         viewPager.adapter = adapter
@@ -24,5 +25,10 @@ class RegisterActivity : AppCompatActivity() {
 
         tv_pager_position.text = (position + 1).toString()
         viewPager.currentItem = position
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right)
     }
 }
