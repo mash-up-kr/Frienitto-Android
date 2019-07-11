@@ -5,6 +5,7 @@ import com.mashup.frienitto.register.RegisterFragmentViewModel
 import com.mashup.frienitto.register.RegisterViewModel
 import com.mashup.frienitto.repository.room.RoomRepository
 import com.mashup.frienitto.room.creation.RoomCreationViewModel
+import com.mashup.frienitto.room.entry.RoomEntryViewModel
 import com.mashup.frienitto.select.SelectViewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -16,6 +17,7 @@ val module: Module = module {
     viewModel { RegisterViewModel() }
     viewModel { RoomCreationViewModel(get()) }
     viewModel { RegisterFragmentViewModel() }
+    viewModel { RoomEntryViewModel(get()) }
 
     single { RoomRepository() }
 }

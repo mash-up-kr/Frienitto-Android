@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable name="editType" type="com.mashup.frienitto.EditType"/>
+
+        <variable
+                name="viewModel"
+                type="com.mashup.frienitto.room.entry.RoomEntryViewModel"/>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black"
+            >
+
+
+        <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp"/>
+
+        <LinearLayout
+                android:id="@+id/container_creation"
+                android:layout_width="312dp"
+                android:layout_height="430dp"
+                android:layout_marginTop="200dp"
+                android:background="@drawable/round"
+                android:backgroundTint="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:orientation="vertical"
+                android:padding="24dp"
+                >
+            <TextView
+                    android:id="@+id/tv_room_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="68dp"
+                    android:text="@string/room_name"
+                    android:textStyle="bold"
+                    android:textColor="#0c0c0c"
+                    android:textSize="16sp"
+                    />
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:gravity="center">
+
+                <EditText
+                        android:id="@+id/et_room_name"
+                        android:textSize="14sp"
+                        android:layout_width="240dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/hint_room_name"
+                        android:inputType="text"
+                        android:onTextChanged="@{(text, start, before, count) -> viewModel.onTextChange(editType.ROOM_NAME,text)}"
+                        />
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/email"
+                        android:onClick="@{()-> viewModel.onDeleteContent(editType.ROOM_NAME)}"
+                        />
+            </LinearLayout>
+
+            <TextView
+                    android:id="@+id/tv_room_pw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:textStyle="bold"
+                    android:text="@string/room_code"
+                    android:textColor="#0c0c0c"
+                    android:textSize="16sp"
+                    />
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:gravity="center">
+
+                <EditText
+                        android:id="@+id/et_room_pw"
+                        android:textSize="14sp"
+                        android:layout_width="240dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/hint_room_code"
+                        android:onTextChanged="@{(text, start, before, count) -> viewModel.onTextChange(editType.ROOM_PW,text)}"
+                        android:inputType="numberPassword"
+                        />
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/email"
+                        android:onClick="@{()-> viewModel.onDeleteContent(editType.ROOM_PW)}"
+                        />
+            </LinearLayout>
+
+            <Button
+                    android:id="@+id/btn_room_enter"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_gravity="center"
+                    android:text="방입장하기"
+                    android:onClick="@{()->viewModel.onSubmit()}"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/round"
+                    android:backgroundTint="@color/gray"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

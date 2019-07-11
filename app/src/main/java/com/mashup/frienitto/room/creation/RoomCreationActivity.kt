@@ -24,7 +24,7 @@ class RoomCreationActivity(override val layoutResourceId: Int = R.layout.activit
         setContentView(viewDataBinding.root)
         viewDataBinding.viewModel = viewModel
 
-        compositeDisposable.add(
+        addDisposable(
             viewModel.endDateSubject
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -45,7 +45,7 @@ class RoomCreationActivity(override val layoutResourceId: Int = R.layout.activit
                     }
                 }, {})
         )
-        compositeDisposable.add(
+        addDisposable(
             viewModel.submitBtnSubject
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({isActive->
@@ -60,7 +60,7 @@ class RoomCreationActivity(override val layoutResourceId: Int = R.layout.activit
                 }, {})
         )
 
-        compositeDisposable.add(
+        addDisposable(
             viewModel.roomNameSubject
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -70,7 +70,7 @@ class RoomCreationActivity(override val layoutResourceId: Int = R.layout.activit
                 },{})
         )
 
-        compositeDisposable.add(
+        addDisposable(
             viewModel.roomCodeSubject
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

@@ -14,11 +14,16 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         android:usesCleartextTraffic="true">
-        <activity android:name=".room.entry.RoomEnteryActivity">
+        <activity android:name=".room.entry.RoomEntryActivity">
         </activity>
         <activity android:name=".room.creation.RoomCreationActivity">
         </activity>
         <activity android:name=".room.RoomActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
