@@ -29,6 +29,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         viewModel.isLogin.observe(this, Observer {
             val intent = Intent(this, RoomActivity::class.java)
             startActivity(intent)
+            finishAffinity()
         })
     }
 }

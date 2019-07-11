@@ -11,7 +11,7 @@ import org.koin.dsl.module
 import org.koin.android.viewmodel.dsl.viewModel
 
 val module: Module = module {
-    viewModel { LoginViewModel() }
+    viewModel { LoginViewModel(get()) }
     viewModel { SelectViewModel() }
     viewModel { RegisterViewModel() }
     viewModel { RoomCreationViewModel(get()) }
