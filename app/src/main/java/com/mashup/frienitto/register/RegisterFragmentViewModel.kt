@@ -12,7 +12,7 @@ import com.mashup.frienitto.repository.user.UserRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class RegisterFragmentViewModel : BaseViewModel() {
+class RegisterFragmentViewModel() : BaseViewModel() {
     val registerStepCnt = MutableLiveData<Int>().apply { postValue(0) }
     val signinComplete = MutableLiveData<Boolean>()
     val emailText: LiveData<String>

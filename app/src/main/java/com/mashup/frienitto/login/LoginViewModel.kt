@@ -1,42 +1,62 @@
 package com.mashup.frienitto.login
 
+import android.app.Application
 import android.util.Log
 import android.view.View
+import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
+import com.mashup.frienitto.base.BaseAndroidViewModel
 import com.mashup.frienitto.base.BaseViewModel
 import com.mashup.frienitto.data.RequestSignIn
 import com.mashup.frienitto.repository.user.UserRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.Observables
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.BehaviorSubject
 
-class LoginViewModel : BaseViewModel() {
+class LoginViewModel(application: Application) : BaseAndroidViewModel(application) {
+    private val context = getApplication<Application>().applicationContext
     val requestToast = MutableLiveData<String>()
 
-    private var email: String = ""
-
-    private var password: String = ""
+    val email = BehaviorSubject.createDefault<String>("")
+    val password = BehaviorSubject.createDefault<String>("")
 
     val isLogin = MutableLiveData<Boolean>()
 
+    val isWriteAllData = ObservableField<Boolean>().apply { set(false) }
+
+    init {
+        addDisposable(
+                Observables.combineLatest(email, password).subscribe {
+                    val email = it.first
+                    val password = it.second
+                    if (email.isNotBlank() && password.isNotBlank()) {
+                        //버튼을 활성화하고 버튼 색상을 변경
+                        isWriteAllData.set(true)
+                    } else {
+                        isWriteAllData.set(false)
+                    }
+
+                }
+        )
+    }
+
     fun onEmailTextChange(email: CharSequence) {
-        this.email = email.toString()
+        this.email.onNext(email.toString())
     }
 
     fun onPasswordTextChange(password: CharSequence) {
-        this.password = password.toString()
+        this.password.onNext(password.toString())
     }
 
     fun onClickLoginButton(view: View) {
-        if (email.isEmpty() || password.isEmpty()) {
-            requestToast.value = "이메일 또는 패스워드를 적어주세요."
-            return
-        }
         addDisposable(
-                UserRepository.signIn(RequestSignIn(email, password))
+                UserRepository.signIn(RequestSignIn(email.value!!, password.value!!))
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({ response ->
                             Log.d("csh Success", response.msg)
+                            UserRepository.setUserToken(context, response.data)
                             isLogin.value = true
                         }, { except ->
                             Log.d("csh Error", except.message.toString())
