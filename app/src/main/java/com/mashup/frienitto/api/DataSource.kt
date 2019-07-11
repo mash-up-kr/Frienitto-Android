@@ -15,7 +15,8 @@ object DataSource {
 
 
     init {
-        baseURL = "http://192.168.123.26:8080"
+        //baseURL = "http://192.168.123.26:8080"
+        baseURL = "https://codingsquid-side-project.com"
 
         val okHttpClient = OkHttpClient.Builder()
             .build()
@@ -32,7 +33,6 @@ object DataSource {
 
     // User
     fun requestSignUp(token: String, body: RequestSignUp) : Single<ResponseSignUp> {
-        Log.d("csh", "token:"+token+"body:"+body.toString())
         return service.requestSignUp(token, body)
     }
 
