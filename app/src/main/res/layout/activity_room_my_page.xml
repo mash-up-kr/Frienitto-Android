@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+                name="viewModel"
+                type="com.mashup.frienitto.room.mypage.RoomMyPageViewModel"/>
+    </data>
+
+    <ScrollView
+            android:background="@color/navy"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                tools:context=".room.home.RoomHomeActivity">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="12dp"
+                    android:text="@string/my_manitto"
+                    android:textColor="@color/white"
+                    android:textSize="28sp"
+                    android:textStyle="bold"/>
+
+            <LinearLayout
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:background="@drawable/round"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <ImageView
+                        android:layout_marginBottom="12dp"
+                        android:layout_marginTop="32dp"
+                        android:layout_width="104dp"
+                        android:layout_height="104dp"/>
+
+                <TextView
+                        android:textColor="#646464"
+                        android:textSize="18sp"
+                        android:layout_marginBottom="4dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:layout_marginBottom="28dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="42dp"
+                    android:text="@string/remain_time"
+                    android:textColor="@color/white"
+                    android:textSize="28sp"
+                    android:textStyle="bold"/>
+
+            <TextView
+                    android:text="@{viewModel.remainText}"
+                    android:paddingTop="32dp"
+                    android:paddingBottom="32dp"
+                    android:gravity="center"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:background="@drawable/round"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:textColor="@color/gray_darker"
+                    android:textSize="28sp"
+                    android:textStyle="bold"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="52dp"
+                    android:backgroundTint="@color/orange"
+                    android:text="@string/finish_matching"
+                    style="@style/FrenttoButton"
+                    android:background="@drawable/round"
+                    android:visibility="@{viewModel.isManager ? View.VISIBLE : View.GONE, default=gone }" />
+        </LinearLayout>
+    </ScrollView>
+</layout>

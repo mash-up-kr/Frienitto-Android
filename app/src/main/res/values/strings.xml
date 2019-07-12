@@ -39,6 +39,9 @@
     <string name="sign_in_2">이메일로 인증코드가 전송되었습니다</string>
     <string name="sign_in_3">회원가입이 거의 끝났어요!\n프렌또를 통해 친구와 더욱 돈독해지세요!</string>
     <string name="sign_in_4">회원가입 마지막 페이지에요!\n프렌또를 통해 친구와 더욱 돈독해지세요!</string>
-    <string formatted="false" name="room_participant_format">현재 %s명 입장하였습니다</string>
+    <string name="room_participant_format" formatted="false">현재 %s명 입장하였습니다</string>
     <string name="start_matching">매칭 시작하기</string>
+    <string name="my_manitto">내 마니또</string>
+    <string name="remain_time">남은 시간</string>
+    <string name="finish_matching">마니또 종료하기</string>
 </resources>
