@@ -4,6 +4,8 @@ import com.mashup.frienitto.login.LoginViewModel
 import com.mashup.frienitto.register.RegisterFragmentViewModel
 import com.mashup.frienitto.register.RegisterViewModel
 import com.mashup.frienitto.repository.room.RoomRepository
+import com.mashup.frienitto.room.close.RoomCloseActivity
+import com.mashup.frienitto.room.close.RoomCloseViewModel
 import com.mashup.frienitto.room.mypage.RoomMyPageViewModel
 import com.mashup.frienitto.room.creation.RoomCreationViewModel
 import com.mashup.frienitto.room.home.RoomHomeViewModel
@@ -20,5 +22,6 @@ val module: Module = module {
     viewModel { RegisterFragmentViewModel() }
     viewModel { RoomHomeViewModel() }
     viewModel { RoomMyPageViewModel() }
+    viewModel { RoomCloseViewModel() }
     single { RoomRepository() }
 }

@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.mashup.frienitto.R
+import com.mashup.frienitto.room.close.RoomCloseActivity
 import com.mashup.frienitto.room.creation.RoomCreationActivity
 import com.mashup.frienitto.room.home.RoomHomeActivity
 import com.mashup.frienitto.room.mypage.RoomMyPageActivity
@@ -20,7 +21,7 @@ class RoomActivity : AppCompatActivity() {
         }
 
         btn_room_enter.setOnClickListener{
-            startActivity(Intent(this, RoomMyPageActivity::class.java))
+            startActivity(Intent(this, RoomHomeActivity::class.java))
         }
     }
 }

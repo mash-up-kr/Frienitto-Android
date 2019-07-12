@@ -44,4 +44,5 @@
     <string name="my_manitto">내 마니또</string>
     <string name="remain_time">남은 시간</string>
     <string name="finish_matching">마니또 종료하기</string>
+    <string name="check_my_manitto">내 마니또가 누구인지\n확인해보세요!</string>
 </resources>
