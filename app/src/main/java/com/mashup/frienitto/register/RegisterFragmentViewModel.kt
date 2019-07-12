@@ -11,6 +11,7 @@ import com.mashup.frienitto.data.RequestSignUp
 import com.mashup.frienitto.repository.user.UserRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlin.random.Random
 
 class RegisterFragmentViewModel() : BaseViewModel() {
     val registerStepCnt = MutableLiveData<Int>().apply { postValue(0) }
@@ -67,21 +68,21 @@ class RegisterFragmentViewModel() : BaseViewModel() {
 
     fun sendConfirmEmail() {
         addDisposable(
-                 UserRepository.requestEmail(RequestEmailCode(email.value.toString(), "EMAIL"))
-                         .subscribeOn(Schedulers.io())
-                         .observeOn(AndroidSchedulers.mainThread())
-                         .subscribe({ response ->
-                             Log.d("csh Success", response?.msg)
-                             registerStepCnt.value = 1
-                         }, { except ->
-                             Log.d("csh Error", except.message?.toString())
-                         })
-         )
+                UserRepository.requestEmail(RequestEmailCode(email.value.toString(), "EMAIL"))
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({ response ->
+                            Log.d("csh Success", response?.msg)
+                            registerStepCnt.value = 1
+                        }, { except ->
+                            Log.d("csh Error", except.message?.toString())
+                        })
+        )
     }
 
     fun signIn() {
         addDisposable(
-                UserRepository.signUp(UserRepository.getTokenizer(), RequestSignUp(name, info, 1, email.value.toString(), password))
+                UserRepository.signUp(UserRepository.getTokenizer(), RequestSignUp(name, info, Random.nextInt(5) + 1, email.value.toString(), password))
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({ response ->
