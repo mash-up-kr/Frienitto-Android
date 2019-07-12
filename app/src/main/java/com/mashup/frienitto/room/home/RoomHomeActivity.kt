@@ -10,12 +10,20 @@ import com.mashup.frienitto.data.ResponseRoom
 import com.mashup.frienitto.data.UserPreview
 import com.mashup.frienitto.databinding.ActivityRoomHomeBinding
 import org.koin.android.viewmodel.ext.android.viewModel
+import android.R.layout
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.view.View
+import androidx.appcompat.app.AlertDialog
+import com.mashup.frienitto.utils.setUserImage
+import kotlinx.android.synthetic.main.dialog_user_datail_layout.view.*
+
 
 class RoomHomeActivity : BaseActivity<ActivityRoomHomeBinding>() {
     override val layoutResourceId: Int
         get() = R.layout.activity_room_home
 
-    private val viewModel:RoomHomeViewModel by viewModel()
+    private val viewModel: RoomHomeViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +39,19 @@ class RoomHomeActivity : BaseActivity<ActivityRoomHomeBinding>() {
         viewDataBinding.rvRoomHome.layoutManager = GridLayoutManager(this, 2)
         viewDataBinding.rvRoomHome.adapter = RoomUserListAdapter { item ->
             //TODO onclick
+            createDialog(item.imageCode, item.userName)
         }
+    }
+
+    fun createDialog(imageCode: Int, name: String) {
+        val dialogBuilder = AlertDialog.Builder(this@RoomHomeActivity)
+        val layoutView = layoutInflater.inflate(R.layout.dialog_user_datail_layout, null)
+        layoutView.iv_user_image.setUserImage(imageCode)
+        layoutView.tv_user_name.text = name
+        dialogBuilder.setView(layoutView)
+        val alertDialog = dialogBuilder.create()
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        alertDialog.show()
     }
 
     private fun ovbserveItem() {
