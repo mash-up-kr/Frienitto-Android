@@ -48,13 +48,18 @@ object DataSource {
         return service.requestCreateRoom(token, body)
     }
 
-    fun requestJoinRoom(token: String, id: String) : Single<ResponseCreateRoom> {
-        return service.requestJoinRoom(token, id)
+    fun requestJoinRoom(token: String, body: RequestJoinRoom) : Single<ResponseCreateRoom> {
+        return service.requestJoinRoom(token, body)
     }
 
     fun requestRoomDetail(token: String, id: String) : Single<ResponseCreateRoom> {
         return service.requestRoomDetail(token, id)
     }
+
+    fun requestRoomList(token: String) : Single<ResponseRoomList> {
+        return service.requestRoomList(token)
+    }
+
 
     fun requestMatchingStart(token: String, body: RequestMatchingStart) : Single<ResponseMatchingStart> {
         return service.requestMatchingStart(token, body)
