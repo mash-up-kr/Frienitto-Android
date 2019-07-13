@@ -6,6 +6,7 @@ import android.widget.EditText
 import com.mashup.frienitto.R
 import com.mashup.frienitto.base.BaseActivity
 import com.mashup.frienitto.matching.MatchingAnimationActivity
+import com.mashup.frienitto.room.home.RoomHomeActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_creation_room.*
 import org.jetbrains.anko.toast
@@ -25,10 +26,7 @@ class RoomEntryActivity(override val layoutResourceId: Int = R.layout.activity_r
         addDisposable(
             viewModel.moveActivity.subscribe {
                 if (it) {
-                    toast("성공쓰")
-                    //페이지가 넘어가야쥬
-                    //startActivity(Intent(this))
-                    startActivity(Intent(this,MatchingAnimationActivity::class.java))
+                    startActivity(Intent(this,RoomHomeActivity::class.java))
                     finish()
                 }
             }

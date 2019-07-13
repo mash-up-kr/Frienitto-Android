@@ -93,6 +93,7 @@ class RoomCreationViewModel(val repository: RoomRepository) : BaseViewModel(), A
                     .subscribe({ response ->
                         Log.d("csh Success", response?.msg)
                         Log.d("csh", "RoomID:" + response.data.id.toString())
+                        repository.roomId = response.data.id
                         isFinish.value = true
                     }, { except ->
                         Log.d("csh Error", except.message)

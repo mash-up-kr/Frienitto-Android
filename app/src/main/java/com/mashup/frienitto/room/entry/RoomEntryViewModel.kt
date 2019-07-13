@@ -76,8 +76,10 @@ class RoomEntryViewModel(private val repository: RoomRepository) : BaseViewModel
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ response ->
                         Log.d("csh Success", response?.msg)
-                        if (response.code == 200)
+                        if (response.code == 200) {
+                            repository.roomId = response.data.id
                             moveActivity.onNext(true)
+                        }
                         else
                             commonError.onNext(R.string.fail_entry_room)
                     }, { except ->

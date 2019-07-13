@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.mashup.frienitto.R
 import com.mashup.frienitto.room.creation.RoomCreationActivity
 import com.mashup.frienitto.room.entry.RoomEntryActivity
+import com.mashup.frienitto.room.home.RoomHomeActivity
 import kotlinx.android.synthetic.main.activity_room.*
 
 class RoomActivity : AppCompatActivity() {

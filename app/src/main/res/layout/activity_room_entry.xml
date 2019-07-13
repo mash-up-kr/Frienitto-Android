@@ -137,7 +137,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/hint_room_code"
                             android:onTextChanged="@{(text, start, before, count) -> viewModel.onTextChange(editType.ROOM_PW,text)}"
-                            android:inputType="numberPassword"
+                            android:inputType="textPassword"
                     />
                     <ImageView
                             android:layout_width="wrap_content"

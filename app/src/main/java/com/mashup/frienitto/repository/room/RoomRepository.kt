@@ -5,7 +5,7 @@ import com.mashup.frienitto.data.*
 import io.reactivex.Single
 
 class RoomRepository {
-
+    var roomId : Int ?= null
     fun createRoom(token: String, body: RequestCreateRoom) : Single<ResponseCreateRoom> {
         return DataSource.requestCreateRoom(token, body)
     }
@@ -29,7 +29,4 @@ class RoomRepository {
     fun getMatchingInfo(token: String, id: String) : Single<ResponseMatchingInfo> {
         return DataSource.requestMatchingInfo(token, id)
     }
-
-
-
 }

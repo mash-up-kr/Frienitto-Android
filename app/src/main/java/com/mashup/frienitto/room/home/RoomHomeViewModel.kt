@@ -1,5 +1,6 @@
 package com.mashup.frienitto.room.home
 
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.mashup.frienitto.base.BaseViewModel
@@ -18,12 +19,13 @@ class RoomHomeViewModel(private val roomRepository: RoomRepository) : BaseViewMo
     init {
         UserRepository.getUserToken()?.let {
             addDisposable(
-                roomRepository.getRoomDetail(it.token, "5")
+                roomRepository.getRoomDetail(it.token, roomRepository.roomId.toString())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ response ->
                         roomData.value = response.data
                         data.value = response.data.participant
+                        Log.d("lolo", response.toString())
                     }, { except ->
                     })
             )

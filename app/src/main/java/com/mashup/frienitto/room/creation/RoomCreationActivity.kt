@@ -10,6 +10,7 @@ import com.mashup.frienitto.R
 import com.mashup.frienitto.base.BaseActivity
 import com.mashup.frienitto.databinding.ActivityCreationRoomBinding
 import com.mashup.frienitto.matching.MatchingAnimationActivity
+import com.mashup.frienitto.room.home.RoomHomeActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_creation_room.*
 import org.jetbrains.anko.AnkoLogger
@@ -82,8 +83,8 @@ class RoomCreationActivity(override val layoutResourceId: Int = R.layout.activit
         )
 
         viewModel.isFinish.observe(this, Observer {
-            //startActivity(Intent(this,MatchingAnimationActivity::class.java))
-            finish()
+            startActivity(Intent(this, RoomHomeActivity::class.java))
+            finishAffinity()
         })
     }
 

@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="4dp"
-            android:text="@{@string/room_participant_format(roomModel.getParticipantSize())}"
+            android:text="@{@string/room_participant_format(roomModel.participant.size())}"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
