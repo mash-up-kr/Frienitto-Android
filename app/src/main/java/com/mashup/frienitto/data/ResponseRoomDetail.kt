@@ -24,5 +24,6 @@ data class ResponseRoomDetailData(
     val status: String,
     @SerializedName("participant")
     var participant: List<UserPreview>
-
-)
+){
+    fun getParticipantSize() = participant.size
+}

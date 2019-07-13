@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.EditText
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
+import androidx.lifecycle.Observer
 import com.mashup.frienitto.EditType
 import com.mashup.frienitto.R
 import com.mashup.frienitto.base.BaseActivity
@@ -79,6 +80,10 @@ class RoomCreationActivity(override val layoutResourceId: Int = R.layout.activit
                     }
                 },{})
         )
+
+        viewModel.isFinish.observe(this, Observer {
+            finish()
+        })
     }
 
 
