@@ -4,7 +4,11 @@ import com.mashup.frienitto.login.LoginViewModel
 import com.mashup.frienitto.register.RegisterFragmentViewModel
 import com.mashup.frienitto.register.RegisterViewModel
 import com.mashup.frienitto.repository.room.RoomRepository
+import com.mashup.frienitto.room.close.RoomCloseActivity
+import com.mashup.frienitto.room.close.RoomCloseViewModel
+import com.mashup.frienitto.room.mypage.RoomMyPageViewModel
 import com.mashup.frienitto.room.creation.RoomCreationViewModel
+import com.mashup.frienitto.room.home.RoomHomeViewModel
 import com.mashup.frienitto.select.SelectViewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -16,6 +20,8 @@ val module: Module = module {
     viewModel { RegisterViewModel() }
     viewModel { RoomCreationViewModel(get()) }
     viewModel { RegisterFragmentViewModel() }
-
+    viewModel { RoomHomeViewModel(get()) }
+    viewModel { RoomMyPageViewModel() }
+    viewModel { RoomCloseViewModel() }
     single { RoomRepository() }
 }
