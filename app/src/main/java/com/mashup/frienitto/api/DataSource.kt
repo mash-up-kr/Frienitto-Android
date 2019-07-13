@@ -52,7 +52,7 @@ object DataSource {
         return service.requestJoinRoom(token, body)
     }
 
-    fun requestRoomDetail(token: String, id: String) : Single<ResponseCreateRoom> {
+    fun requestRoomDetail(token: String, id: String) : Single<ResponseRoomDetail> {
         return service.requestRoomDetail(token, id)
     }
 
