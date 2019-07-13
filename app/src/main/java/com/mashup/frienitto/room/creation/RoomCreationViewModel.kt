@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import com.mashup.frienitto.EditType
 import com.mashup.frienitto.base.BaseViewModel
 import com.mashup.frienitto.data.RequestCreateRoom
+import com.mashup.frienitto.data.UserPreview
 import com.mashup.frienitto.repository.room.RoomRepository
 import com.mashup.frienitto.repository.user.UserRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -40,6 +41,7 @@ class RoomCreationViewModel(val repository: RoomRepository) : BaseViewModel(), A
     val btnActive: LiveData<Boolean>
         get() = _btnActive
 
+    val isFinish = MutableLiveData<Boolean>()
 
     init {
         _submitName.value = "방 생성하기"
@@ -88,6 +90,7 @@ class RoomCreationViewModel(val repository: RoomRepository) : BaseViewModel(), A
                     .subscribe({ response ->
                         Log.d("csh Success", response?.msg)
                         Log.d("csh", "RoomID:" + response.data.id.toString())
+                        isFinish.value = true
                     }, { except ->
                         Log.d("csh Error", except.message?.toString())
                     })
