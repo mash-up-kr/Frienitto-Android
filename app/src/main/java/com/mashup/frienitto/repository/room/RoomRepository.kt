@@ -10,11 +10,11 @@ class RoomRepository {
         return DataSource.requestCreateRoom(token, body)
     }
 
-    fun joinRoom(token: String, body: RequestJoinRoom) : Single<ResponseCreateRoom> {
+    fun getJoinRoom(token: String, body: RequestJoinRoom) : Single<ResponseCreateRoom> {
         return DataSource.requestJoinRoom(token, body)
     }
 
-    fun getRoomDetail(token: String, id: String) : Single<ResponseCreateRoom> {
+    fun getRoomDetail(token: String, id: String) : Single<ResponseRoomDetail> {
         return DataSource.requestRoomDetail(token, id)
     }
 
