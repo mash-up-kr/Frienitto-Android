@@ -26,7 +26,7 @@ interface Service {
 
     @GET("api/v1/room/{id}")
     fun requestRoomDetail(@Header("X-Authorization") token: String,
-                          @Path("id") id: String) : Single<ResponseCreateRoom>
+                          @Path("id") id: String) : Single<ResponseRoomDetail>
 
 
     @GET("api/v1/room/list")
