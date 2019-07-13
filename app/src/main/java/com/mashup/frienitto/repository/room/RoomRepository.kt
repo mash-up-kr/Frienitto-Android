@@ -26,5 +26,10 @@ class RoomRepository {
         return DataSource.requestMatchingStart(token, body)
     }
 
+    fun getMatchingInfo(token: String, id: String) : Single<ResponseMatchingInfo> {
+        return DataSource.requestMatchingInfo(token, id)
+    }
+
+
 
 }

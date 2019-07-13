@@ -14,6 +14,8 @@ data class ResponseMatchingStart(
 data class ResponseMatchingStartData(
     @SerializedName("room_id")
     var code: Int,
+    @SerializedName("room_status")
+    var roomStatus: String,
     @SerializedName("missions")
     var missions: List<Mission>
 )
