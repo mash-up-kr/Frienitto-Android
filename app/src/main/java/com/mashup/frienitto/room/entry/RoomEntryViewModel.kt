@@ -1,11 +1,14 @@
 package com.mashup.frienitto.room.entry
 
 import android.annotation.SuppressLint
+import android.media.MediaRouter
 import android.util.Log
 import com.mashup.frienitto.EditType
 import com.mashup.frienitto.R
 import com.mashup.frienitto.base.BaseViewModel
+import com.mashup.frienitto.data.RequestJoinRoom
 import com.mashup.frienitto.repository.room.RoomRepository
+import com.mashup.frienitto.repository.user.UserRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
@@ -49,20 +52,39 @@ class RoomEntryViewModel(private val repository: RoomRepository) : BaseViewModel
 
 
     fun onSubmit() {
-        addDisposable(
-            repository.joinRoom("tooooken", roomCodeSubject.value.toString())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ response ->
-                    Log.d("csh Success", response?.msg)
-                    if(response.msg=="방입장이성공한경우")
-                        moveActivity.onNext(true)
-                    else if(response.msg=="뭔가튕겨나갔을경우")
-                        commonError.onNext(R.string.fail_entry_room)
-                }, { except ->
-                    Log.d("csh Error", except.message)
-                    commonError.onNext(R.string.error_unkown)
-                })
-        )
+
+//            repository.getJoinRoom("tooooken", roomCodeSubject.value.toString())
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe({ response ->
+//                    Log.d("csh Success", response?.msg)
+//                    if(response.msg=="방입장이성공한경우")
+//                        moveActivity.onNext(true)
+//                    else if(response.msg=="뭔가튕겨나갔을경우")
+//                        commonError.onNext(R.string.fail_entry_room)
+//                }, { except ->
+//                    Log.d("csh Error", except.message)
+//                    commonError.onNext(R.string.error_unkown)
+//                })
+        UserRepository.getUserToken()?.let {
+            addDisposable(
+                repository.getJoinRoom(
+                    it.token,
+                    RequestJoinRoom(roomNameSubject.value.toString(), roomCodeSubject.value.toString())
+                )
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ response ->
+                        Log.d("csh Success", response?.msg)
+                        if (response.msg == "방입장이성공한경우")
+                            moveActivity.onNext(true)
+                        else if (response.msg == "뭔가튕겨나갔을경우")
+                            commonError.onNext(R.string.fail_entry_room)
+                    }, { except ->
+                        Log.d("csh Error", except.message)
+                        commonError.onNext(R.string.error_unkown)
+                    })
+            )
+        }
     }
 }
