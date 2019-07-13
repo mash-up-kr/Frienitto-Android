@@ -1,18 +1,18 @@
 package com.mashup.frienitto.room.creation
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
-import com.mashup.frienitto.EditType
 import com.mashup.frienitto.R
 import com.mashup.frienitto.base.BaseActivity
 import com.mashup.frienitto.databinding.ActivityCreationRoomBinding
+import com.mashup.frienitto.matching.MatchingAnimationActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_creation_room.*
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class RoomCreationActivity(override val layoutResourceId: Int = R.layout.activity_creation_room) :
@@ -82,6 +82,7 @@ class RoomCreationActivity(override val layoutResourceId: Int = R.layout.activit
         )
 
         viewModel.isFinish.observe(this, Observer {
+            //startActivity(Intent(this,MatchingAnimationActivity::class.java))
             finish()
         })
     }

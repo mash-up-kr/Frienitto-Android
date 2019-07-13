@@ -28,29 +28,43 @@
                     android:textSize="28sp"
                     android:textColor="@color/white"
                     android:letterSpacing="0.03"
-                    android:text="방 만들기"
+                    android:text="방 입장하기"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/textView2"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="11dp"
                     android:layout_margin="54dp"
             />
 
             <TextView
-                    android:text="친구들이 마니또 방을 잘 찾아올 수 있도록 방이름과 \n 비밀번호, 종료일을 지정해주세요."
+                    android:text="방에 들어가서 참여해보세요"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textSize="13sp"
-                    android:textColor="@color/white"
-                    android:lineSpacingExtra="9sp"
+                    android:textSize="20sp"
+                    android:textColor="#ffffff"
+                    android:letterSpacing="0.03"
                     android:id="@+id/textView3"
                     app:layout_constraintTop_toBottomOf="@+id/textView2"
                     app:layout_constraintStart_toStartOf="@+id/textView2"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginTop="6dp"
             />
+            <TextView
+                    android:text="방 이름과 코드번호를 입력하고 마니또에 참여하세요!"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="@color/white"
+                    android:lineSpacingExtra="9sp"
+                    android:id="@+id/textView4"
+                    app:layout_constraintTop_toBottomOf="@+id/textView3"
+                    app:layout_constraintStart_toStartOf="@+id/textView3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="6dp"
+            />
+
 
             <LinearLayout
                     android:id="@+id/container_creation"

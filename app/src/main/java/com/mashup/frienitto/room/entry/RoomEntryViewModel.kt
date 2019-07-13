@@ -76,9 +76,9 @@ class RoomEntryViewModel(private val repository: RoomRepository) : BaseViewModel
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ response ->
                         Log.d("csh Success", response?.msg)
-                        if (response.msg == "방입장이성공한경우")
+                        if (response.code == 200)
                             moveActivity.onNext(true)
-                        else if (response.msg == "뭔가튕겨나갔을경우")
+                        else
                             commonError.onNext(R.string.fail_entry_room)
                     }, { except ->
                         Log.d("csh Error", except.message)

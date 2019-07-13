@@ -7,7 +7,6 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-
             android:name=".FrenttoApplication"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
@@ -17,6 +16,13 @@
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true"
             tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".matching.MatchingAnimationActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".room.close.RoomCloseActivity">
         </activity>
         <activity android:name=".room.mypage.RoomMyPageActivity"/>
@@ -27,7 +33,6 @@
         <activity
                 android:name=".SplashActivity"
                 android:theme="@style/SplashTheme">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

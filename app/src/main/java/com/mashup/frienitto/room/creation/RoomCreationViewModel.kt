@@ -20,6 +20,9 @@ import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 class RoomCreationViewModel(val repository: RoomRepository) : BaseViewModel(), AnkoLogger {
 
@@ -30,6 +33,8 @@ class RoomCreationViewModel(val repository: RoomRepository) : BaseViewModel(), A
     private val _isEditable = MutableLiveData<Boolean>()
     val isEditable: LiveData<Boolean>
         get() = _isEditable
+
+    private var expiredDate : String =""
 
     val roomNameSubject = BehaviorSubject.createDefault<String>("")
     val roomCodeSubject = BehaviorSubject.createDefault<String>("")
@@ -77,14 +82,12 @@ class RoomCreationViewModel(val repository: RoomRepository) : BaseViewModel(), A
     }
 
     fun onSubmit() {
-        info { "tag1 onSubmit" }
-        //db
 
         Log.d("csh", "userToken:" + UserRepository.getUserToken())
         Log.d("csh", "name: " + roomNameSubject.value!! + "  code: " + roomCodeSubject.value!!)
         UserRepository.getUserToken()?.let {
             addDisposable(
-                repository.createRoom(it.token, RequestCreateRoom(roomNameSubject.value!!, roomCodeSubject.value!!, "2019-07-16"))
+                repository.createRoom(it.token, RequestCreateRoom(roomNameSubject.value!!, roomCodeSubject.value!!, expiredDate))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ response ->
@@ -100,6 +103,20 @@ class RoomCreationViewModel(val repository: RoomRepository) : BaseViewModel(), A
 
     fun onClickEndDate(endDateType: Int) {
         endDateSubject.onNext(endDateType)
+        val cal = Calendar.getInstance()
+        cal.time = Date()
+        val df: DateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
+        when(endDateType){
+            1-> {
+                cal.add(Calendar.DATE, 3)
+                expiredDate= df.format(cal.time).toString()
+            }
+            2->{
+                cal.add(Calendar.DATE,5)
+                expiredDate= df.format(cal.time).toString()
+            }
+
+        }
     }
 
     fun onDeleteContent(editType: EditType) {

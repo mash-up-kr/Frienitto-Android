@@ -1,9 +1,11 @@
 package com.mashup.frienitto.room.entry
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
 import com.mashup.frienitto.R
 import com.mashup.frienitto.base.BaseActivity
+import com.mashup.frienitto.matching.MatchingAnimationActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_creation_room.*
 import org.jetbrains.anko.toast
@@ -26,6 +28,8 @@ class RoomEntryActivity(override val layoutResourceId: Int = R.layout.activity_r
                     toast("성공쓰")
                     //페이지가 넘어가야쥬
                     //startActivity(Intent(this))
+                    startActivity(Intent(this,MatchingAnimationActivity::class.java))
+                    finish()
                 }
             }
         )
