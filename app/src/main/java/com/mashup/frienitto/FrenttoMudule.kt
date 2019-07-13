@@ -20,7 +20,7 @@ val module: Module = module {
     viewModel { RegisterViewModel() }
     viewModel { RoomCreationViewModel(get()) }
     viewModel { RegisterFragmentViewModel() }
-    viewModel { RoomHomeViewModel() }
+    viewModel { RoomHomeViewModel(get()) }
     viewModel { RoomMyPageViewModel() }
     viewModel { RoomCloseViewModel() }
     single { RoomRepository() }

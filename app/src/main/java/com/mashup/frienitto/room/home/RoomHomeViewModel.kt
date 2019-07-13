@@ -3,21 +3,30 @@ package com.mashup.frienitto.room.home
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.mashup.frienitto.base.BaseViewModel
+import com.mashup.frienitto.data.ResponseRoomDetailData
 import com.mashup.frienitto.data.UserPreview
+import com.mashup.frienitto.repository.room.RoomRepository
+import com.mashup.frienitto.repository.user.UserRepository
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
-class RoomHomeViewModel : BaseViewModel() {
+class RoomHomeViewModel(private val roomRepository: RoomRepository) : BaseViewModel() {
     val data = MutableLiveData<List<UserPreview>>()
+    val roomData = MutableLiveData<ResponseRoomDetailData>()
     val isManager = ObservableField<Boolean>(false)
 
     init {
-        val mockArray = ArrayList<UserPreview>()
-        mockArray.add(UserPreview(0, "a", 1))
-        mockArray.add(UserPreview(1, "b", 2))
-        mockArray.add(UserPreview(2, "c", 3))
-        mockArray.add(UserPreview(3, "f", 4))
-        mockArray.add(UserPreview(4, "e", 5))
-        mockArray.add(UserPreview(55, "q", 6))
-
-        data.value = mockArray
+        UserRepository.getUserToken()?.let {
+            addDisposable(
+                roomRepository.getRoomDetail(it.token, "5")
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ response ->
+                        roomData.value = response.data
+                        data.value = response.data.participant
+                    }, { except ->
+                    })
+            )
+        }
     }
 }

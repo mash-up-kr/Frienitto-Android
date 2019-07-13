@@ -11,10 +11,6 @@ data class ResponseRoom(
         var expiresDate: String,
         @SerializedName("url")
         var url: String,
-        @SerializedName("participant")
-        var participant: List<UserPreview>
-) {
-    fun getParticipantSize(): Int {
-        return participant.size
-    }
-}
+        @SerializedName("status")
+        val status: String
+)

@@ -15,8 +15,11 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import com.mashup.frienitto.data.ResponseRoomDetailData
+import com.mashup.frienitto.repository.room.RoomRepository
 import com.mashup.frienitto.utils.setUserImage
 import kotlinx.android.synthetic.main.dialog_user_datail_layout.view.*
+import org.koin.android.ext.android.inject
 
 
 class RoomHomeActivity : BaseActivity<ActivityRoomHomeBinding>() {
@@ -29,7 +32,6 @@ class RoomHomeActivity : BaseActivity<ActivityRoomHomeBinding>() {
         super.onCreate(savedInstanceState)
         setContentView(viewDataBinding.root)
         viewDataBinding.viewModel = viewModel
-        viewDataBinding.roomModel = ResponseRoom(11, "마니또 방이름", "2020-01-02", "", viewModel.data.value!!)
 
         initView()
         ovbserveItem()
@@ -57,6 +59,10 @@ class RoomHomeActivity : BaseActivity<ActivityRoomHomeBinding>() {
     private fun ovbserveItem() {
         viewModel.data.observe(this, Observer {
             (viewDataBinding.rvRoomHome.adapter as RoomUserListAdapter).updateListItems(it as ArrayList<UserPreview>)
+        })
+
+        viewModel.roomData.observe(this, Observer {
+            viewDataBinding.roomModel = it
         })
     }
 }
