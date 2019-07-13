@@ -20,13 +20,18 @@ interface Service {
     fun requestCreateRoom(@Header("X-Authorization") token: String,
                           @Body body: RequestCreateRoom) : Single<ResponseCreateRoom>
 
-    @GET("api/v1/join/room/{id}")
+    @POST("api/v1/join/room")
     fun requestJoinRoom(@Header("X-Authorization") token: String,
-                        @Path("id") id: String) : Single<ResponseCreateRoom>
+                        @Body body: RequestJoinRoom) : Single<ResponseCreateRoom>
 
     @GET("api/v1/room/{id}")
     fun requestRoomDetail(@Header("X-Authorization") token: String,
                           @Path("id") id: String) : Single<ResponseCreateRoom>
+
+
+    @GET("api/v1/room/list")
+    fun requestRoomList(@Header("X-Authorization") token: String) : Single<ResponseRoomList>
+
 
     @POST("api/v1/matching")
     fun requestMatchingStart(@Header("X-Authorization") token: String,
