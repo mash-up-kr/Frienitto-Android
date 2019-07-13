@@ -2,12 +2,16 @@ package com.mashup.frienitto.data
 
 import com.google.gson.annotations.SerializedName
 
-data class ResponseCreateRoom(
+data class ResponseMatchingInfo(
     @SerializedName("code")
     var code: Int,
     @SerializedName("msg")
     var msg: String,
     @SerializedName("data")
-    var data: ResponseRoom
+    var data: ResponseMatchingInfoData
 )
 
+data class ResponseMatchingInfoData(
+    @SerializedName("missions")
+    var missions: List<Mission>
+)

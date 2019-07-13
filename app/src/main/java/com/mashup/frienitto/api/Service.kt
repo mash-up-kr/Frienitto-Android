@@ -38,6 +38,11 @@ interface Service {
                              @Body body: RequestMatchingStart) : Single<ResponseMatchingStart>
 
 
+    @GET("api/v1/matching-info/room/{id}")
+    fun requestMatchingInfo(@Header("X-Authorization") token: String,
+                          @Path("id") id: String) : Single<ResponseMatchingInfo>
+
+
     // Email
 
     @POST("api/v1/issue/code")

@@ -65,6 +65,10 @@ object DataSource {
         return service.requestMatchingStart(token, body)
     }
 
+    fun requestMatchingInfo(token: String, id: String) : Single<ResponseMatchingInfo> {
+        return service.requestMatchingInfo(token, id)
+    }
+
 
 
 
