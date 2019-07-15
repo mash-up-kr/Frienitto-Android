@@ -113,7 +113,7 @@ class RoomCreationViewModel(val repository: RoomRepository) : BaseViewModel(), A
                 expiredDate= df.format(cal.time).toString()
             }
             2->{
-                cal.add(Calendar.DATE,5)
+                cal.add(Calendar.DATE,7)
                 expiredDate= df.format(cal.time).toString()
             }
 

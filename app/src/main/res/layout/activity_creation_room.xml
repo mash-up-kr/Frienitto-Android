@@ -49,16 +49,23 @@
                     android:layout_marginTop="6dp"
             />
 
+            <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_one_third"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.33" />
+
+
             <LinearLayout
                     android:id="@+id/container_creation"
                     android:layout_width="312dp"
                     android:layout_height="430dp"
-                    android:layout_marginTop="200dp"
                     android:background="@drawable/round"
                     android:backgroundTint="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/guideline_one_third"
                     android:orientation="vertical"
                     android:padding="24dp"
 
@@ -87,6 +94,8 @@
                             android:layout_width="240dp"
                             android:layout_height="wrap_content"
                             android:hint="@string/hint_room_name"
+                            android:imeOptions="actionNext"
+                            android:singleLine="true"
                             android:onTextChanged="@{(text, start, before, count) -> viewModel.onTextChange(editType.ROOM_NAME,text)}"
                             android:enabled="@{viewModel.isEditable?true:false}"
                     />
@@ -94,6 +103,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@drawable/email"
+                            android:padding="4dp"
                             android:onClick="@{()-> viewModel.onDeleteContent(editType.ROOM_NAME)}"
                     />
                 </LinearLayout>
@@ -121,15 +131,18 @@
                         android:textSize="14sp"
                         android:layout_width="240dp"
                         android:layout_height="wrap_content"
+                        android:singleLine="true"
                         android:hint="@string/hint_room_code"
                         android:onTextChanged="@{(text, start, before, count) -> viewModel.onTextChange(editType.ROOM_PW,text)}"
                         android:inputType="numberPassword"
+                        android:imeOptions="actionDone"
                         android:enabled="@{viewModel.isEditable?true:false}"
                 />
                 <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/email"
+                        android:padding="4dp"
                         android:onClick="@{()-> viewModel.onDeleteContent(editType.ROOM_PW)}"
                 />
             </LinearLayout>
