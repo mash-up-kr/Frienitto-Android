@@ -5,8 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.mashup.frienitto.R
 import com.mashup.frienitto.room.creation.RoomCreationActivity
-import com.mashup.frienitto.room.entry.RoomEntryActivity
-import com.mashup.frienitto.room.home.RoomHomeActivity
+import com.mashup.frienitto.room.join.RoomJoinActivity
 import kotlinx.android.synthetic.main.activity_room.*
 
 class RoomActivity : AppCompatActivity() {
@@ -20,7 +19,7 @@ class RoomActivity : AppCompatActivity() {
         }
 
         btn_room_enter.setOnClickListener {
-            startActivity(Intent(this,RoomEntryActivity::class.java))
+            startActivity(Intent(this,RoomJoinActivity::class.java))
         }
     }
 }

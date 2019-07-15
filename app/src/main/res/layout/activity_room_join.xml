@@ -9,7 +9,7 @@
 
         <variable
                 name="viewModel"
-                type="com.mashup.frienitto.room.entry.RoomEntryViewModel"/>
+                type="com.mashup.frienitto.room.join.RoomJoinViewModel"/>
 
     </data>
 

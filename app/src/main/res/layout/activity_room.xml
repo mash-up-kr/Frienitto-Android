@@ -60,7 +60,7 @@
         />
         <Button
                 android:id="@+id/btn_room_enter"
-                android:text="@string/room_entry"
+                android:text="@string/room_join"
                 android:layout_width="264dp"
                 android:textSize="16sp"
                 android:textStyle="bold"

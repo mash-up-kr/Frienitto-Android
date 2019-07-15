@@ -1,10 +1,11 @@
-package com.mashup.frienitto.room.entry
+package com.mashup.frienitto.room.join
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
 import com.mashup.frienitto.R
 import com.mashup.frienitto.base.BaseActivity
+import com.mashup.frienitto.databinding.ActivityRoomJoinBinding
 import com.mashup.frienitto.matching.MatchingAnimationActivity
 import com.mashup.frienitto.room.home.RoomHomeActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -12,10 +13,10 @@ import kotlinx.android.synthetic.main.activity_creation_room.*
 import org.jetbrains.anko.toast
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class RoomEntryActivity(override val layoutResourceId: Int = R.layout.activity_room_entry) :
-    BaseActivity<com.mashup.frienitto.databinding.ActivityRoomEntryBinding>() {
+class RoomJoinActivity(override val layoutResourceId: Int = R.layout.activity_room_join) :
+    BaseActivity<ActivityRoomJoinBinding>() {
 
-    val viewModel: RoomEntryViewModel by viewModel()
+    val viewModel: RoomJoinViewModel by viewModel()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,13 +26,12 @@ class RoomEntryActivity(override val layoutResourceId: Int = R.layout.activity_r
 
         addDisposable(
             viewModel.moveActivity.subscribe {
-                //방장이 매칭 버튼 안 눌렀을 경우
+                //Todo 매칭 유무따라 보여지는 페이지 달라져야함
                 if (it) {
-                    startActivity(Intent(this,RoomHomeActivity::class.java))
+                    //startActivity(Intent(this,RoomHomeActivity::class.java))
+                    startActivity(Intent(this, MatchingAnimationActivity::class.java).apply{addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)})
                     finish()
                 }
-                //방장이 매칭 버튼 눌렀을 경우
-                // startActivity(Intent(this,MatchingAnimationActivity::class.java).apply{addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)})
             }
         )
 

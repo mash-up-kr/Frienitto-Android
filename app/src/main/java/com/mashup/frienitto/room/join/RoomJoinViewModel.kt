@@ -1,7 +1,5 @@
-package com.mashup.frienitto.room.entry
+package com.mashup.frienitto.room.join
 
-import android.annotation.SuppressLint
-import android.media.MediaRouter
 import android.util.Log
 import com.mashup.frienitto.EditType
 import com.mashup.frienitto.R
@@ -14,7 +12,7 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 
-class RoomEntryViewModel(private val repository: RoomRepository) : BaseViewModel() {
+class RoomJoinViewModel(private val repository: RoomRepository) : BaseViewModel() {
 
     val moveActivity = PublishSubject.create<Boolean>()
     val roomNameSubject = BehaviorSubject.createDefault<String>("")
@@ -78,10 +76,11 @@ class RoomEntryViewModel(private val repository: RoomRepository) : BaseViewModel
                         Log.d("csh Success", response?.msg)
                         if (response.code == 200) {
                             repository.roomId = response.data.id
+                            //Todo 매칭 유무 확인 후 값을 넣어야함
                             moveActivity.onNext(true)
                         }
                         else
-                            commonError.onNext(R.string.fail_entry_room)
+                            commonError.onNext(R.string.fail_join_room)
                     }, { except ->
                         Log.d("csh Error", except.message)
                         commonError.onNext(R.string.error_unkown)
