@@ -25,10 +25,13 @@ class RoomEntryActivity(override val layoutResourceId: Int = R.layout.activity_r
 
         addDisposable(
             viewModel.moveActivity.subscribe {
+                //방장이 매칭 버튼 안 눌렀을 경우
                 if (it) {
                     startActivity(Intent(this,RoomHomeActivity::class.java))
                     finish()
                 }
+                //방장이 매칭 버튼 눌렀을 경우
+                // startActivity(Intent(this,MatchingAnimationActivity::class.java).apply{addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)})
             }
         )
 
