@@ -134,7 +134,7 @@
                         android:singleLine="true"
                         android:hint="@string/hint_room_code"
                         android:onTextChanged="@{(text, start, before, count) -> viewModel.onTextChange(editType.ROOM_PW,text)}"
-                        android:inputType="numberPassword"
+                        android:inputType="textPassword"
                         android:imeOptions="actionDone"
                         android:enabled="@{viewModel.isEditable?true:false}"
                 />

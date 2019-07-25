@@ -147,7 +147,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/hint_room_code"
                             android:singleLine="true"
-                            android:inputType="numberPassword"
+                            android:inputType="textPassword"
                             android:imeOptions="actionDone"
                             android:onTextChanged="@{(text, start, before, count) -> viewModel.onTextChange(editType.ROOM_PW,text)}"
                     />
