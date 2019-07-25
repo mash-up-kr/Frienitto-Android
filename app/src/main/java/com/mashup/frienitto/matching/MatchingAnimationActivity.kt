@@ -1,10 +1,13 @@
 package com.mashup.frienitto.matching
 
+import android.animation.Animator
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat
+import com.airbnb.lottie.LottieAnimationView
+import com.airbnb.lottie.LottieDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -56,15 +59,33 @@ class MatchingAnimationActivity : AppCompatActivity(), AnkoLogger {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.mashup.frienitto.R.layout.activity_matching_animation)
-        mGlideRequestManager
-            .asGif()
-            .load(com.mashup.frienitto.R.drawable.frentto_ani)
-            .listener(listener).into(img_gif)
 
+        setUpAnimation(lottieAnimView)
+    }
+
+    private fun setUpAnimation(animationView: LottieAnimationView) {
+        animationView.imageAssetsFolder = "images/"
+        animationView.setAnimation("data.json")
+        animationView.repeatCount = 0
+        animationView.playAnimation()
+
+        animationView.addAnimatorListener(object : Animator.AnimatorListener {
+            override fun onAnimationStart(animation: Animator) {
+            }
+
+            override fun onAnimationEnd(animation: Animator) {
+                try {
+                    startActivity(Intent(this@MatchingAnimationActivity, RoomHomeActivity::class.java))
+                } catch (ex: Exception) {
+                    ex.toString()
+                }
+            }
+
+            override fun onAnimationCancel(animation: Animator) {
+            }
+
+            override fun onAnimationRepeat(animation: Animator) {
+            }
+        })
     }
 }
-
-
-
-
-
