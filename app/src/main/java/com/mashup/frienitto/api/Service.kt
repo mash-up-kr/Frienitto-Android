@@ -22,7 +22,7 @@ interface Service {
 
     @POST("api/v1/join/room")
     fun requestJoinRoom(@Header("X-Authorization") token: String,
-                        @Body body: RequestJoinRoom) : Single<ResponseCreateRoom>
+                        @Body body: RequestJoinRoom) : Single<ResponseRoomDetail>
 
     @GET("api/v1/room/{id}")
     fun requestRoomDetail(@Header("X-Authorization") token: String,

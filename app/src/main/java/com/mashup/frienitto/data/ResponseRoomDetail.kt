@@ -21,5 +21,8 @@ data class ResponseRoomDetailData(
     @SerializedName("expires_date")
     var expiresDate: String,
     @SerializedName("participants")
-    var participant: List<UserPreview>
+    var participant: List<UserPreview>,
+    @SerializedName("is_owner")
+    var isOwner: Boolean
+
 )

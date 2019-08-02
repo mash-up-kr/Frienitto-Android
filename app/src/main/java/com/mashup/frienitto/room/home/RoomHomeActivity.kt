@@ -2,24 +2,19 @@ package com.mashup.frienitto.room.home
 
 import android.os.Bundle
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mashup.frienitto.R
 import com.mashup.frienitto.base.BaseActivity
-import com.mashup.frienitto.data.ResponseRoom
 import com.mashup.frienitto.data.UserPreview
 import com.mashup.frienitto.databinding.ActivityRoomHomeBinding
 import org.koin.android.viewmodel.ext.android.viewModel
-import android.R.layout
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import com.mashup.frienitto.data.ResponseRoomDetailData
-import com.mashup.frienitto.repository.room.RoomRepository
 import com.mashup.frienitto.utils.setUserImage
 import kotlinx.android.synthetic.main.dialog_user_datail_layout.view.*
-import org.koin.android.ext.android.inject
 
 
 class RoomHomeActivity : BaseActivity<ActivityRoomHomeBinding>() {
@@ -54,6 +49,7 @@ class RoomHomeActivity : BaseActivity<ActivityRoomHomeBinding>() {
         val alertDialog = dialogBuilder.create()
         alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         alertDialog.show()
+        alertDialog.window?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
 
     private fun ovbserveItem() {

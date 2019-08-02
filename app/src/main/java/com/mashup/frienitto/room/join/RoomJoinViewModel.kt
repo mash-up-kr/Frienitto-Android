@@ -1,8 +1,10 @@
 package com.mashup.frienitto.room.join
 
+import android.app.Application
 import android.util.Log
 import com.mashup.frienitto.EditType
 import com.mashup.frienitto.R
+import com.mashup.frienitto.base.BaseAndroidViewModel
 import com.mashup.frienitto.base.BaseViewModel
 import com.mashup.frienitto.data.RequestJoinRoom
 import com.mashup.frienitto.repository.room.RoomRepository
@@ -12,7 +14,8 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 
-class RoomJoinViewModel(private val repository: RoomRepository) : BaseViewModel() {
+class RoomJoinViewModel(private val repository: RoomRepository, application: Application) : BaseAndroidViewModel(application) {
+    private val context = getApplication<Application>().applicationContext
 
     val moveActivity = PublishSubject.create<Boolean>()
     val roomNameSubject = BehaviorSubject.createDefault<String>("")
@@ -75,7 +78,7 @@ class RoomJoinViewModel(private val repository: RoomRepository) : BaseViewModel(
                     .subscribe({ response ->
                         Log.d("csh Success", response?.msg)
                         if (response.code == 200) {
-                            repository.roomId = response.data.id
+                            repository.setRoomId(context, response.data.id)
                             //Todo 매칭 유무 확인 후 값을 넣어야함
                             moveActivity.onNext(true)
                         }

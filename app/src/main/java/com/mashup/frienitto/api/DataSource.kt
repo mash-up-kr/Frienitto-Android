@@ -48,7 +48,7 @@ object DataSource {
         return service.requestCreateRoom(token, body)
     }
 
-    fun requestJoinRoom(token: String, body: RequestJoinRoom) : Single<ResponseCreateRoom> {
+    fun requestJoinRoom(token: String, body: RequestJoinRoom) : Single<ResponseRoomDetail> {
         return service.requestJoinRoom(token, body)
     }
 

@@ -19,9 +19,9 @@ val module: Module = module {
     viewModel { LoginViewModel(get()) }
     viewModel { SelectViewModel() }
     viewModel { RegisterViewModel() }
-    viewModel { RoomCreationViewModel(get()) }
+    viewModel { RoomCreationViewModel(get(), get()) }
     viewModel { RegisterFragmentViewModel() }
-    viewModel { RoomJoinViewModel(get()) }
+    viewModel { RoomJoinViewModel(get(), get()) }
     viewModel { RoomHomeViewModel(get()) }
     viewModel { RoomMyPageViewModel() }
     viewModel { RoomCloseViewModel() }

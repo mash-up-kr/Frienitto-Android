@@ -19,13 +19,13 @@ class RoomHomeViewModel(private val roomRepository: RoomRepository) : BaseViewMo
     init {
         UserRepository.getUserToken()?.let {
             addDisposable(
-                roomRepository.getRoomDetail(it.token, roomRepository.roomId.toString())
+                roomRepository.getRoomDetail(it.token, roomRepository.getRoomId().toString())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ response ->
                         roomData.value = response.data
                         data.value = response.data.participant
-                        Log.d("lolo", response.toString())
+                        isManager.set(response.data.isOwner)
                     }, { except ->
                     })
             )

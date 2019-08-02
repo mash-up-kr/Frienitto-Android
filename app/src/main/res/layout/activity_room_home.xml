@@ -46,6 +46,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
             android:backgroundTint="@color/orange"
             android:text="@string/start_matching"
             style="@style/FrenttoButton"
@@ -55,7 +57,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:layout_marginStart="14dp"
             android:layout_marginEnd="14dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="12dp"
             android:id="@+id/rv_room_home"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
