@@ -7,11 +7,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.mashup.frienitto.R
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 
 abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
     abstract val layoutResourceId: Int
     lateinit var viewDataBinding: T
-    protected val compositeDisposable = CompositeDisposable()
+    private val compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,6 +20,11 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         viewDataBinding = DataBindingUtil.inflate(layoutInflater, layoutResourceId, null, false)
     }
+
+    fun addDisposable(disposable: Disposable) {
+        compositeDisposable.add(disposable)
+    }
+
 
     override fun onDestroy() {
         compositeDisposable.dispose()

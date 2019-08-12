@@ -1,15 +1,15 @@
-package com.mashup.frienitto.room.mypage
+package com.mashup.frienitto.matching.home
 
 import android.os.Bundle
 import com.mashup.frienitto.R
 import com.mashup.frienitto.base.BaseActivity
-import com.mashup.frienitto.databinding.ActivityRoomMyPageBinding
+import com.mashup.frienitto.databinding.ActivityMatchingHomeBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class RoomMyPageActivity : BaseActivity<ActivityRoomMyPageBinding>() {
+class MatchingHomeActivity : BaseActivity<ActivityMatchingHomeBinding>() {
     override val layoutResourceId: Int
-        get() = R.layout.activity_room_my_page
-    private val viewModel: RoomMyPageViewModel by viewModel()
+        get() = R.layout.activity_matching_home
+    private val viewModel: MatchingHomeViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

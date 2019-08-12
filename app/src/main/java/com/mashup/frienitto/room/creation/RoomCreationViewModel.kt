@@ -1,5 +1,6 @@
 package com.mashup.frienitto.room.creation
 
+import android.app.Application
 import android.icu.text.UnicodeSet
 import android.util.Log
 import androidx.databinding.ObservableField
@@ -7,6 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.mashup.frienitto.EditType
+import com.mashup.frienitto.base.BaseAndroidViewModel
 import com.mashup.frienitto.base.BaseViewModel
 import com.mashup.frienitto.data.RequestCreateRoom
 import com.mashup.frienitto.data.UserPreview
@@ -20,8 +22,12 @@ import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
-class RoomCreationViewModel(val repository: RoomRepository) : BaseViewModel(), AnkoLogger {
+class RoomCreationViewModel(val repository: RoomRepository, application: Application) : BaseAndroidViewModel(application), AnkoLogger {
+    private val context = getApplication<Application>().applicationContext
 
     private val _submitName = MutableLiveData<String>()
     val submitName: LiveData<String>
@@ -30,6 +36,8 @@ class RoomCreationViewModel(val repository: RoomRepository) : BaseViewModel(), A
     private val _isEditable = MutableLiveData<Boolean>()
     val isEditable: LiveData<Boolean>
         get() = _isEditable
+
+    private var expiredDate : String =""
 
     val roomNameSubject = BehaviorSubject.createDefault<String>("")
     val roomCodeSubject = BehaviorSubject.createDefault<String>("")
@@ -77,22 +85,21 @@ class RoomCreationViewModel(val repository: RoomRepository) : BaseViewModel(), A
     }
 
     fun onSubmit() {
-        info { "tag1 onSubmit" }
-        //db
 
         Log.d("csh", "userToken:" + UserRepository.getUserToken())
         Log.d("csh", "name: " + roomNameSubject.value!! + "  code: " + roomCodeSubject.value!!)
         UserRepository.getUserToken()?.let {
             addDisposable(
-                repository.createRoom(it.token, RequestCreateRoom(roomNameSubject.value!!, roomCodeSubject.value!!, "2019-07-16"))
+                repository.createRoom(it.token, RequestCreateRoom(roomNameSubject.value!!, roomCodeSubject.value!!, expiredDate))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ response ->
                         Log.d("csh Success", response?.msg)
                         Log.d("csh", "RoomID:" + response.data.id.toString())
+                        repository.setRoomId(context, response.data.id)
                         isFinish.value = true
                     }, { except ->
-                        Log.d("csh Error", except.message?.toString())
+                        Log.d("csh Error", except.message)
                     })
             )
         }
@@ -100,6 +107,20 @@ class RoomCreationViewModel(val repository: RoomRepository) : BaseViewModel(), A
 
     fun onClickEndDate(endDateType: Int) {
         endDateSubject.onNext(endDateType)
+        val cal = Calendar.getInstance()
+        cal.time = Date()
+        val df: DateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
+        when(endDateType){
+            1-> {
+                cal.add(Calendar.DATE, 3)
+                expiredDate= df.format(cal.time).toString()
+            }
+            2->{
+                cal.add(Calendar.DATE,7)
+                expiredDate= df.format(cal.time).toString()
+            }
+
+        }
     }
 
     fun onDeleteContent(editType: EditType) {

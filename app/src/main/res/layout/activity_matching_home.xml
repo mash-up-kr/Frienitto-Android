@@ -7,7 +7,7 @@
         <import type="android.view.View"/>
         <variable
                 name="viewModel"
-                type="com.mashup.frienitto.room.mypage.RoomMyPageViewModel"/>
+                type="com.mashup.frienitto.matching.home.MatchingHomeViewModel"/>
     </data>
 
     <ScrollView
@@ -18,8 +18,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:gravity="center_horizontal"
-                tools:context=".room.home.RoomHomeActivity">
+                android:gravity="center_horizontal">
 
             <TextView
                     android:layout_width="wrap_content"

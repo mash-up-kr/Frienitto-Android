@@ -16,28 +16,47 @@
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true"
             tools:ignore="GoogleAppIndexingWarning">
+
+        <activity android:name=".matching.MatchingAnimationActivity">
+        </activity>
+
         <activity android:name=".room.close.RoomCloseActivity">
         </activity>
-        <activity android:name=".room.mypage.RoomMyPageActivity"/>
-        <activity android:name=".room.home.RoomHomeActivity"/>
-        <activity android:name=".room.entry.RoomEnteryActivity"/>
-        <activity android:name=".room.creation.RoomCreationActivity"/>
-        <activity android:name=".room.RoomActivity"/>
+
+        <activity android:name=".matching.home.MatchingHomeActivity"/>
+
+        <activity android:name=".room.home.RoomHomeActivity">
+        </activity>
+
+        <activity android:name=".room.join.RoomJoinActivity"
+                  android:windowSoftInputMode="adjustPan"
+        >
+        </activity>
+
+        <activity android:name=".room.creation.RoomCreationActivity"
+                  android:windowSoftInputMode="adjustPan"/>
+
+        <activity android:name=".room.RoomActivity">
+        </activity>
+
         <activity
                 android:name=".SplashActivity"
                 android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
         <activity android:name=".select.SelectActivity"/>
+
         <activity android:name=".home.HomeActivity"/>
+
         <activity
                 android:name=".register.RegisterActivity"
                 android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity android:name=".login.LoginActivity"/>
+
     </application>
 
 </manifest>

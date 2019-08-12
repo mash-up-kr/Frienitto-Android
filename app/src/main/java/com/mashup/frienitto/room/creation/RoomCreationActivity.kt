@@ -1,18 +1,19 @@
 package com.mashup.frienitto.room.creation
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
-import com.mashup.frienitto.EditType
 import com.mashup.frienitto.R
 import com.mashup.frienitto.base.BaseActivity
 import com.mashup.frienitto.databinding.ActivityCreationRoomBinding
+import com.mashup.frienitto.matching.MatchingAnimationActivity
+import com.mashup.frienitto.room.home.RoomHomeActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_creation_room.*
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class RoomCreationActivity(override val layoutResourceId: Int = R.layout.activity_creation_room) :
@@ -25,7 +26,7 @@ class RoomCreationActivity(override val layoutResourceId: Int = R.layout.activit
         setContentView(viewDataBinding.root)
         viewDataBinding.viewModel = viewModel
 
-        compositeDisposable.add(
+        addDisposable(
             viewModel.endDateSubject
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -46,7 +47,7 @@ class RoomCreationActivity(override val layoutResourceId: Int = R.layout.activit
                     }
                 }, {})
         )
-        compositeDisposable.add(
+        addDisposable(
             viewModel.submitBtnSubject
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({isActive->
@@ -61,7 +62,7 @@ class RoomCreationActivity(override val layoutResourceId: Int = R.layout.activit
                 }, {})
         )
 
-        compositeDisposable.add(
+        addDisposable(
             viewModel.roomNameSubject
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -71,7 +72,7 @@ class RoomCreationActivity(override val layoutResourceId: Int = R.layout.activit
                 },{})
         )
 
-        compositeDisposable.add(
+        addDisposable(
             viewModel.roomCodeSubject
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -82,7 +83,8 @@ class RoomCreationActivity(override val layoutResourceId: Int = R.layout.activit
         )
 
         viewModel.isFinish.observe(this, Observer {
-            finish()
+            startActivity(Intent(this, RoomHomeActivity::class.java))
+            finishAffinity()
         })
     }
 

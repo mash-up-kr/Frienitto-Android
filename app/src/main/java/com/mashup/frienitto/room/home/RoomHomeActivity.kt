@@ -2,24 +2,21 @@ package com.mashup.frienitto.room.home
 
 import android.os.Bundle
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mashup.frienitto.R
 import com.mashup.frienitto.base.BaseActivity
-import com.mashup.frienitto.data.ResponseRoom
 import com.mashup.frienitto.data.UserPreview
 import com.mashup.frienitto.databinding.ActivityRoomHomeBinding
 import org.koin.android.viewmodel.ext.android.viewModel
-import android.R.layout
+import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import com.mashup.frienitto.data.ResponseRoomDetailData
-import com.mashup.frienitto.repository.room.RoomRepository
+import com.mashup.frienitto.matching.MatchingAnimationActivity
 import com.mashup.frienitto.utils.setUserImage
 import kotlinx.android.synthetic.main.dialog_user_datail_layout.view.*
-import org.koin.android.ext.android.inject
 
 
 class RoomHomeActivity : BaseActivity<ActivityRoomHomeBinding>() {
@@ -34,7 +31,7 @@ class RoomHomeActivity : BaseActivity<ActivityRoomHomeBinding>() {
         viewDataBinding.viewModel = viewModel
 
         initView()
-        ovbserveItem()
+        observeItem()
     }
 
     private fun initView() {
@@ -45,7 +42,7 @@ class RoomHomeActivity : BaseActivity<ActivityRoomHomeBinding>() {
         }
     }
 
-    fun createDialog(imageCode: Int, name: String) {
+    private fun createDialog(imageCode: Int, name: String) {
         val dialogBuilder = AlertDialog.Builder(this@RoomHomeActivity)
         val layoutView = layoutInflater.inflate(R.layout.dialog_user_datail_layout, null)
         layoutView.iv_user_image.setUserImage(imageCode)
@@ -54,9 +51,10 @@ class RoomHomeActivity : BaseActivity<ActivityRoomHomeBinding>() {
         val alertDialog = dialogBuilder.create()
         alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         alertDialog.show()
+        alertDialog.window?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
 
-    private fun ovbserveItem() {
+    private fun observeItem() {
         viewModel.data.observe(this, Observer {
             (viewDataBinding.rvRoomHome.adapter as RoomUserListAdapter).updateListItems(it as ArrayList<UserPreview>)
         })
@@ -64,5 +62,15 @@ class RoomHomeActivity : BaseActivity<ActivityRoomHomeBinding>() {
         viewModel.roomData.observe(this, Observer {
             viewDataBinding.roomModel = it
         })
+
+        addDisposable(
+            viewModel.startMatching.subscribe {
+                //Todo 매칭 유무따라 보여지는 페이지 달라져야함
+                if (it) {
+                    startActivity(Intent(this, MatchingAnimationActivity::class.java).apply{addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)})
+                    finish()
+                }
+            }
+        )
     }
 }
