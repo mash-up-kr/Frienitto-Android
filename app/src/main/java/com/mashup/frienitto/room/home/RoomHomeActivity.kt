@@ -9,10 +9,12 @@ import com.mashup.frienitto.data.UserPreview
 import com.mashup.frienitto.databinding.ActivityRoomHomeBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import com.mashup.frienitto.matching.MatchingAnimationActivity
 import com.mashup.frienitto.utils.setUserImage
 import kotlinx.android.synthetic.main.dialog_user_datail_layout.view.*
 
@@ -29,7 +31,7 @@ class RoomHomeActivity : BaseActivity<ActivityRoomHomeBinding>() {
         viewDataBinding.viewModel = viewModel
 
         initView()
-        ovbserveItem()
+        observeItem()
     }
 
     private fun initView() {
@@ -40,7 +42,7 @@ class RoomHomeActivity : BaseActivity<ActivityRoomHomeBinding>() {
         }
     }
 
-    fun createDialog(imageCode: Int, name: String) {
+    private fun createDialog(imageCode: Int, name: String) {
         val dialogBuilder = AlertDialog.Builder(this@RoomHomeActivity)
         val layoutView = layoutInflater.inflate(R.layout.dialog_user_datail_layout, null)
         layoutView.iv_user_image.setUserImage(imageCode)
@@ -52,7 +54,7 @@ class RoomHomeActivity : BaseActivity<ActivityRoomHomeBinding>() {
         alertDialog.window?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
 
-    private fun ovbserveItem() {
+    private fun observeItem() {
         viewModel.data.observe(this, Observer {
             (viewDataBinding.rvRoomHome.adapter as RoomUserListAdapter).updateListItems(it as ArrayList<UserPreview>)
         })
@@ -60,5 +62,15 @@ class RoomHomeActivity : BaseActivity<ActivityRoomHomeBinding>() {
         viewModel.roomData.observe(this, Observer {
             viewDataBinding.roomModel = it
         })
+
+        addDisposable(
+            viewModel.startMatching.subscribe {
+                //Todo 매칭 유무따라 보여지는 페이지 달라져야함
+                if (it) {
+                    startActivity(Intent(this, MatchingAnimationActivity::class.java).apply{addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)})
+                    finish()
+                }
+            }
+        )
     }
 }

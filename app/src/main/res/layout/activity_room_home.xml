@@ -50,6 +50,7 @@
             android:layout_marginBottom="24dp"
             android:backgroundTint="@color/orange"
             android:text="@string/start_matching"
+            android:onClick="@{(view) -> viewModel.startMatching()}"
             style="@style/FrenttoButton"
             android:background="@drawable/round"
             android:visibility="@{viewModel.isManager ? View.VISIBLE : View.GONE, default=gone }" />
