@@ -3,6 +3,7 @@ package com.mashup.frienitto.room.join
 import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
+import androidx.lifecycle.Observer
 import com.mashup.frienitto.R
 import com.mashup.frienitto.base.BaseActivity
 import com.mashup.frienitto.databinding.ActivityRoomJoinBinding
@@ -60,6 +61,11 @@ class RoomJoinActivity(override val layoutResourceId: Int = R.layout.activity_ro
                     }
                 },{})
         )
+
+        viewModel.showLoadingDialog.observe(this, Observer {
+            if(it) showProgress()
+            else dismissProgress()
+        })
     }
 
     private fun clearEditText(edit: EditText){

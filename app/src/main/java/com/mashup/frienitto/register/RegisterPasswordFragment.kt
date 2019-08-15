@@ -31,5 +31,10 @@ class RegisterPasswordFragment : BaseFragment<FragmentRegisterPasswordBinding>()
         viewModel.registerStepCnt.observe(this, Observer {
             (activity as RegisterActivity).setCurrentPage(it)
         })
+
+        viewModel.showLoadingDialog.observe(this, Observer {
+            if(it) (activity as RegisterActivity).showProgress()
+            else (activity as RegisterActivity).dismissProgress()
+        })
     }
 }

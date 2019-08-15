@@ -50,6 +50,7 @@ class LoginViewModel(application: Application) : BaseAndroidViewModel(applicatio
     }
 
     fun onClickLoginButton(view: View) {
+        showLoadingDialog()
         addDisposable(
                 UserRepository.signIn(RequestSignIn(email.value!!, password.value!!))
                         .subscribeOn(Schedulers.io())
@@ -58,8 +59,10 @@ class LoginViewModel(application: Application) : BaseAndroidViewModel(applicatio
                             Log.d("csh Success", response.msg)
                             UserRepository.setUserToken(context, response.data)
                             isLogin.value = true
+                            dismissLoadingDialog()
                         }, { except ->
                             Log.d("csh Error", except.message.toString())
+                            dismissLoadingDialog()
                         })
         )
     }

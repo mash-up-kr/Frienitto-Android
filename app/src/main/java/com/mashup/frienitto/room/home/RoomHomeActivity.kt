@@ -55,8 +55,10 @@ class RoomHomeActivity : BaseActivity<ActivityRoomHomeBinding>() {
     }
 
     private fun observeItem() {
+        showProgress()
         viewModel.data.observe(this, Observer {
             (viewDataBinding.rvRoomHome.adapter as RoomUserListAdapter).updateListItems(it as ArrayList<UserPreview>)
+            dismissProgress()
         })
 
         viewModel.roomData.observe(this, Observer {

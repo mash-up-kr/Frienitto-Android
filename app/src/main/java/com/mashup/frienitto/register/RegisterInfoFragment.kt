@@ -31,5 +31,10 @@ class RegisterInfoFragment : BaseFragment<FragmentRegisterInfoBinding>() {
         viewModel.signinComplete.observe(this, Observer {
             activity?.finish()
         })
+
+        viewModel.showLoadingDialog.observe(this, Observer {
+            if(it) (activity as RegisterActivity).showProgress()
+            else (activity as RegisterActivity).dismissProgress()
+        })
     }
 }

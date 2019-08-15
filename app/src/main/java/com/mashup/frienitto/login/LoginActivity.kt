@@ -31,5 +31,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             startActivity(intent)
             finishAffinity()
         })
+
+        viewModel.showLoadingDialog.observe(this, Observer {
+            if(it) showProgress()
+            else dismissProgress()
+        })
     }
 }

@@ -67,6 +67,7 @@ class RoomJoinViewModel(private val repository: RoomRepository, application: App
 //                    Log.d("csh Error", except.message)
 //                    commonError.onNext(R.string.error_unkown)
 //                })
+        showLoadingDialog()
         UserRepository.getUserToken()?.let {
             addDisposable(
                 repository.getJoinRoom(
@@ -77,6 +78,7 @@ class RoomJoinViewModel(private val repository: RoomRepository, application: App
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ response ->
                         Log.d("csh Success", response?.msg)
+                        dismissLoadingDialog()
                         if (response.code == 200) {
                             repository.setRoomId(context, response.data.id)
                             //Todo 매칭 유무 확인 후 값을 넣어야함
@@ -86,6 +88,7 @@ class RoomJoinViewModel(private val repository: RoomRepository, application: App
                             commonError.onNext(R.string.fail_join_room)
                     }, { except ->
                         Log.d("csh Error", except.message)
+                        dismissLoadingDialog()
                         commonError.onNext(R.string.error_unkown)
                     })
             )
