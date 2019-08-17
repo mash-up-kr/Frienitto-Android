@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="@{item.userName}"
-                android:textColor="#646464"
+                android:textColor="@color/gray_darker"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -51,7 +51,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="12dp"
                 android:text="@{item.description}"
-                android:textColor="#afafaf"
+                android:textColor="@color/gray_lighter"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 

@@ -17,7 +17,10 @@ import java.util.*
 
 class MatchingHomeViewModel(private val roomRepository: RoomRepository) : BaseViewModel() {
     val isManager = ObservableField<Boolean>(false)
-    val remainText = ObservableField<String>()
+    val dayText = ObservableField<String>()
+    val hourText = ObservableField<String>()
+    val minText = ObservableField<String>()
+    val secText = ObservableField<String>()
     val commonError = PublishSubject.create<Boolean>()
     val missionData = MutableLiveData<Mission>()
 
@@ -30,12 +33,12 @@ class MatchingHomeViewModel(private val roomRepository: RoomRepository) : BaseVi
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ response ->
                         val f = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.getDefault())
-                        val d1 = f.parse("2019-08-20-00-00-00")
+                        val d1 = f.parse("2019-08-22-00-00-00")
                         var now = System.currentTimeMillis()
                         var nowTime = f.format(Date(now))
                         var d2 = f.parse(nowTime)
                         var diff = d1.time - d2.time
-                        remainText.set(convertSecondsToHMmSs(diff / 1000))
+                        convertSecondsToHMmSs(diff / 1000)
                         addDisposable(
                             Observable.interval(1, TimeUnit.SECONDS)
                                 .map { o ->
@@ -43,9 +46,8 @@ class MatchingHomeViewModel(private val roomRepository: RoomRepository) : BaseVi
                                     nowTime = f.format(Date(now))
                                     d2 = f.parse(nowTime)
                                     diff = d1.time - d2.time
-                                    convertSecondsToHMmSs(diff / 1000)
                                 }
-                                .subscribe { remainText.set(it) })
+                                .subscribe { convertSecondsToHMmSs(diff / 1000) })
                         missionData.value = response.data.missions[0]
                         dissmissLoadingDialog()
                     }, { except ->
@@ -56,11 +58,14 @@ class MatchingHomeViewModel(private val roomRepository: RoomRepository) : BaseVi
         }
     }
 
-    private fun convertSecondsToHMmSs(seconds: Long): String {
+    private fun convertSecondsToHMmSs(seconds: Long){
         val s = seconds % 60
         val m = seconds / 60 % 60
         val h = seconds / (60 * 60) % 24
         val d = seconds / (60 * 60 * 24)
-        return String.format("%d : %d : %02d : %02d", d, h, m, s)
+        dayText.set(d.toString())
+        hourText.set(h.toString())
+        minText.set(String.format("%02d",m))
+        secText.set(String.format("%02d",s))
     }
 }
