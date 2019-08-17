@@ -1,12 +1,15 @@
 package com.mashup.frienitto.matching.home
 
 import androidx.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
 import com.mashup.frienitto.base.BaseViewModel
+import com.mashup.frienitto.data.Mission
 import com.mashup.frienitto.repository.room.RoomRepository
 import com.mashup.frienitto.repository.user.UserRepository
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.PublishSubject
 import java.util.concurrent.TimeUnit
 import java.text.SimpleDateFormat
 import java.util.*
@@ -15,8 +18,11 @@ import java.util.*
 class MatchingHomeViewModel(private val roomRepository: RoomRepository) : BaseViewModel() {
     val isManager = ObservableField<Boolean>(false)
     val remainText = ObservableField<String>()
+    val commonError = PublishSubject.create<Boolean>()
+    val missionData = MutableLiveData<Mission>()
 
     init {
+        showLoadingDialog()
         UserRepository.getUserToken()?.let {
             addDisposable(
                 roomRepository.getMatchingInfo(it.token, roomRepository.getRoomId().toString())
@@ -24,7 +30,7 @@ class MatchingHomeViewModel(private val roomRepository: RoomRepository) : BaseVi
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ response ->
                         val f = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.getDefault())
-                        val d1 = f.parse("2019-08-10-00-00-00")
+                        val d1 = f.parse("2019-08-20-00-00-00")
                         var now = System.currentTimeMillis()
                         var nowTime = f.format(Date(now))
                         var d2 = f.parse(nowTime)
@@ -40,7 +46,11 @@ class MatchingHomeViewModel(private val roomRepository: RoomRepository) : BaseVi
                                     convertSecondsToHMmSs(diff / 1000)
                                 }
                                 .subscribe { remainText.set(it) })
+                        missionData.value = response.data.missions[0]
+                        dissmissLoadingDialog()
                     }, { except ->
+                        dissmissLoadingDialog()
+                        commonError.onNext(true)
                     })
             )
         }

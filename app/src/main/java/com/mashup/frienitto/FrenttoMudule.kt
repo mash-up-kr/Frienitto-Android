@@ -35,7 +35,7 @@ val module: Module = module {
     viewModel { MatchingHomeViewModel(get()) }
     viewModel { RoomCloseViewModel() }
     single { RoomRepository() }
-    single { (context: Context) ->
+    factory { (context: Context) ->
         AppCompatDialog(context)
             .apply {
                 setCancelable(false)

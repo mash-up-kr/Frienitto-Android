@@ -18,32 +18,41 @@ class RoomHomeViewModel(private val roomRepository: RoomRepository) : BaseViewMo
     val roomData = MutableLiveData<ResponseRoomDetailData>()
     val isManager = ObservableField<Boolean>(false)
     val startMatching  = PublishSubject.create<Boolean>()
+    val commonError = PublishSubject.create<Boolean>()
 
     init {
+        showLoadingDialog()
         UserRepository.getUserToken()?.let {
             addDisposable(
                 roomRepository.getRoomDetail(it.token, roomRepository.getRoomId().toString())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ response ->
+                        dissmissLoadingDialog()
                         roomData.value = response.data
                         data.value = response.data.participant
                         isManager.set(response.data.isOwner)
                     }, { except ->
+                        dissmissLoadingDialog()
+                        commonError.onNext(true)
                     })
             )
         }
     }
 
     fun startMatching() {
+        showLoadingDialog()
         UserRepository.getUserToken()?.let {
             addDisposable(
                 roomRepository.matchingStart(it.token, RequestMatchingStart(roomRepository.getRoomId()!!, 0, "ROOM"))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
+                        dissmissLoadingDialog()
                         startMatching.onNext(true)
                     }, {
+                        dissmissLoadingDialog()
+                        commonError.onNext(true)
                     })
             )
         }

@@ -21,16 +21,27 @@ data class ResponseMatchingStartData(
 )
 
 data class Mission(
-    @SerializedName("id")
-    var id: Int,
-    @SerializedName("source_id")
-    var sourceID: Int,
-    @SerializedName("target_id")
-    var targetID: Int,
     @SerializedName("description")
     var description: String,
+    @SerializedName("from")
+    var fromUserInfo: MatchingUserInfo,
+    @SerializedName("id")
+    var id: Int,
     @SerializedName("status")
     var status: String,
+    @SerializedName("to")
+    var toUserInfo: MatchingUserInfo,
     @SerializedName("type")
     var type: String
+)
+
+data class MatchingUserInfo(
+    @SerializedName("description")
+    var description: String,
+    @SerializedName("id")
+    var id: Int,
+    @SerializedName("image_code")
+    var imageCode: Int,
+    @SerializedName("username")
+    var username: String
 )

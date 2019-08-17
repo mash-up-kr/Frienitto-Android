@@ -88,17 +88,20 @@ class RoomCreationViewModel(val repository: RoomRepository, application: Applica
 
         Log.d("csh", "userToken:" + UserRepository.getUserToken())
         Log.d("csh", "name: " + roomNameSubject.value!! + "  code: " + roomCodeSubject.value!!)
+        showLoadingDialog()
         UserRepository.getUserToken()?.let {
             addDisposable(
                 repository.createRoom(it.token, RequestCreateRoom(roomNameSubject.value!!, roomCodeSubject.value!!, expiredDate))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ response ->
+                        dismissLoadingDialog()
                         Log.d("csh Success", response?.msg)
                         Log.d("csh", "RoomID:" + response.data.id.toString())
                         repository.setRoomId(context, response.data.id)
                         isFinish.value = true
                     }, { except ->
+                        dismissLoadingDialog()
                         Log.d("csh Error", except.message)
                     })
             )

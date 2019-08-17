@@ -8,6 +8,9 @@
         <variable
                 name="viewModel"
                 type="com.mashup.frienitto.matching.home.MatchingHomeViewModel"/>
+        <variable
+                name="missionModel"
+                type="com.mashup.frienitto.data.Mission"/>
     </data>
 
     <ScrollView
@@ -43,9 +46,11 @@
                         android:layout_marginBottom="12dp"
                         android:layout_marginTop="32dp"
                         android:layout_width="104dp"
-                        android:layout_height="104dp"/>
+                        android:layout_height="104dp"
+                        app:userImage="@{missionModel.toUserInfo.imageCode}"/>
 
                 <TextView
+                        android:text="@{missionModel.toUserInfo.username}"
                         android:textColor="#646464"
                         android:textSize="18sp"
                         android:layout_marginBottom="4dp"
@@ -53,6 +58,7 @@
                         android:layout_height="wrap_content"/>
 
                 <TextView
+                        android:text="@{missionModel.toUserInfo.description}"
                         android:layout_marginBottom="28dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
