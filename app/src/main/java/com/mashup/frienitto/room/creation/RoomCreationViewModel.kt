@@ -20,7 +20,7 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-class RoomCreationViewModel(val repository: RoomRepository, application: Application) : BaseAndroidViewModel(application), AnkoLogger {
+class RoomCreationViewModel(private val userRepository: UserRepository, private val repository: RoomRepository, application: Application) : BaseAndroidViewModel(application), AnkoLogger {
     private val context = getApplication<Application>().applicationContext
 
     private val _submitName = MutableLiveData<String>()
@@ -80,10 +80,10 @@ class RoomCreationViewModel(val repository: RoomRepository, application: Applica
 
     fun onSubmit() {
 
-        Log.d("csh", "userToken:" + UserRepository.getUserInfo())
+        Log.d("csh", "userToken:" + userRepository.getUserInfo())
         Log.d("csh", "name: " + roomNameSubject.value!! + "  code: " + roomCodeSubject.value!!)
         showLoadingDialog()
-        UserRepository.getUserInfo()?.let {
+        userRepository.getUserInfo()?.let {
             addDisposable(
                 repository.createRoom(it.token, RequestCreateRoom(roomNameSubject.value!!, roomCodeSubject.value!!, expiredDate))
                     .subscribeOn(Schedulers.io())

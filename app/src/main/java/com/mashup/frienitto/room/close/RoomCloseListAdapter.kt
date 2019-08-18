@@ -31,7 +31,7 @@ class RoomCloseListAdapter(private val listener: (item: UserPreview) -> Unit) :
 
     //기록된 활동들에 대한 뷰홀더
     class MovieItemViewHolder(
-        var binding: ListItemMatchFriendBinding,
+        val binding: ListItemMatchFriendBinding,
         val listener: (item: UserPreview) -> Unit
     ) : RecyclerView.ViewHolder(binding.root)
 

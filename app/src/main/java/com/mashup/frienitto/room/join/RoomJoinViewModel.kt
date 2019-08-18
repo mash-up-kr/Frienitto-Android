@@ -13,7 +13,11 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 
-class RoomJoinViewModel(private val repository: RoomRepository, application: Application) : BaseAndroidViewModel(application) {
+class RoomJoinViewModel(
+    private val userRepository: UserRepository,
+    private val repository: RoomRepository,
+    application: Application
+) : BaseAndroidViewModel(application) {
     private val context = getApplication<Application>().applicationContext
 
     val moveActivity = PublishSubject.create<Boolean>()
@@ -67,7 +71,7 @@ class RoomJoinViewModel(private val repository: RoomRepository, application: App
 //                    commonError.onNext(R.string.error_unkown)
 //                })
         showLoadingDialog()
-        UserRepository.getUserInfo()?.let {
+        userRepository.getUserInfo()?.let {
             addDisposable(
                 repository.getJoinRoom(
                     it.token,
@@ -82,8 +86,7 @@ class RoomJoinViewModel(private val repository: RoomRepository, application: App
                             repository.setRoomId(context, response.data.id)
                             //Todo 매칭 유무 확인 후 값을 넣어야함
                             moveActivity.onNext(true)
-                        }
-                        else
+                        } else
                             commonError.onNext(R.string.fail_join_room)
                     }, { except ->
                         Log.d("csh Error", except.message)

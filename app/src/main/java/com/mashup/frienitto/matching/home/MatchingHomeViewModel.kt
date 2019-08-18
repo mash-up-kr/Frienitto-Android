@@ -15,7 +15,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class MatchingHomeViewModel(private val roomRepository: RoomRepository) : BaseViewModel() {
+class MatchingHomeViewModel(private val userRepository: UserRepository, private val roomRepository: RoomRepository) :
+    BaseViewModel() {
     val isManager = ObservableField<Boolean>(false)
     val dayText = ObservableField<String>()
     val hourText = ObservableField<String>()
@@ -26,7 +27,7 @@ class MatchingHomeViewModel(private val roomRepository: RoomRepository) : BaseVi
 
     init {
         showLoadingDialog()
-        UserRepository.getUserInfo()?.let {
+        userRepository.getUserInfo()?.let {
             addDisposable(
                 roomRepository.getMatchingInfo(it.token, roomRepository.getRoomId().toString())
                     .subscribeOn(Schedulers.io())
@@ -58,14 +59,14 @@ class MatchingHomeViewModel(private val roomRepository: RoomRepository) : BaseVi
         }
     }
 
-    private fun convertSecondsToHMmSs(seconds: Long){
+    private fun convertSecondsToHMmSs(seconds: Long) {
         val s = seconds % 60
         val m = seconds / 60 % 60
         val h = seconds / (60 * 60) % 24
         val d = seconds / (60 * 60 * 24)
         dayText.set(d.toString())
         hourText.set(h.toString())
-        minText.set(String.format("%02d",m))
-        secText.set(String.format("%02d",s))
+        minText.set(String.format("%02d", m))
+        secText.set(String.format("%02d", s))
     }
 }

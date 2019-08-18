@@ -12,6 +12,7 @@ import com.mashup.frienitto.matching.home.MatchingHomeViewModel
 import com.mashup.frienitto.register.RegisterFragmentViewModel
 import com.mashup.frienitto.register.RegisterViewModel
 import com.mashup.frienitto.repository.room.RoomRepository
+import com.mashup.frienitto.repository.user.UserRepository
 import com.mashup.frienitto.room.list.RoomListViewModel
 import com.mashup.frienitto.room.close.RoomCloseViewModel
 import com.mashup.frienitto.room.creation.RoomCreationViewModel
@@ -26,17 +27,18 @@ import org.koin.dsl.module
 import org.koin.android.viewmodel.dsl.viewModel
 
 val module: Module = module {
-    viewModel { LoginViewModel(get()) }
+    viewModel { LoginViewModel(get(),get()) }
     viewModel { SelectViewModel() }
     viewModel { RegisterViewModel() }
-    viewModel { RoomCreationViewModel(get(), get()) }
-    viewModel { RegisterFragmentViewModel() }
-    viewModel { RoomJoinViewModel(get(), get()) }
-    viewModel { RoomHomeViewModel(get()) }
-    viewModel { MatchingHomeViewModel(get()) }
+    viewModel { RoomCreationViewModel(get(), get(),get()) }
+    viewModel { RegisterFragmentViewModel(get()) }
+    viewModel { RoomJoinViewModel(get(), get(),get()) }
+    viewModel { RoomHomeViewModel(get(),get()) }
+    viewModel { MatchingHomeViewModel(get(),get()) }
     viewModel { RoomCloseViewModel() }
     viewModel { RoomListViewModel(get(),get()) }
     single { RoomRepository() }
+    single { UserRepository()}
     factory { (context: Context) ->
         AppCompatDialog(context)
             .apply {

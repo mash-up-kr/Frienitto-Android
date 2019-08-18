@@ -7,9 +7,8 @@ import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import com.google.gson.Gson
 
-
-object UserRepository {
-    private const val LOGIN_TOKEN_KEY = "logintoken"
+private const val LOGIN_TOKEN_KEY = "logintoken"
+class UserRepository {
     private var emailToken: String = ""
     private var userInfo: UserInfo? = null
 

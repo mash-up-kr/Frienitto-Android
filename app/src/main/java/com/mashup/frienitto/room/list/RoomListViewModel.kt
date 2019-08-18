@@ -6,11 +6,15 @@ import com.mashup.frienitto.base.BaseViewModel
 import com.mashup.frienitto.data.RoomInfo
 import com.mashup.frienitto.repository.room.RoomRepository
 import com.mashup.frienitto.repository.user.UserRepository
+import io.reactivex.schedulers.Schedulers
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.debug
+import org.jetbrains.anko.info
 
 class RoomListViewModel(
     private val userRepository: UserRepository,
     private val roomRepository: RoomRepository
-) : BaseViewModel() {
+) : BaseViewModel(), AnkoLogger {
     private val _username = MutableLiveData<String>()
     val username: LiveData<String>
         get() = _username
@@ -26,23 +30,29 @@ class RoomListViewModel(
     init {
 
         userRepository.getUserInfo()?.let {
+            info { "tag1 $it" }
             _username.postValue(it.user.username)
             _email.postValue(it.user.email)
         }
 
+        info{"tag1 tokein ${userRepository.getUserInfo()?.token}"}
         addDisposable(
-            roomRepository.getRoomList(userRepository.getTokenizer())
+            roomRepository.getRoomList(userRepository.getUserInfo()?.token!!)
+                .subscribeOn(Schedulers.io())
                 .subscribe({
-                    it.data?.let {
+                    info { "tag1 what??? $it" }
+                    it.data.let {
+                        info { "tag1 $it" }
                         _roomList.postValue(it)
                     }
                 }, {
-                    it.message
+                    info { "tag1 error ${it.printStackTrace()}" }
+                    info { "tag1 error ${it.message}" }
                 })
         )
     }
 
-    fun onCardClick(roomId:Int){
+    fun onCardClick(roomId: Int) {
 
     }
 

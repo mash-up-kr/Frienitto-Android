@@ -15,6 +15,7 @@ import com.bumptech.glide.load.resource.gif.GifDrawable
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.mashup.frienitto.room.home.RoomHomeActivity
+import com.mashup.frienitto.room.list.RoomListActivity
 import kotlinx.android.synthetic.main.activity_matching_animation.*
 import org.jetbrains.anko.AnkoLogger
 
@@ -45,7 +46,7 @@ class MatchingAnimationActivity : AppCompatActivity(), AnkoLogger {
                 resource.setLoopCount(1)
                 val callback = object : Animatable2Compat.AnimationCallback() {
                     override fun onAnimationEnd(drawable: Drawable?) {
-                        startActivity(Intent(this@MatchingAnimationActivity, RoomHomeActivity::class.java))
+                        startActivity(Intent(this@MatchingAnimationActivity, RoomListActivity::class.java))
                         super.onAnimationEnd(drawable)
                     }
                 }
@@ -75,7 +76,7 @@ class MatchingAnimationActivity : AppCompatActivity(), AnkoLogger {
 
             override fun onAnimationEnd(animation: Animator) {
                 try {
-                    startActivity(Intent(this@MatchingAnimationActivity, RoomHomeActivity::class.java))
+                    startActivity(Intent(this@MatchingAnimationActivity, RoomListActivity::class.java))
                 } catch (ex: Exception) {
                     ex.toString()
                 }
