@@ -5,6 +5,7 @@ import com.mashup.frienitto.matching.home.MatchingHomeViewModel
 import com.mashup.frienitto.register.RegisterFragmentViewModel
 import com.mashup.frienitto.register.RegisterViewModel
 import com.mashup.frienitto.repository.room.RoomRepository
+import com.mashup.frienitto.room.list.RoomListViewModel
 import com.mashup.frienitto.room.close.RoomCloseViewModel
 import com.mashup.frienitto.room.creation.RoomCreationViewModel
 import com.mashup.frienitto.room.join.RoomJoinViewModel
@@ -25,5 +26,6 @@ val module: Module = module {
     viewModel { RoomHomeViewModel(get()) }
     viewModel { MatchingHomeViewModel(get()) }
     viewModel { RoomCloseViewModel() }
+    viewModel { RoomListViewModel() }
     single { RoomRepository() }
 }
