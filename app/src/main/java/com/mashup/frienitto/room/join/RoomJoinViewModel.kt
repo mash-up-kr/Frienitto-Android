@@ -5,7 +5,6 @@ import android.util.Log
 import com.mashup.frienitto.EditType
 import com.mashup.frienitto.R
 import com.mashup.frienitto.base.BaseAndroidViewModel
-import com.mashup.frienitto.base.BaseViewModel
 import com.mashup.frienitto.data.RequestJoinRoom
 import com.mashup.frienitto.repository.room.RoomRepository
 import com.mashup.frienitto.repository.user.UserRepository
@@ -67,7 +66,8 @@ class RoomJoinViewModel(private val repository: RoomRepository, application: App
 //                    Log.d("csh Error", except.message)
 //                    commonError.onNext(R.string.error_unkown)
 //                })
-        UserRepository.getUserToken()?.let {
+        showLoadingDialog()
+        UserRepository.getUserInfo()?.let {
             addDisposable(
                 repository.getJoinRoom(
                     it.token,
@@ -77,6 +77,7 @@ class RoomJoinViewModel(private val repository: RoomRepository, application: App
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ response ->
                         Log.d("csh Success", response?.msg)
+                        dismissLoadingDialog()
                         if (response.code == 200) {
                             repository.setRoomId(context, response.data.id)
                             //Todo 매칭 유무 확인 후 값을 넣어야함
@@ -86,6 +87,7 @@ class RoomJoinViewModel(private val repository: RoomRepository, application: App
                             commonError.onNext(R.string.fail_join_room)
                     }, { except ->
                         Log.d("csh Error", except.message)
+                        dismissLoadingDialog()
                         commonError.onNext(R.string.error_unkown)
                     })
             )

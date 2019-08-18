@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.mashup.frienitto.data.Token
+import com.mashup.frienitto.data.UserInfo
 import com.mashup.frienitto.home.HomeActivity
 import com.mashup.frienitto.repository.room.RoomRepository
 import com.mashup.frienitto.repository.user.UserRepository
@@ -20,7 +20,7 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (UserRepository.getUserToken(this) == null) {
+        if (UserRepository.getUserInfo(this) == null) {
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
         } else {
@@ -29,7 +29,7 @@ class SplashActivity : AppCompatActivity() {
             val strDate = dateFormat.format(date)
             Log.d("loloss", "RoomHomeActivity ${roomRepository.getRoomId(this)}")
             when {
-                (UserRepository.getUserToken(this) as Token).tokenExpiresDate <= strDate -> {
+                (UserRepository.getUserInfo(this) as UserInfo).tokenExpiresDate <= strDate -> {
                     val intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
                 }

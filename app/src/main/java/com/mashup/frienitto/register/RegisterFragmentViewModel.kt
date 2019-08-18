@@ -52,6 +52,7 @@ class RegisterFragmentViewModel() : BaseViewModel() {
     }
 
     private fun confirmCode() {
+        showLoadingDialog()
         addDisposable(
                 UserRepository.requestAuth(RequestAuth(email.value.toString(), "EMAIL", code))
                         .subscribeOn(Schedulers.io())
@@ -60,13 +61,16 @@ class RegisterFragmentViewModel() : BaseViewModel() {
                             Log.d("csh Success", response.toString())
                             UserRepository.setTokenizer(response.data.registerToken)
                             registerStepCnt.value = 2
+                            dissmissLoadingDialog()
                         }, { except ->
                             Log.d("csh Error", except.message)
+                            dissmissLoadingDialog()
                         })
         )
     }
 
     fun sendConfirmEmail() {
+        showLoadingDialog()
         addDisposable(
                 UserRepository.requestEmail(RequestEmailCode(email.value.toString(), "EMAIL"))
                         .subscribeOn(Schedulers.io())
@@ -74,13 +78,16 @@ class RegisterFragmentViewModel() : BaseViewModel() {
                         .subscribe({ response ->
                             Log.d("csh Success", response?.msg)
                             registerStepCnt.value = 1
+                            dissmissLoadingDialog()
                         }, { except ->
                             Log.d("csh Error", except.message?.toString())
+                            dissmissLoadingDialog()
                         })
         )
     }
 
     fun signIn() {
+        showLoadingDialog()
         addDisposable(
                 UserRepository.signUp(UserRepository.getTokenizer(), RequestSignUp(name, info, Random.nextInt(5) + 1, email.value.toString(), password))
                         .subscribeOn(Schedulers.io())
@@ -88,8 +95,10 @@ class RegisterFragmentViewModel() : BaseViewModel() {
                         .subscribe({ response ->
                             Log.d("csh Success", response.msg)
                             signinComplete.value = true
+                            dissmissLoadingDialog()
                         }, { except ->
                             Log.d("csh Error", except.message?.toString())
+                            dissmissLoadingDialog()
                         })
         )
     }

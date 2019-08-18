@@ -86,6 +86,11 @@ class RoomCreationActivity(override val layoutResourceId: Int = R.layout.activit
             startActivity(Intent(this, RoomHomeActivity::class.java))
             finishAffinity()
         })
+
+        viewModel.showLoadingDialog.observe(this, Observer {
+            if(it) showProgress()
+            else dismissProgress()
+        })
     }
 
 

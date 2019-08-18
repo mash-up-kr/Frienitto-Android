@@ -40,10 +40,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="32dp"
                 android:text="@{item.userName}"
-                android:textColor="#646464"
-                android:textSize="18sp" />
+                android:textColor="@color/gray_darker"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="12dp"
+                android:text="@{item.description}"
+                android:textColor="@color/gray_lighter"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

@@ -6,7 +6,6 @@ import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.mashup.frienitto.base.BaseAndroidViewModel
-import com.mashup.frienitto.base.BaseViewModel
 import com.mashup.frienitto.data.RequestSignIn
 import com.mashup.frienitto.repository.user.UserRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -50,16 +49,19 @@ class LoginViewModel(application: Application) : BaseAndroidViewModel(applicatio
     }
 
     fun onClickLoginButton(view: View) {
+        showLoadingDialog()
         addDisposable(
                 UserRepository.signIn(RequestSignIn(email.value!!, password.value!!))
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({ response ->
                             Log.d("csh Success", response.msg)
-                            UserRepository.setUserToken(context, response.data)
+                            UserRepository.setUserInfo(context, response.data)
                             isLogin.value = true
+                            dismissLoadingDialog()
                         }, { except ->
                             Log.d("csh Error", except.message.toString())
+                            dismissLoadingDialog()
                         })
         )
     }
