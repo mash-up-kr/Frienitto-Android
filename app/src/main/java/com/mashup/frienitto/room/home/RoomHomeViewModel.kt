@@ -1,6 +1,5 @@
 package com.mashup.frienitto.room.home
 
-import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.mashup.frienitto.base.BaseViewModel
@@ -22,7 +21,7 @@ class RoomHomeViewModel(private val roomRepository: RoomRepository) : BaseViewMo
 
     init {
         showLoadingDialog()
-        UserRepository.getUserToken()?.let {
+        UserRepository.getUserInfo()?.let {
             addDisposable(
                 roomRepository.getRoomDetail(it.token, roomRepository.getRoomId().toString())
                     .subscribeOn(Schedulers.io())
@@ -42,7 +41,7 @@ class RoomHomeViewModel(private val roomRepository: RoomRepository) : BaseViewMo
 
     fun startMatching() {
         showLoadingDialog()
-        UserRepository.getUserToken()?.let {
+        UserRepository.getUserInfo()?.let {
             addDisposable(
                 roomRepository.matchingStart(it.token, RequestMatchingStart(roomRepository.getRoomId()!!, 0, "ROOM"))
                     .subscribeOn(Schedulers.io())

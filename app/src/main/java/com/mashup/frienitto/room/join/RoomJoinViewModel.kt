@@ -5,7 +5,6 @@ import android.util.Log
 import com.mashup.frienitto.EditType
 import com.mashup.frienitto.R
 import com.mashup.frienitto.base.BaseAndroidViewModel
-import com.mashup.frienitto.base.BaseViewModel
 import com.mashup.frienitto.data.RequestJoinRoom
 import com.mashup.frienitto.repository.room.RoomRepository
 import com.mashup.frienitto.repository.user.UserRepository
@@ -68,7 +67,7 @@ class RoomJoinViewModel(private val repository: RoomRepository, application: App
 //                    commonError.onNext(R.string.error_unkown)
 //                })
         showLoadingDialog()
-        UserRepository.getUserToken()?.let {
+        UserRepository.getUserInfo()?.let {
             addDisposable(
                 repository.getJoinRoom(
                     it.token,

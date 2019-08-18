@@ -20,7 +20,7 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (UserRepository.getUserToken(this) == null) {
+        if (UserRepository.getUserInfo(this) == null) {
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
         } else {
@@ -29,7 +29,7 @@ class SplashActivity : AppCompatActivity() {
             val strDate = dateFormat.format(date)
             Log.d("loloss", "RoomHomeActivity ${roomRepository.getRoomId(this)}")
             when {
-                (UserRepository.getUserToken(this) as UserInfo).tokenExpiresDate <= strDate -> {
+                (UserRepository.getUserInfo(this) as UserInfo).tokenExpiresDate <= strDate -> {
                     val intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
                 }

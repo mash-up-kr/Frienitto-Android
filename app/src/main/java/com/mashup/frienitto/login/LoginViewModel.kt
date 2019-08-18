@@ -6,7 +6,6 @@ import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.mashup.frienitto.base.BaseAndroidViewModel
-import com.mashup.frienitto.base.BaseViewModel
 import com.mashup.frienitto.data.RequestSignIn
 import com.mashup.frienitto.repository.user.UserRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -57,7 +56,7 @@ class LoginViewModel(application: Application) : BaseAndroidViewModel(applicatio
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({ response ->
                             Log.d("csh Success", response.msg)
-                            UserRepository.setUserToken(context, response.data)
+                            UserRepository.setUserInfo(context, response.data)
                             isLogin.value = true
                             dismissLoadingDialog()
                         }, { except ->

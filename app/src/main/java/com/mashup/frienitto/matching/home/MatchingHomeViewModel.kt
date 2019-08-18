@@ -26,7 +26,7 @@ class MatchingHomeViewModel(private val roomRepository: RoomRepository) : BaseVi
 
     init {
         showLoadingDialog()
-        UserRepository.getUserToken()?.let {
+        UserRepository.getUserInfo()?.let {
             addDisposable(
                 roomRepository.getMatchingInfo(it.token, roomRepository.getRoomId().toString())
                     .subscribeOn(Schedulers.io())
