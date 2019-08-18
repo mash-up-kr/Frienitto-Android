@@ -46,7 +46,7 @@ object UserRepository {
             val prefs = context.getSharedPreferences("PrefName", MODE_PRIVATE)
             val json = prefs.getString(LOGIN_TOKEN_KEY, null)
             return if (json == null) null else {
-                userInfo = Gson().fromJson<Any>(json, UserInfo::class.java) as UserInfo
+                userInfo = Gson().fromJson<Any>(json, UserInfo::class.java) as UserInfo //<-??
                 userInfo
             }
         } else {

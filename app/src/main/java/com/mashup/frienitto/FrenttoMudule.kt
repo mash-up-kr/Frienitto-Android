@@ -35,7 +35,7 @@ val module: Module = module {
     viewModel { RoomHomeViewModel(get()) }
     viewModel { MatchingHomeViewModel(get()) }
     viewModel { RoomCloseViewModel() }
-    viewModel { RoomListViewModel() }
+    viewModel { RoomListViewModel(get(),get()) }
     single { RoomRepository() }
     factory { (context: Context) ->
         AppCompatDialog(context)
