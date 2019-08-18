@@ -17,6 +17,7 @@ import androidx.appcompat.app.AlertDialog
 import com.mashup.frienitto.matching.MatchingAnimationActivity
 import com.mashup.frienitto.utils.setUserImage
 import kotlinx.android.synthetic.main.dialog_user_datail_layout.view.*
+import org.jetbrains.anko.toast
 
 
 class RoomHomeActivity : BaseActivity<ActivityRoomHomeBinding>() {
@@ -38,15 +39,16 @@ class RoomHomeActivity : BaseActivity<ActivityRoomHomeBinding>() {
         viewDataBinding.rvRoomHome.layoutManager = GridLayoutManager(this, 2)
         viewDataBinding.rvRoomHome.adapter = RoomUserListAdapter { item ->
             //TODO onclick
-            createDialog(item.imageCode, item.userName)
+            createDialog(item)
         }
     }
 
-    private fun createDialog(imageCode: Int, name: String) {
+    private fun createDialog(item: UserPreview) {
         val dialogBuilder = AlertDialog.Builder(this@RoomHomeActivity)
         val layoutView = layoutInflater.inflate(R.layout.dialog_user_datail_layout, null)
-        layoutView.iv_user_image.setUserImage(imageCode)
-        layoutView.tv_user_name.text = name
+        layoutView.iv_user_image.setUserImage(item.imageCode)
+        layoutView.tv_user_name.text = item.userName
+        layoutView.tv_user_des.text = item.description
         dialogBuilder.setView(layoutView)
         val alertDialog = dialogBuilder.create()
         alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -72,5 +74,18 @@ class RoomHomeActivity : BaseActivity<ActivityRoomHomeBinding>() {
                 }
             }
         )
+
+        addDisposable(
+            viewModel.commonError.subscribe {
+                if (it) {
+                    toast(R.string.error_unkown)
+                }
+            }
+        )
+
+        viewModel.showLoadingDialog.observe(this, Observer {
+            if(it) showProgress()
+            else dismissProgress()
+        })
     }
 }

@@ -11,7 +11,7 @@ import com.google.gson.Gson
 object UserRepository {
     private const val LOGIN_TOKEN_KEY = "logintoken"
     private var emailToken: String = ""
-    private var userToken: Token? = null
+    private var userInfo: UserInfo? = null
 
     // User
     fun signUp(token: String, body: RequestSignUp): Single<ResponseSignUp> {
@@ -34,32 +34,32 @@ object UserRepository {
     }
 
 
-    // Token
+    // UserInfo
     fun getTokenizer() = emailToken
 
     fun setTokenizer(token: String) {
         this.emailToken = token
     }
 
-    fun getUserToken(context: Context): Token? {
-        return if (userToken == null) {
+    fun getUserInfo(context: Context): UserInfo? {
+        return if (userInfo == null) {
             val prefs = context.getSharedPreferences("PrefName", MODE_PRIVATE)
             val json = prefs.getString(LOGIN_TOKEN_KEY, null)
             return if (json == null) null else {
-                userToken = Gson().fromJson<Any>(json, Token::class.java) as Token
-                userToken
+                userInfo = Gson().fromJson<Any>(json, UserInfo::class.java) as UserInfo
+                userInfo
             }
         } else {
-            userToken
+            userInfo
         }
     }
 
-    fun getUserToken() = userToken
+    fun getUserInfo() = userInfo
 
-    fun setUserToken(context: Context, token: Token) {
+    fun setUserInfo(context: Context, userInfo: UserInfo) {
         val prefs = context.getSharedPreferences("PrefName", MODE_PRIVATE)
-        val json = Gson().toJson(token)
+        val json = Gson().toJson(userInfo)
         prefs.edit().putString(LOGIN_TOKEN_KEY, json).apply()
-        this.userToken = token
+        this.userInfo = userInfo
     }
 }

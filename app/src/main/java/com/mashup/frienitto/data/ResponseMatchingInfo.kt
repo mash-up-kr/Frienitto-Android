@@ -13,5 +13,9 @@ data class ResponseMatchingInfo(
 
 data class ResponseMatchingInfoData(
     @SerializedName("missions")
-    var missions: List<Mission>
+    var missions: List<Mission>,
+    @SerializedName("room_id")
+    var roomId: Int,
+    @SerializedName("room_status")
+    var roomStatus: String
 )
