@@ -5,17 +5,12 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.mashup.frienitto.data.UserInfo
-import com.mashup.frienitto.data.UserPreview
 import com.mashup.frienitto.home.HomeActivity
 import com.mashup.frienitto.repository.room.RoomRepository
 import com.mashup.frienitto.repository.user.UserRepository
-import com.mashup.frienitto.room.RoomActivity
-import com.mashup.frienitto.room.home.RoomHomeActivity
 import com.mashup.frienitto.room.list.RoomListActivity
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
-import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.startActivity
 import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import java.util.*

@@ -2,11 +2,13 @@ package com.mashup.frienitto.room.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.bumptech.glide.Glide.init
 import com.mashup.frienitto.base.BaseViewModel
 import com.mashup.frienitto.data.RoomInfo
 import com.mashup.frienitto.repository.room.RoomRepository
 import com.mashup.frienitto.repository.user.UserRepository
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.PublishSubject
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.debug
 import org.jetbrains.anko.info
@@ -27,6 +29,9 @@ class RoomListViewModel(
     val roomList: LiveData<List<RoomInfo>>
         get() = _roomList
 
+    val moveToRoomId = PublishSubject.create<Int>()
+
+
     init {
 
         userRepository.getUserInfo()?.let {
@@ -35,7 +40,7 @@ class RoomListViewModel(
             _email.postValue(it.user.email)
         }
 
-        info{"tag1 tokein ${userRepository.getUserInfo()?.token}"}
+        info { "tag1 tokein ${userRepository.getUserInfo()?.token}" }
         addDisposable(
             roomRepository.getRoomList(userRepository.getUserInfo()?.token!!)
                 .subscribeOn(Schedulers.io())
@@ -53,7 +58,7 @@ class RoomListViewModel(
     }
 
     fun onCardClick(roomId: Int) {
-
+        moveToRoomId.onNext(roomId)
     }
 
     fun onRoomCreationClick() {
@@ -63,7 +68,6 @@ class RoomListViewModel(
     fun onRoomEnterClick() {
 
     }
-
 
 }
 

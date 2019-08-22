@@ -3,6 +3,7 @@ package com.mashup.frienitto.room.list
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.mashup.frienitto.BR
 import com.mashup.frienitto.data.RoomInfo
 import com.mashup.frienitto.databinding.ItemRoomCardBinding
 import com.mashup.frienitto.databinding.ItemRoomCreationCardBinding
@@ -11,12 +12,9 @@ import com.mashup.frienitto.databinding.ItemRoomCreationCardBinding
 const val ROOM_CARD = 1
 const val ROOM_CREATION = 2
 
-class RoomListAdapter(private val viewModel: RoomListViewModel) : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
-    RoomItemCardListener {
+class RoomListAdapter(private val viewModel: RoomListViewModel) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    override fun onCardClick(roomId: String) {
-        viewModel.onCardClick(roomId.toInt())
-    }
 
     private val roomList = ArrayList<RoomInfo>()
 
@@ -61,13 +59,9 @@ class RoomListAdapter(private val viewModel: RoomListViewModel) : RecyclerView.A
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
             ROOM_CARD -> {
-//                with((holder as RoomCardViewHolder).binding) {
-//                    item = roomList[position]
-//                    listener = this@RoomListAdapter
-//                }
                 (holder as RoomCardViewHolder).binding.apply {
                     item = roomList[position]
-                    listener = this@RoomListAdapter
+                    viewModel = viewModel
                 }.executePendingBindings()
             }
             ROOM_CREATION -> {
@@ -87,8 +81,4 @@ class RoomListAdapter(private val viewModel: RoomListViewModel) : RecyclerView.A
         RecyclerView.ViewHolder(binding.root)
 
 
-}
-
-interface RoomItemCardListener {
-    fun onCardClick(roomId: String)
 }

@@ -1,6 +1,5 @@
 package com.mashup.frienitto.api
 
-import android.util.Log
 import com.mashup.frienitto.data.*
 import io.reactivex.Single
 import okhttp3.OkHttpClient
@@ -12,7 +11,6 @@ object DataSource {
 
     private val service: Service
     private val baseURL: String
-
 
     init {
         //baseURL = "http://192.168.123.26:8080"
@@ -41,9 +39,7 @@ object DataSource {
     }
 
 
-
     // Room
-
     fun requestCreateRoom(token: String, body: RequestCreateRoom) : Single<ResponseCreateRoom> {
         return service.requestCreateRoom(token, body)
     }

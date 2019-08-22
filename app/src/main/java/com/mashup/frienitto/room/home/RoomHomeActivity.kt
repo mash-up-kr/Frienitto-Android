@@ -8,14 +8,13 @@ import com.mashup.frienitto.base.BaseActivity
 import com.mashup.frienitto.data.UserPreview
 import com.mashup.frienitto.databinding.ActivityRoomHomeBinding
 import org.koin.android.viewmodel.ext.android.viewModel
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import com.mashup.frienitto.matching.MatchingAnimationActivity
-import com.mashup.frienitto.utils.setUserImage
+import com.mashup.frienitto.adapter.setUserImage
 import kotlinx.android.synthetic.main.dialog_user_datail_layout.view.*
 import org.jetbrains.anko.toast
 

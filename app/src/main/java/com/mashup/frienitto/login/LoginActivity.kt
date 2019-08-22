@@ -6,8 +6,7 @@ import androidx.lifecycle.Observer
 import com.mashup.frienitto.R
 import com.mashup.frienitto.base.BaseActivity
 import com.mashup.frienitto.databinding.ActivityLoginBinding
-import com.mashup.frienitto.register.RegisterActivity
-import com.mashup.frienitto.room.RoomActivity
+import com.mashup.frienitto.room.list.RoomListActivity
 import org.jetbrains.anko.toast
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -27,7 +26,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         })
 
         viewModel.isLogin.observe(this, Observer {
-            val intent = Intent(this, RoomActivity::class.java)
+            val intent = Intent(this, RoomListActivity::class.java)
             startActivity(intent)
             finishAffinity()
         })
