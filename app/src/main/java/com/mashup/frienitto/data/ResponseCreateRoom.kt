@@ -8,6 +8,6 @@ data class ResponseCreateRoom(
     @SerializedName("msg")
     var msg: String,
     @SerializedName("data")
-    var data: ResponseRoom
+    var data: RoomInfo
 )
 

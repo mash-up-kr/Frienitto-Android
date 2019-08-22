@@ -2,9 +2,11 @@ package com.mashup.frienitto.data
 
 import com.google.gson.annotations.SerializedName
 
-data class ResponseRoom(
+data class RoomInfo(
         @SerializedName("id")
         var id: Int,
+        @SerializedName("is_owner")
+        var isOwner: Boolean,
         @SerializedName("title")
         var title: String,
         @SerializedName("expires_date")

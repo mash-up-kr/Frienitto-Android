@@ -13,7 +13,8 @@ import io.reactivex.rxkotlin.Observables
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 
-class LoginViewModel(application: Application) : BaseAndroidViewModel(application) {
+class LoginViewModel(private val userRepository: UserRepository, application: Application) :
+    BaseAndroidViewModel(application) {
     private val context = getApplication<Application>().applicationContext
     val requestToast = MutableLiveData<String>()
 
@@ -26,17 +27,17 @@ class LoginViewModel(application: Application) : BaseAndroidViewModel(applicatio
 
     init {
         addDisposable(
-                Observables.combineLatest(email, password).subscribe {
-                    val email = it.first
-                    val password = it.second
-                    if (email.isNotBlank() && password.isNotBlank()) {
-                        //버튼을 활성화하고 버튼 색상을 변경
-                        isWriteAllData.set(true)
-                    } else {
-                        isWriteAllData.set(false)
-                    }
-
+            Observables.combineLatest(email, password).subscribe {
+                val email = it.first
+                val password = it.second
+                if (email.isNotBlank() && password.isNotBlank()) {
+                    //버튼을 활성화하고 버튼 색상을 변경
+                    isWriteAllData.set(true)
+                } else {
+                    isWriteAllData.set(false)
                 }
+
+            }
         )
     }
 
@@ -51,18 +52,18 @@ class LoginViewModel(application: Application) : BaseAndroidViewModel(applicatio
     fun onClickLoginButton(view: View) {
         showLoadingDialog()
         addDisposable(
-                UserRepository.signIn(RequestSignIn(email.value!!, password.value!!))
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({ response ->
-                            Log.d("csh Success", response.msg)
-                            UserRepository.setUserInfo(context, response.data)
-                            isLogin.value = true
-                            dismissLoadingDialog()
-                        }, { except ->
-                            Log.d("csh Error", except.message.toString())
-                            dismissLoadingDialog()
-                        })
+            userRepository.signIn(RequestSignIn(email.value!!, password.value!!))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ response ->
+                    Log.d("Success", response.msg)
+                    userRepository.setUserInfo(context, response.data)
+                    isLogin.value = true
+                    dismissLoadingDialog()
+                }, { except ->
+                    Log.d("Error", except.message.toString())
+                    dismissLoadingDialog()
+                })
         )
     }
 }

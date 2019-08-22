@@ -9,5 +9,5 @@ data class ResponseRoomList(
     @SerializedName("msg")
     var msg: String,
     @SerializedName("data")
-    var data: List<ResponseRoom>
+    var data: List<RoomInfo>
 )

@@ -13,7 +13,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlin.random.Random
 
-class RegisterFragmentViewModel() : BaseViewModel() {
+class RegisterFragmentViewModel(private val userRepository: UserRepository) : BaseViewModel() {
     val registerStepCnt = MutableLiveData<Int>().apply { postValue(0) }
     val signinComplete = MutableLiveData<Boolean>()
     val emailText: LiveData<String>
@@ -54,12 +54,12 @@ class RegisterFragmentViewModel() : BaseViewModel() {
     private fun confirmCode() {
         showLoadingDialog()
         addDisposable(
-                UserRepository.requestAuth(RequestAuth(email.value.toString(), "EMAIL", code))
+            userRepository.requestAuth(RequestAuth(email.value.toString(), "EMAIL", code))
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({ response ->
                             Log.d("csh Success", response.toString())
-                            UserRepository.setTokenizer(response.data.registerToken)
+                            userRepository.setTokenizer(response.data.registerToken)
                             registerStepCnt.value = 2
                             dissmissLoadingDialog()
                         }, { except ->
@@ -72,7 +72,7 @@ class RegisterFragmentViewModel() : BaseViewModel() {
     fun sendConfirmEmail() {
         showLoadingDialog()
         addDisposable(
-                UserRepository.requestEmail(RequestEmailCode(email.value.toString(), "EMAIL"))
+            userRepository.requestEmail(RequestEmailCode(email.value.toString(), "EMAIL"))
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({ response ->
@@ -89,7 +89,7 @@ class RegisterFragmentViewModel() : BaseViewModel() {
     fun signIn() {
         showLoadingDialog()
         addDisposable(
-                UserRepository.signUp(UserRepository.getTokenizer(), RequestSignUp(name, info, Random.nextInt(5) + 1, email.value.toString(), password))
+            userRepository.signUp(userRepository.getTokenizer(), RequestSignUp(name, info, Random.nextInt(5) + 1, email.value.toString(), password))
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({ response ->
