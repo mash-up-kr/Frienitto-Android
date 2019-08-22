@@ -1,5 +1,6 @@
 package com.mashup.frienitto.room.home
 
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.mashup.frienitto.base.BaseViewModel
@@ -47,14 +48,20 @@ class RoomHomeViewModel(
     fun startMatching() {
         showLoadingDialog()
         userRepository.getUserInfo()?.let {
+            Log.d("lolo", it.token + "   " + roomData.value!!.id + "   " + it.user.id)
             addDisposable(
-                roomRepository.matchingStart(it.token, RequestMatchingStart(roomId.toInt(), 0, "ROOM"))
+                roomRepository.matchingStart(it.token, RequestMatchingStart(roomData.value!!.id, "USER"))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
+                    .subscribe({ response ->
+                        Log.d("csh Success", response.toString())
                         dissmissLoadingDialog()
                         startMatching.onNext(true)
-                    }, {
+                    }, { except ->
+                        Log.d("csh Error", except.toString())
+                        if (except.toString() == "401") {
+                            Log.d("csh Error", except.message.toString())
+                        }
                         dissmissLoadingDialog()
                         commonError.onNext(true)
                     })

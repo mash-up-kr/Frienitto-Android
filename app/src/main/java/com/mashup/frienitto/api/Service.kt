@@ -24,9 +24,9 @@ interface Service {
     fun requestJoinRoom(@Header("X-Authorization") token: String,
                         @Body body: RequestJoinRoom) : Single<ResponseRoomDetail>
 
-    @GET("api/v1/room/{id}")
+    @GET("api/v1/room/")
     fun requestRoomDetail(@Header("X-Authorization") token: String,
-                          @Path("id") id: String) : Single<ResponseRoomDetail>
+                          @Query("title") id: String) : Single<ResponseRoomDetail>
 
     @GET("api/v1/user/room")
     fun requestRoomList(@Header("X-Authorization") token: String) : Single<ResponseRoomList>

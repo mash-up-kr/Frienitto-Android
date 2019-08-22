@@ -12,8 +12,6 @@ data class RequestMatchingStart(
     var participantID: List<Int>*/
     @SerializedName("room_id")
     var roomID: Int,
-    @SerializedName("owner_id")
-    var ownerID: Int,
     @SerializedName("type")
     var type: String
 )
