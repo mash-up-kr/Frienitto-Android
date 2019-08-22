@@ -15,7 +15,7 @@ import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import java.util.*
 
-class SplashActivity : AppCompatActivity(),AnkoLogger {
+class SplashActivity : AppCompatActivity(), AnkoLogger {
     private val userRepository: UserRepository by inject()
     private val roomRepository: RoomRepository by inject()
 
@@ -29,31 +29,16 @@ class SplashActivity : AppCompatActivity(),AnkoLogger {
             val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             val date = Date()
             val strDate = dateFormat.format(date)
-            Log.d("loloss", "RoomHomeActivity ${roomRepository.getRoomId(this)}")
             when {
                 (userRepository.getUserInfo(this) as UserInfo).tokenExpiresDate <= strDate -> {
-                    info { "tag1 first%%%%%%" }
                     val intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
                 }
-                else->{
-                    info { "tag1 second%%%%%%" }
-                    startActivity(Intent(this,RoomListActivity::class.java))
+                else -> {
+                    startActivity(Intent(this, RoomListActivity::class.java))
                 }
-
-//                roomRepository.getRoomId(this) != null -> {
-//                    val intent = Intent(this, RoomHomeActivity::class.java)
-//                    startActivity(intent)
-//                }
-//                else -> {
-//                    val intent = Intent(this, RoomActivity::class.java)
-//                    startActivity(intent)
-//                }
             }
         }
-
-        //TODO 방참여 이력이 있으면
-        //바로 방으로 이동
 
         finish()
     }

@@ -2,7 +2,6 @@ package com.mashup.frienitto.room.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.bumptech.glide.Glide.init
 import com.mashup.frienitto.base.BaseViewModel
 import com.mashup.frienitto.data.RoomInfo
 import com.mashup.frienitto.repository.room.RoomRepository
@@ -12,6 +11,12 @@ import io.reactivex.subjects.PublishSubject
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.debug
 import org.jetbrains.anko.info
+import java.security.PublicKey
+
+enum class RoomType {
+    CREATION,
+    ENTRY
+}
 
 class RoomListViewModel(
     private val userRepository: UserRepository,
@@ -29,45 +34,38 @@ class RoomListViewModel(
     val roomList: LiveData<List<RoomInfo>>
         get() = _roomList
 
-    val moveToRoomId = PublishSubject.create<Int>()
+    val moveToRoomCard = PublishSubject.create<RoomInfo>()
 
+    val moveToRoom = PublishSubject.create<RoomType>()
 
     init {
 
         userRepository.getUserInfo()?.let {
-            info { "tag1 $it" }
             _username.postValue(it.user.username)
             _email.postValue(it.user.email)
         }
 
-        info { "tag1 tokein ${userRepository.getUserInfo()?.token}" }
         addDisposable(
             roomRepository.getRoomList(userRepository.getUserInfo()?.token!!)
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    info { "tag1 what??? $it" }
                     it.data.let {
-                        info { "tag1 $it" }
                         _roomList.postValue(it)
                     }
                 }, {
-                    info { "tag1 error ${it.printStackTrace()}" }
-                    info { "tag1 error ${it.message}" }
+                    debug { it.message }
                 })
         )
     }
 
-    fun onCardClick(roomId: Int) {
-        moveToRoomId.onNext(roomId)
+    fun onCardClick(item: RoomInfo) {
+        moveToRoomCard.onNext(item)
     }
 
-    fun onRoomCreationClick() {
-
+    fun onRoomButtonClick(roomType: RoomType) {
+        moveToRoom.onNext(roomType)
     }
 
-    fun onRoomEnterClick() {
-
-    }
 
 }
 

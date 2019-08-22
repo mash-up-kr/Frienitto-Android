@@ -70,4 +70,5 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
             progressDialog.dismiss()
         }
     }
+
 }

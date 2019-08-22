@@ -96,7 +96,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="176dp"
                 android:layout_marginTop="322dp"
-                android:onClick="@{()->viewModel.onCardClick(item.id)}"
+                android:onClick="@{()->viewModel.onCardClick(item)}"
 
 
         />

@@ -4,6 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable name="roomType" type="com.mashup.frienitto.room.list.RoomType"/>
         <variable name="viewModel" type="com.mashup.frienitto.room.list.RoomListViewModel"/>
     </data>
 
@@ -31,7 +32,7 @@
         <Button
                 android:id="@+id/btn_room_creation"
                 android:text="@string/room_creation"
-                android:onClick="@{()->viewModel.onRoomCreationClick()}"
+                android:onClick="@{()->viewModel.onRoomButtonClick(roomType.CREATION)}"
                 android:layout_marginTop="224dp"
                 android:backgroundTint="@color/white"
                 android:layout_gravity="center"
@@ -47,8 +48,8 @@
 
         <Button
                 android:id="@+id/btn_room_enter"
-                android:text="방입장하기"
-                android:onClick="@{()->viewModel.onRoomEnterClick()}"
+                android:text="방 입장하기"
+                android:onClick="@{()->viewModel.onRoomButtonClick(roomType.ENTRY)}"
                 android:layout_marginTop="284dp"
                 android:backgroundTint="@color/navy"
                 android:textColor="@color/white"

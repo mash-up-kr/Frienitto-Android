@@ -28,7 +28,7 @@ interface Service {
     fun requestRoomDetail(@Header("X-Authorization") token: String,
                           @Path("id") id: String) : Single<ResponseRoomDetail>
 
-    @GET("api/v1/room/list")
+    @GET("api/v1/user/room")
     fun requestRoomList(@Header("X-Authorization") token: String) : Single<ResponseRoomList>
 
 
@@ -43,7 +43,6 @@ interface Service {
 
 
     // Email
-
     @POST("api/v1/issue/code")
     fun requestEmailCode(@Body body: RequestEmailCode) : Single<ResponseEmailCode>
 
