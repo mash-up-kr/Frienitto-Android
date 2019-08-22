@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatDialog
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
+import com.mashup.frienitto.data.RoomInfo
 import com.mashup.frienitto.login.LoginViewModel
 import com.mashup.frienitto.matching.home.MatchingHomeViewModel
 import com.mashup.frienitto.register.RegisterFragmentViewModel
@@ -25,20 +26,21 @@ import kotlinx.android.synthetic.main.dialog_loading.*
 import org.koin.core.module.Module
 import org.koin.dsl.module
 import org.koin.android.viewmodel.dsl.viewModel
+import org.koin.core.parameter.parametersOf
 
 val module: Module = module {
-    viewModel { LoginViewModel(get(),get()) }
+    viewModel { LoginViewModel(get(), get()) }
     viewModel { SelectViewModel() }
     viewModel { RegisterViewModel() }
-    viewModel { RoomCreationViewModel(get(), get(),get()) }
+    viewModel { RoomCreationViewModel(get(), get(), get()) }
     viewModel { RegisterFragmentViewModel(get()) }
-    viewModel { RoomJoinViewModel(get(), get(),get()) }
-    viewModel { RoomHomeViewModel(get(),get()) }
-    viewModel { MatchingHomeViewModel(get(),get()) }
+    viewModel { RoomJoinViewModel(get(), get(), get()) }
+    viewModel { (roomId: Int) -> RoomHomeViewModel(roomId, get(), get()) }
+    viewModel { (roomId: Int) -> MatchingHomeViewModel(roomId, get(), get()) }
     viewModel { RoomCloseViewModel() }
-    viewModel { RoomListViewModel(get(),get()) }
+    viewModel { RoomListViewModel(get(), get()) }
     single { RoomRepository() }
-    single { UserRepository()}
+    single { UserRepository() }
     factory { (context: Context) ->
         AppCompatDialog(context)
             .apply {

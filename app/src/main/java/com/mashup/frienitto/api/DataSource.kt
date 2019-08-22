@@ -48,7 +48,7 @@ object DataSource {
         return service.requestJoinRoom(token, body)
     }
 
-    fun requestRoomDetail(token: String, id: String) : Single<ResponseRoomDetail> {
+    fun requestRoomDetail(token: String, id: Int) : Single<ResponseRoomDetail> {
         return service.requestRoomDetail(token, id)
     }
 
@@ -61,7 +61,7 @@ object DataSource {
         return service.requestMatchingStart(token, body)
     }
 
-    fun requestMatchingInfo(token: String, id: String) : Single<ResponseMatchingInfo> {
+    fun requestMatchingInfo(token: String, id: Int) : Single<ResponseMatchingInfo> {
         return service.requestMatchingInfo(token, id)
     }
 

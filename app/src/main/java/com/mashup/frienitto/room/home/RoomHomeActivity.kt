@@ -17,27 +17,32 @@ import com.mashup.frienitto.matching.MatchingAnimationActivity
 import com.mashup.frienitto.adapter.setUserImage
 import kotlinx.android.synthetic.main.dialog_user_datail_layout.view.*
 import org.jetbrains.anko.toast
+import org.koin.android.viewmodel.ext.android.getViewModel
+import org.koin.core.parameter.parametersOf
 
 
 class RoomHomeActivity : BaseActivity<ActivityRoomHomeBinding>() {
     override val layoutResourceId: Int
         get() = R.layout.activity_room_home
-
-    private val viewModel: RoomHomeViewModel by viewModel()
-
+    
+    private lateinit var viewModel: RoomHomeViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(viewDataBinding.root)
+        initIntentData()
         viewDataBinding.viewModel = viewModel
-
         initView()
         observeItem()
+    }
+
+    private fun initIntentData() {
+        val roomId = intent.getIntExtra("roomId", -1)
+        viewModel = getViewModel { parametersOf(roomId) }
     }
 
     private fun initView() {
         viewDataBinding.rvRoomHome.layoutManager = GridLayoutManager(this, 2)
         viewDataBinding.rvRoomHome.adapter = RoomUserListAdapter { item ->
-            //TODO onclick
             createDialog(item)
         }
     }
@@ -67,10 +72,14 @@ class RoomHomeActivity : BaseActivity<ActivityRoomHomeBinding>() {
         addDisposable(
             viewModel.startMatching.subscribe {
                 //Todo 매칭 유무따라 보여지는 페이지 달라져야함
-                if (it) {
-                    startActivity(Intent(this, MatchingAnimationActivity::class.java).apply{addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)})
-                    finish()
-                }
+//                if (it) {
+//                    startActivity(
+//                        Intent(
+//                            this,
+//                            MatchingAnimationActivity::class.java
+//                        ).apply { addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY) })
+//                    finish()
+//                }
             }
         )
 
@@ -83,7 +92,7 @@ class RoomHomeActivity : BaseActivity<ActivityRoomHomeBinding>() {
         )
 
         viewModel.showLoadingDialog.observe(this, Observer {
-            if(it) showProgress()
+            if (it) showProgress()
             else dismissProgress()
         })
     }

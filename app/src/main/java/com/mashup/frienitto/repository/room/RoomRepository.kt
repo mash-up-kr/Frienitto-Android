@@ -9,7 +9,9 @@ import io.reactivex.Single
 
 class RoomRepository {
     private val ROOM_ID_KEY = "roomid"
-    private var roomId: Int? = null
+    var roomId: Int? = null
+    var expiredDate: String? = null
+
     fun createRoom(token: String, body: RequestCreateRoom): Single<ResponseCreateRoom> {
         return DataSource.requestCreateRoom(token, body)
     }
@@ -18,7 +20,7 @@ class RoomRepository {
         return DataSource.requestJoinRoom(token, body)
     }
 
-    fun getRoomDetail(token: String, id: String): Single<ResponseRoomDetail> {
+    fun getRoomDetail(token: String, id: Int): Single<ResponseRoomDetail> {
         return DataSource.requestRoomDetail(token, id)
     }
 
@@ -30,28 +32,7 @@ class RoomRepository {
         return DataSource.requestMatchingStart(token, body)
     }
 
-    fun getMatchingInfo(token: String, id: String): Single<ResponseMatchingInfo> {
+    fun getMatchingInfo(token: String, id: Int): Single<ResponseMatchingInfo> {
         return DataSource.requestMatchingInfo(token, id)
-    }
-
-    fun getRoomId(context: Context): Int? {
-        return if (roomId == null) {
-            val prefs = context.getSharedPreferences("PrefName", MODE_PRIVATE)
-            if (prefs.contains(ROOM_ID_KEY)) {
-                roomId = prefs.getInt(ROOM_ID_KEY, 0)
-            }
-            Log.d("loloss", "id : $roomId")
-            return null
-        } else {
-            roomId
-        }
-    }
-
-    fun getRoomId() = roomId
-
-    fun setRoomId(context: Context, roomId: Int) {
-        val prefs = context.getSharedPreferences("PrefName", MODE_PRIVATE)
-        prefs.edit().putInt(ROOM_ID_KEY, roomId).apply()
-        this.roomId = roomId
     }
 }

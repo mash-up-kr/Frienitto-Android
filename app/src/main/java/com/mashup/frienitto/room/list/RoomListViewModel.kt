@@ -59,6 +59,8 @@ class RoomListViewModel(
     }
 
     fun onCardClick(item: RoomInfo) {
+        roomRepository.roomId = item.id
+        roomRepository.expiredDate = item.expiresDate
         moveToRoomCard.onNext(item)
     }
 

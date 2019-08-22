@@ -8,16 +8,5 @@ data class ResponseSignUp(
     @SerializedName("msg")
     var msg: String,
     @SerializedName("data")
-    var data: ResponseSignUpData
-)
-
-data class ResponseSignUpData(
-    @SerializedName("username")
-    var userName: String,
-    @SerializedName("description")
-    var description: String,
-    @SerializedName("image_code")
-    var imageCode: Int,
-    @SerializedName("email")
-    var email: String
+    var data: User
 )

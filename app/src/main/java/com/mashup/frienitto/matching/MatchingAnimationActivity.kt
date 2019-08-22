@@ -14,6 +14,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.gif.GifDrawable
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.mashup.frienitto.matching.home.MatchingHomeActivity
 import com.mashup.frienitto.room.home.RoomHomeActivity
 import com.mashup.frienitto.room.list.RoomListActivity
 import kotlinx.android.synthetic.main.activity_matching_animation.*
@@ -76,7 +77,7 @@ class MatchingAnimationActivity : AppCompatActivity(), AnkoLogger {
 
             override fun onAnimationEnd(animation: Animator) {
                 try {
-                    startActivity(Intent(this@MatchingAnimationActivity, RoomListActivity::class.java))
+                    startActivity(Intent(this@MatchingAnimationActivity, MatchingHomeActivity::class.java).putExtra("roomId",intent.getIntExtra("roomId", -1)))
                 } catch (ex: Exception) {
                     ex.toString()
                 }

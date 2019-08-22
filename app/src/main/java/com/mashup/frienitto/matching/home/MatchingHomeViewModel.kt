@@ -1,5 +1,6 @@
 package com.mashup.frienitto.matching.home
 
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.mashup.frienitto.base.BaseViewModel
@@ -15,7 +16,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class MatchingHomeViewModel(private val userRepository: UserRepository, private val roomRepository: RoomRepository) :
+class MatchingHomeViewModel(roomId: Int, private val userRepository: UserRepository, private val roomRepository: RoomRepository) :
     BaseViewModel() {
     val isManager = ObservableField<Boolean>(false)
     val dayText = ObservableField<String>()
@@ -29,12 +30,12 @@ class MatchingHomeViewModel(private val userRepository: UserRepository, private 
         showLoadingDialog()
         userRepository.getUserInfo()?.let {
             addDisposable(
-                roomRepository.getMatchingInfo(it.token, roomRepository.getRoomId().toString())
+                roomRepository.getMatchingInfo(it.token, roomId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ response ->
                         val f = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.getDefault())
-                        val d1 = f.parse("2019-08-22-00-00-00")
+                        val d1 = f.parse(roomRepository.expiredDate)
                         var now = System.currentTimeMillis()
                         var nowTime = f.format(Date(now))
                         var d2 = f.parse(nowTime)
@@ -49,9 +50,11 @@ class MatchingHomeViewModel(private val userRepository: UserRepository, private 
                                     diff = d1.time - d2.time
                                 }
                                 .subscribe { convertSecondsToHMmSs(diff / 1000) })
-                        missionData.value = response.data.missions[0]
+                        missionData.value = response.data[0]
                         dissmissLoadingDialog()
+                        Log.d("csh Success", response.toString())
                     }, { except ->
+                        Log.d("csh Error", except.toString())
                         dissmissLoadingDialog()
                         commonError.onNext(true)
                     })

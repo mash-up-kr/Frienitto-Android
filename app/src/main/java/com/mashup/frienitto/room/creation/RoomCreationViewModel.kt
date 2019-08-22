@@ -92,7 +92,7 @@ class RoomCreationViewModel(private val userRepository: UserRepository, private 
                         dismissLoadingDialog()
                         Log.d("csh Success", response?.msg)
                         Log.d("csh", "RoomID:" + response.data.id.toString())
-                        repository.setRoomId(context, response.data.id)
+                        repository.roomId = response.data.id
                         isFinish.value = true
                     }, { except ->
                         dismissLoadingDialog()
