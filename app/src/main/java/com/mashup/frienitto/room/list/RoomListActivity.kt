@@ -69,7 +69,7 @@ class RoomListActivity(override val layoutResourceId: Int = R.layout.activity_ro
 
     private fun identifyActivityToMove(roomInfo: RoomInfo) {
         when (roomInfo.status) {
-            "CREATED" -> startActivity(Intent(this, RoomHomeActivity::class.java))
+            "CREATED" -> startActivity(Intent(this, RoomHomeActivity::class.java).apply { putExtra("roomId",roomInfo.id.toString()) })
             "MATCHED" -> checkFirstEntry(roomInfo.id.toString())
             "EXPIRED" -> startActivity(Intent(this, RoomCloseActivity::class.java))
         }

@@ -12,7 +12,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 
-class RoomHomeViewModel(private val userRepository: UserRepository, private val roomRepository: RoomRepository) :
+class RoomHomeViewModel(
+    private val roomId: String,
+    private val userRepository: UserRepository,
+    private val roomRepository: RoomRepository
+) :
     BaseViewModel() {
     val data = MutableLiveData<List<UserPreview>>()
     val roomData = MutableLiveData<ResponseRoomDetailData>()
@@ -24,7 +28,7 @@ class RoomHomeViewModel(private val userRepository: UserRepository, private val 
         showLoadingDialog()
         userRepository.getUserInfo()?.let {
             addDisposable(
-                roomRepository.getRoomDetail(it.token, roomRepository.getRoomId().toString())
+                roomRepository.getRoomDetail(it.token, roomId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ response ->
@@ -44,7 +48,7 @@ class RoomHomeViewModel(private val userRepository: UserRepository, private val 
         showLoadingDialog()
         userRepository.getUserInfo()?.let {
             addDisposable(
-                roomRepository.matchingStart(it.token, RequestMatchingStart(roomRepository.getRoomId()!!, 0, "ROOM"))
+                roomRepository.matchingStart(it.token, RequestMatchingStart(roomId.toInt(), 0, "ROOM"))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
