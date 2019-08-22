@@ -83,7 +83,7 @@ class RoomJoinViewModel(
                         Log.d("csh Success", response?.msg)
                         dismissLoadingDialog()
                         if (response.code == 200) {
-                            repository.setRoomId(context, response.data.id)
+                            repository.roomId = response.data.id
                             //Todo 매칭 유무 확인 후 값을 넣어야함
                             moveActivity.onNext(true)
                         } else

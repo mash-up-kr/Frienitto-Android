@@ -8,7 +8,7 @@ data class ResponseMatchingInfo(
     @SerializedName("msg")
     var msg: String,
     @SerializedName("data")
-    var data: ResponseMatchingInfoData
+    var data: List<Mission>
 )
 
 data class ResponseMatchingInfoData(

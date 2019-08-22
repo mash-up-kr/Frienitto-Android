@@ -69,19 +69,19 @@ class RoomListActivity(override val layoutResourceId: Int = R.layout.activity_ro
 
     private fun identifyActivityToMove(roomInfo: RoomInfo) {
         when (roomInfo.status) {
-            "CREATED" -> startActivity(Intent(this, RoomHomeActivity::class.java).apply { putExtra("roomId",roomInfo.id.toString()) })
-            "MATCHED" -> checkFirstEntry(roomInfo.id.toString())
+            "CREATED" -> startActivity(Intent(this, RoomHomeActivity::class.java).apply { putExtra("roomId",roomInfo.id) })
+            "MATCHED" -> checkFirstEntry(roomInfo.id)
             "EXPIRED" -> startActivity(Intent(this, RoomCloseActivity::class.java))
         }
     }
 
-    private fun checkFirstEntry(roomId: String) {
+    private fun checkFirstEntry(roomId: Int) {
         val prefs = this.getSharedPreferences(MATCHING_ANIMATION_TABLE, Context.MODE_PRIVATE)
-        if (prefs.contains(roomId)) {
-            startActivity(Intent(this, MatchingAnimationActivity::class.java))
+        if (prefs.contains(roomId.toString())) {
+            startActivity(Intent(this, MatchingAnimationActivity::class.java).putExtra("roomId",roomId))
         } else {
-            prefs.getBoolean(roomId, true)
-            startActivity(Intent(this, MatchingHomeActivity::class.java))
+            prefs.getBoolean(roomId.toString(), true)
+            startActivity(Intent(this, MatchingHomeActivity::class.java).putExtra("roomId",roomId))
         }
     }
 }

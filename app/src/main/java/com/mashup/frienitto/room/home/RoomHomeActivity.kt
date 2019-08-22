@@ -36,7 +36,7 @@ class RoomHomeActivity : BaseActivity<ActivityRoomHomeBinding>() {
     }
 
     private fun initIntentData() {
-        val roomId = intent.getStringExtra("roomId")
+        val roomId = intent.getIntExtra("roomId", -1)
         viewModel = getViewModel { parametersOf(roomId) }
     }
 

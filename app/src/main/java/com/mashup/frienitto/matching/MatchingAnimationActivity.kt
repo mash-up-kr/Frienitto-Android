@@ -77,7 +77,7 @@ class MatchingAnimationActivity : AppCompatActivity(), AnkoLogger {
 
             override fun onAnimationEnd(animation: Animator) {
                 try {
-                    startActivity(Intent(this@MatchingAnimationActivity, MatchingHomeActivity::class.java))
+                    startActivity(Intent(this@MatchingAnimationActivity, MatchingHomeActivity::class.java).putExtra("roomId",intent.getIntExtra("roomId", -1)))
                 } catch (ex: Exception) {
                     ex.toString()
                 }

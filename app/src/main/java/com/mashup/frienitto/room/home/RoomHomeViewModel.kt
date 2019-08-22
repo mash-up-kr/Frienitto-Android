@@ -14,7 +14,7 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 
 class RoomHomeViewModel(
-    private val roomId: String,
+    private val roomId: Int,
     private val userRepository: UserRepository,
     private val roomRepository: RoomRepository
 ) :
@@ -28,16 +28,20 @@ class RoomHomeViewModel(
     init {
         showLoadingDialog()
         userRepository.getUserInfo()?.let {
+            if (roomId == -1)
+                return@let
             addDisposable(
                 roomRepository.getRoomDetail(it.token, roomId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ response ->
                         dissmissLoadingDialog()
+                        Log.d("csh Success", response.toString())
                         roomData.value = response.data
                         data.value = response.data.participant
                         isManager.set(response.data.isOwner)
                     }, { except ->
+                        Log.d("csh Error", except.toString())
                         dissmissLoadingDialog()
                         commonError.onNext(true)
                     })
@@ -59,9 +63,6 @@ class RoomHomeViewModel(
                         startMatching.onNext(true)
                     }, { except ->
                         Log.d("csh Error", except.toString())
-                        if (except.toString() == "401") {
-                            Log.d("csh Error", except.message.toString())
-                        }
                         dissmissLoadingDialog()
                         commonError.onNext(true)
                     })

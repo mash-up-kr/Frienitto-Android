@@ -23,7 +23,7 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
     abstract val layoutResourceId: Int
     lateinit var viewDataBinding: T
     private val compositeDisposable = CompositeDisposable()
-    val progressDialog: AppCompatDialog by inject { parametersOf(this) }
+    private val progressDialog: AppCompatDialog by inject { parametersOf(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

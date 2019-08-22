@@ -24,9 +24,9 @@ interface Service {
     fun requestJoinRoom(@Header("X-Authorization") token: String,
                         @Body body: RequestJoinRoom) : Single<ResponseRoomDetail>
 
-    @GET("api/v1/room/")
+    @GET("api/v1/room/{id}")
     fun requestRoomDetail(@Header("X-Authorization") token: String,
-                          @Query("title") id: String) : Single<ResponseRoomDetail>
+                          @Path("id") id: Int) : Single<ResponseRoomDetail>
 
     @GET("api/v1/user/room")
     fun requestRoomList(@Header("X-Authorization") token: String) : Single<ResponseRoomList>
@@ -39,7 +39,7 @@ interface Service {
 
     @GET("api/v1/matching-info/room/{id}")
     fun requestMatchingInfo(@Header("X-Authorization") token: String,
-                          @Path("id") id: String) : Single<ResponseMatchingInfo>
+                          @Path("id") id: Int) : Single<ResponseMatchingInfo>
 
 
     // Email
