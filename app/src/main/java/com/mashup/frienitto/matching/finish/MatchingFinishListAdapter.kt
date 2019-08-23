@@ -1,17 +1,16 @@
-package com.mashup.frienitto.room.close
+package com.mashup.frienitto.matching.finish
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.mashup.frienitto.data.Mission
 import com.mashup.frienitto.data.UserPreview
 import com.mashup.frienitto.databinding.ListItemMatchFriendBinding
-import com.mashup.frienitto.room.home.RoomUserDiffUtilCallBack
 
-class RoomCloseListAdapter(private val listener: (item: UserPreview) -> Unit) :
+class MatchingFinishListAdapter(private val listener: (item: Mission) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val userItemList = ArrayList<UserPreview>()
+    private val userItemList = ArrayList<Mission>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return MovieItemViewHolder(
@@ -32,10 +31,10 @@ class RoomCloseListAdapter(private val listener: (item: UserPreview) -> Unit) :
     //기록된 활동들에 대한 뷰홀더
     class MovieItemViewHolder(
         val binding: ListItemMatchFriendBinding,
-        val listener: (item: UserPreview) -> Unit
+        val listener: (item: Mission) -> Unit
     ) : RecyclerView.ViewHolder(binding.root)
 
-    fun updateListItems(movieItem: ArrayList<UserPreview>) {
+    fun updateListItems(movieItem: ArrayList<Mission>) {
         userItemList.clear()
         userItemList.addAll(movieItem)
         notifyDataSetChanged()

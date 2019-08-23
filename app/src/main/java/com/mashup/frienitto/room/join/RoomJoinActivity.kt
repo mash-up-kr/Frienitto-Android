@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.widget.EditText
 import androidx.lifecycle.Observer
 import com.mashup.frienitto.R
+import com.mashup.frienitto.RxBus.RxBus
+import com.mashup.frienitto.RxBus.RxEvent
 import com.mashup.frienitto.base.BaseActivity
 import com.mashup.frienitto.databinding.ActivityRoomJoinBinding
 import com.mashup.frienitto.matching.MatchingAnimationActivity
@@ -29,8 +31,9 @@ class RoomJoinActivity(override val layoutResourceId: Int = R.layout.activity_ro
             viewModel.moveActivity.subscribe {
                 //Todo 매칭 유무따라 보여지는 페이지 달라져야함
                 if (it) {
-                    //startActivity(Intent(this,RoomHomeActivity::class.java))
-                    startActivity(Intent(this, MatchingAnimationActivity::class.java).apply{addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)})
+                    RxBus.publish(RxEvent.EventRefreshEvent())
+                    startActivity(Intent(this,RoomHomeActivity::class.java))
+                    //startActivity(Intent(this, MatchingAnimationActivity::class.java).apply{addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)})
                     finish()
                 }
             }

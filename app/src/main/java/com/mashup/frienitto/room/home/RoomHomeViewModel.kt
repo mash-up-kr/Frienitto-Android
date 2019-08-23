@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.mashup.frienitto.base.BaseViewModel
+import com.mashup.frienitto.data.RequestDeleteRoom
 import com.mashup.frienitto.data.RequestMatchingStart
 import com.mashup.frienitto.data.ResponseRoomDetailData
 import com.mashup.frienitto.data.UserPreview
@@ -14,7 +15,6 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 
 class RoomHomeViewModel(
-    private val roomId: Int,
     private val userRepository: UserRepository,
     private val roomRepository: RoomRepository
 ) :
@@ -24,14 +24,18 @@ class RoomHomeViewModel(
     val isManager = ObservableField<Boolean>(false)
     val startMatching = PublishSubject.create<Boolean>()
     val commonError = PublishSubject.create<Boolean>()
+    val deleteRoom = PublishSubject.create<Boolean>()
 
     init {
         showLoadingDialog()
         userRepository.getUserInfo()?.let {
-            if (roomId == -1)
+            if (roomRepository.roomId == null) {
+                dissmissLoadingDialog()
+                commonError.onNext(false)
                 return@let
+            }
             addDisposable(
-                roomRepository.getRoomDetail(it.token, roomId)
+                roomRepository.getRoomDetail(it.token, roomRepository.roomId!!)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ response ->
@@ -66,6 +70,30 @@ class RoomHomeViewModel(
                         dissmissLoadingDialog()
                         commonError.onNext(true)
                     })
+            )
+        }
+    }
+
+    fun exitRoom() {
+        userRepository.getUserInfo()?.let {
+            if (roomRepository.roomTitle == null) {
+                dissmissLoadingDialog()
+                commonError.onNext(false)
+                return@let
+            }
+            addDisposable(
+                    roomRepository.exitRoom(it.token, RequestDeleteRoom(roomRepository.roomTitle!!))
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe({
+                                Log.d("csh Success", "success")
+                                dissmissLoadingDialog()
+                                deleteRoom.onNext(true)
+                            }, {
+                                Log.d("csh Error", "error")
+                                dissmissLoadingDialog()
+                                commonError.onNext(true)
+                            })
             )
         }
     }

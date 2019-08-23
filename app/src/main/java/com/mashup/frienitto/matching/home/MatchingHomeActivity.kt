@@ -25,6 +25,9 @@ class MatchingHomeActivity : BaseActivity<ActivityMatchingHomeBinding>() {
             viewModel.commonError.subscribe {
                 if (it) {
                     toast(R.string.error_unkown)
+                } else {
+                    toast(R.string.error_unkown)
+                    finish()
                 }
             }
         )

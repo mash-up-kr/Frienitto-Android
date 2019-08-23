@@ -1,6 +1,7 @@
 package com.mashup.frienitto.api
 
 import com.mashup.frienitto.data.*
+import io.reactivex.Completable
 import io.reactivex.Single
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -63,6 +64,10 @@ object DataSource {
 
     fun requestMatchingInfo(token: String, id: Int) : Single<ResponseMatchingInfo> {
         return service.requestMatchingInfo(token, id)
+    }
+
+    fun requestDeleteRoom(token: String, body: RequestDeleteRoom) : Completable{
+        return service.requestDeleteRoom(token, body)
     }
 
 

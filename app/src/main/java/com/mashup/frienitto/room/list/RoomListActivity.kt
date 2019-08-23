@@ -8,12 +8,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.mashup.frienitto.Constants
 import com.mashup.frienitto.R
+import com.mashup.frienitto.RxBus.RxBus
+import com.mashup.frienitto.RxBus.RxEvent
 import com.mashup.frienitto.base.BaseActivity
 import com.mashup.frienitto.data.RoomInfo
 import com.mashup.frienitto.databinding.ActivityRoomListBinding
 import com.mashup.frienitto.matching.MatchingAnimationActivity
 import com.mashup.frienitto.matching.home.MatchingHomeActivity
-import com.mashup.frienitto.room.close.RoomCloseActivity
+import com.mashup.frienitto.matching.finish.MatchingFinishActivity
 import com.mashup.frienitto.room.creation.RoomCreationActivity
 import com.mashup.frienitto.room.home.RoomHomeActivity
 import com.mashup.frienitto.room.join.RoomJoinActivity
@@ -79,6 +81,11 @@ class RoomListActivity(override val layoutResourceId: Int = R.layout.activity_ro
                     }
                 }, {})
         )
+        addDisposable(
+                RxBus.listen(RxEvent.EventRefreshEvent::class.java).subscribe {
+                    viewModel.getRoomList()
+                }
+        )
 
         viewModel.showLoadingDialog.observe(this, Observer {
             if(it) showProgress()
@@ -89,19 +96,19 @@ class RoomListActivity(override val layoutResourceId: Int = R.layout.activity_ro
 
     private fun identifyActivityToMove(roomInfo: RoomInfo) {
         when (roomInfo.status) {
-            "CREATED" -> startActivity(Intent(this, RoomHomeActivity::class.java).apply { putExtra("roomId",roomInfo.id) })
+            "CREATED" -> startActivity(Intent(this, RoomHomeActivity::class.java))
             "MATCHED" -> checkFirstEntry(roomInfo.id)
-            "EXPIRED" -> startActivity(Intent(this, RoomCloseActivity::class.java))
+            "EXPIRED" -> startActivity(Intent(this, MatchingFinishActivity::class.java))
         }
     }
 
     private fun checkFirstEntry(roomId: Int) {
         val prefs = this.getSharedPreferences(Constants.FRENTTO_PREF, Context.MODE_PRIVATE)
         if (prefs.contains(roomId.toString())) {
-            startActivity(Intent(this, MatchingHomeActivity::class.java).putExtra("roomId",roomId))
+            startActivity(Intent(this, MatchingHomeActivity::class.java))
         } else {
             prefs.edit().putBoolean(roomId.toString(), true).apply()
-            startActivity(Intent(this, MatchingAnimationActivity::class.java).putExtra("roomId",roomId))
+            startActivity(Intent(this, MatchingAnimationActivity::class.java))
         }
     }
 }

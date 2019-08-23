@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class MatchingHomeViewModel(roomId: Int, private val userRepository: UserRepository, private val roomRepository: RoomRepository) :
+class MatchingHomeViewModel(private val userRepository: UserRepository, private val roomRepository: RoomRepository) :
     BaseViewModel() {
     val isManager = ObservableField<Boolean>(false)
     val dayText = ObservableField<String>()
@@ -29,9 +29,13 @@ class MatchingHomeViewModel(roomId: Int, private val userRepository: UserReposit
     init {
         showLoadingDialog()
         userRepository.getUserInfo()?.let {
-            Log.d("lolo", it.token + "   " + roomId)
+            if (roomRepository.roomId == null) {
+                dissmissLoadingDialog()
+                commonError.onNext(false)
+                return@let
+            }
             addDisposable(
-                roomRepository.getMatchingInfo(it.token, roomId)
+                roomRepository.getMatchingInfo(it.token, roomRepository.roomId!!)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ response ->
@@ -43,16 +47,20 @@ class MatchingHomeViewModel(roomId: Int, private val userRepository: UserReposit
                         var nowTime = format.format(Date(now))
                         var d2 = format.parse(nowTime)
                         var diff = d1.time - d2.time
-                        convertSecondsToHMmSs(diff / 1000)
-                        addDisposable(
-                            Observable.interval(1, TimeUnit.SECONDS)
-                                .map { o ->
-                                    now = System.currentTimeMillis()
-                                    nowTime = format.format(Date(now))
-                                    d2 = format.parse(nowTime)
-                                    diff = d1.time - d2.time
-                                }
-                                .subscribe { convertSecondsToHMmSs(diff / 1000) })
+                        if (diff > 0) {
+                            convertSecondsToHMmSs(diff / 1000)
+                            addDisposable(
+                                Observable.interval(1, TimeUnit.SECONDS)
+                                    .map { o ->
+                                        now = System.currentTimeMillis()
+                                        nowTime = format.format(Date(now))
+                                        d2 = format.parse(nowTime)
+                                        diff = d1.time - d2.time
+                                    }
+                                    .subscribe { convertSecondsToHMmSs(diff / 1000) })
+                        } else {
+                            convertSecondsToHMmSs(0);
+                        }
                         missionData.value = response.data.first { data -> data.fromUserInfo.id == it.user.id }
                         dissmissLoadingDialog()
                         Log.d("csh Success", response.toString())
