@@ -18,6 +18,7 @@ class RoomJoinViewModel(
     private val repository: RoomRepository,
     application: Application
 ) : BaseAndroidViewModel(application) {
+
     private val context = getApplication<Application>().applicationContext
 
     val moveActivity = PublishSubject.create<Boolean>()

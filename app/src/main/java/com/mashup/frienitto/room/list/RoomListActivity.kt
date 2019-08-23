@@ -76,6 +76,11 @@ class RoomListActivity(override val layoutResourceId: Int = R.layout.activity_ro
                 }, {})
         )
 
+        viewModel.showLoadingDialog.observe(this, Observer {
+            if(it) showProgress()
+            else dismissProgress()
+        })
+
     }
 
     private fun identifyActivityToMove(roomInfo: RoomInfo) {

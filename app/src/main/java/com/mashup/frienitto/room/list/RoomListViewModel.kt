@@ -7,6 +7,7 @@ import com.mashup.frienitto.base.BaseViewModel
 import com.mashup.frienitto.data.RoomInfo
 import com.mashup.frienitto.repository.room.RoomRepository
 import com.mashup.frienitto.repository.user.UserRepository
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import org.jetbrains.anko.AnkoLogger
@@ -48,6 +49,8 @@ class RoomListViewModel(
 
     init {
 
+        showLoadingDialog()
+
         userRepository.getUserInfo()?.let {
             _username.postValue(it.user.username)
             _email.postValue(it.user.email)
@@ -57,6 +60,7 @@ class RoomListViewModel(
         addDisposable(
             roomRepository.getRoomList(userRepository.getUserInfo()?.token!!)
                 .subscribeOn(Schedulers.io())
+                .doOnEvent { t1, t2 -> dissmissLoadingDialog() }
                 .subscribe({
                     it.data.let {
                         _roomList.postValue(it)
