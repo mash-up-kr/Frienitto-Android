@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.preference.PreferenceManager
 import com.google.gson.Gson
+import com.mashup.frienitto.Constants
 
 private const val LOGIN_TOKEN_KEY = "logintoken"
 class UserRepository {
@@ -43,7 +44,7 @@ class UserRepository {
 
     fun getUserInfo(context: Context): UserInfo? {
         return if (userInfo == null) {
-            val prefs = context.getSharedPreferences("PrefName", MODE_PRIVATE)
+            val prefs = context.getSharedPreferences(Constants.FRENTTO_PREF, MODE_PRIVATE)
             val json = prefs.getString(LOGIN_TOKEN_KEY, null)
             return if (json == null) null else {
                 userInfo = Gson().fromJson<Any>(json, UserInfo::class.java) as UserInfo //<-??
@@ -57,17 +58,15 @@ class UserRepository {
     fun getUserInfo() = userInfo
 
     fun setUserInfo(context: Context, userInfo: UserInfo) {
-        val prefs = context.getSharedPreferences("PrefName", MODE_PRIVATE)
+        val prefs = context.getSharedPreferences(Constants.FRENTTO_PREF, MODE_PRIVATE)
         val json = Gson().toJson(userInfo)
         prefs.edit().putString(LOGIN_TOKEN_KEY, json).apply()
         this.userInfo = userInfo
     }
 
     fun logout(context: Context){
-        val prefs = context.getSharedPreferences("PrefName", MODE_PRIVATE)
-        val editor = prefs.edit()
-        editor.clear()
-        editor.apply()
+        val prefs = context.getSharedPreferences(Constants.FRENTTO_PREF, MODE_PRIVATE)
+        prefs.edit().clear().apply()
         userInfo = null
     }
 }

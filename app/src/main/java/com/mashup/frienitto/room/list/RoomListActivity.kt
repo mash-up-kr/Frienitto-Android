@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.mashup.frienitto.Constants
 import com.mashup.frienitto.R
 import com.mashup.frienitto.base.BaseActivity
 import com.mashup.frienitto.data.RoomInfo
@@ -19,9 +20,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_room_list.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import com.mashup.frienitto.home.HomeActivity
-
-
-const val MATCHING_ANIMATION_TABLE = "MATCHING_ANIMATION_TABLE"
 
 class RoomListActivity(override val layoutResourceId: Int = R.layout.activity_room_list) :
     BaseActivity<ActivityRoomListBinding>() {
@@ -89,12 +87,12 @@ class RoomListActivity(override val layoutResourceId: Int = R.layout.activity_ro
     }
 
     private fun checkFirstEntry(roomId: Int) {
-        val prefs = this.getSharedPreferences(MATCHING_ANIMATION_TABLE, Context.MODE_PRIVATE)
+        val prefs = this.getSharedPreferences(Constants.FRENTTO_PREF, Context.MODE_PRIVATE)
         if (prefs.contains(roomId.toString())) {
-            startActivity(Intent(this, MatchingAnimationActivity::class.java).putExtra("roomId",roomId))
-        } else {
-            prefs.getBoolean(roomId.toString(), true)
             startActivity(Intent(this, MatchingHomeActivity::class.java).putExtra("roomId",roomId))
+        } else {
+            prefs.edit().putBoolean(roomId.toString(), true).apply()
+            startActivity(Intent(this, MatchingAnimationActivity::class.java).putExtra("roomId",roomId))
         }
     }
 }
