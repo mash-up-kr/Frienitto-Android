@@ -31,6 +31,17 @@ fun ImageView.setUserImage(imageCode: Int?) {
     }
 }
 
+@BindingAdapter("bind:roomUserImage")
+fun ImageView.setRoomUserImage(imageCode: Int?) {
+    when (imageCode) {
+        1 -> setImageResource(R.drawable.profile_imagr_roomlist_face_3)
+        2 -> setImageResource(R.drawable.profile_imagr_roomlist_face_3)
+        3 -> setImageResource(R.drawable.profile_imagr_roomlist_face_3)
+        4 -> setImageResource(R.drawable.profile_imagr_roomlist_face_3)
+        5 -> setImageResource(R.drawable.profile_imagr_roomlist_face_3)
+        6 -> setImageResource(R.drawable.profile_imagr_roomlist_face_3)
+    }
+}
 
 @SuppressLint("SetTextI18n")
 @BindingAdapter("dayText")

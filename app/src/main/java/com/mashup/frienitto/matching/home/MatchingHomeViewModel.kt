@@ -29,28 +29,31 @@ class MatchingHomeViewModel(roomId: Int, private val userRepository: UserReposit
     init {
         showLoadingDialog()
         userRepository.getUserInfo()?.let {
+            Log.d("lolo", it.token + "   " + roomId)
             addDisposable(
                 roomRepository.getMatchingInfo(it.token, roomId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ response ->
-                        val f = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.getDefault())
-                        val d1 = f.parse(roomRepository.expiredDate)
+                        Log.d("lolo", response.toString())
+                        val simpleFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                        val format = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.getDefault())
+                        val d1 = simpleFormat.parse(roomRepository.expiredDate)
                         var now = System.currentTimeMillis()
-                        var nowTime = f.format(Date(now))
-                        var d2 = f.parse(nowTime)
+                        var nowTime = format.format(Date(now))
+                        var d2 = format.parse(nowTime)
                         var diff = d1.time - d2.time
                         convertSecondsToHMmSs(diff / 1000)
                         addDisposable(
                             Observable.interval(1, TimeUnit.SECONDS)
                                 .map { o ->
                                     now = System.currentTimeMillis()
-                                    nowTime = f.format(Date(now))
-                                    d2 = f.parse(nowTime)
+                                    nowTime = format.format(Date(now))
+                                    d2 = format.parse(nowTime)
                                     diff = d1.time - d2.time
                                 }
                                 .subscribe { convertSecondsToHMmSs(diff / 1000) })
-                        missionData.value = response.data[0]
+                        missionData.value = response.data.first { data -> data.fromUserInfo.id == it.user.id }
                         dissmissLoadingDialog()
                         Log.d("csh Success", response.toString())
                     }, { except ->

@@ -26,6 +26,10 @@ class RoomListViewModel(
     val username: LiveData<String>
         get() = _username
 
+    private val _userImage = MutableLiveData<Int>()
+    val userImage: LiveData<Int>
+        get() = _userImage
+
     private val _email = MutableLiveData<String>()
     val email: LiveData<String>
         get() = _email
@@ -43,6 +47,7 @@ class RoomListViewModel(
         userRepository.getUserInfo()?.let {
             _username.postValue(it.user.username)
             _email.postValue(it.user.email)
+            _userImage.postValue(it.user.image_code)
         }
 
         addDisposable(
