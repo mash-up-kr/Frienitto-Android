@@ -5,6 +5,7 @@ import com.mashup.frienitto.data.*
 import io.reactivex.Single
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
+import android.preference.PreferenceManager
 import com.google.gson.Gson
 
 private const val LOGIN_TOKEN_KEY = "logintoken"
@@ -60,5 +61,13 @@ class UserRepository {
         val json = Gson().toJson(userInfo)
         prefs.edit().putString(LOGIN_TOKEN_KEY, json).apply()
         this.userInfo = userInfo
+    }
+
+    fun logout(context: Context){
+        val prefs = context.getSharedPreferences("PrefName", MODE_PRIVATE)
+        val editor = prefs.edit()
+        editor.clear()
+        editor.apply()
+        userInfo = null
     }
 }

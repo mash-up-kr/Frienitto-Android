@@ -1,5 +1,6 @@
 package com.mashup.frienitto.room.list
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mashup.frienitto.base.BaseViewModel
@@ -19,6 +20,7 @@ enum class RoomType {
 }
 
 class RoomListViewModel(
+    private val application: Application,
     private val userRepository: UserRepository,
     private val roomRepository: RoomRepository
 ) : BaseViewModel(), AnkoLogger {
@@ -42,6 +44,8 @@ class RoomListViewModel(
 
     val moveToRoom = PublishSubject.create<RoomType>()
 
+    val logout = PublishSubject.create<Boolean>()
+
     init {
 
         userRepository.getUserInfo()?.let {
@@ -61,6 +65,11 @@ class RoomListViewModel(
                     debug { it.message }
                 })
         )
+    }
+
+    fun onLogoutClick() {
+        userRepository.logout(application)
+        logout.onNext(true)
     }
 
     fun onCardClick(item: RoomInfo) {

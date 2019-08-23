@@ -23,6 +23,7 @@ import com.mashup.frienitto.room.home.RoomHomeViewModel
 import com.mashup.frienitto.select.SelectViewModel
 import io.reactivex.Completable
 import kotlinx.android.synthetic.main.dialog_loading.*
+import org.koin.android.ext.koin.androidApplication
 import org.koin.core.module.Module
 import org.koin.dsl.module
 import org.koin.android.viewmodel.dsl.viewModel
@@ -38,7 +39,7 @@ val module: Module = module {
     viewModel { (roomId: Int) -> RoomHomeViewModel(roomId, get(), get()) }
     viewModel { (roomId: Int) -> MatchingHomeViewModel(roomId, get(), get()) }
     viewModel { RoomCloseViewModel() }
-    viewModel { RoomListViewModel(get(), get()) }
+    viewModel { RoomListViewModel(androidApplication(), get(), get()) }
     single { RoomRepository() }
     single { UserRepository() }
     factory { (context: Context) ->

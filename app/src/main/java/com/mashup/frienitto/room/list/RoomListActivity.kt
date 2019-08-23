@@ -17,8 +17,9 @@ import com.mashup.frienitto.room.home.RoomHomeActivity
 import com.mashup.frienitto.room.join.RoomJoinActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_room_list.*
-import org.jetbrains.anko.startActivity
 import org.koin.android.viewmodel.ext.android.viewModel
+import com.mashup.frienitto.home.HomeActivity
+
 
 const val MATCHING_ANIMATION_TABLE = "MATCHING_ANIMATION_TABLE"
 
@@ -61,6 +62,18 @@ class RoomListActivity(override val layoutResourceId: Int = R.layout.activity_ro
                     when (it) {
                         RoomType.CREATION -> startActivity(Intent(this, RoomCreationActivity::class.java))
                         RoomType.ENTRY -> startActivity(Intent(this, RoomJoinActivity::class.java))
+                    }
+                }, {})
+        )
+
+        addDisposable(
+            viewModel.logout
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    if (it) {
+                        finishAffinity()
+                        val intent = Intent(this, HomeActivity::class.java)
+                        startActivity(intent)
                     }
                 }, {})
         )
