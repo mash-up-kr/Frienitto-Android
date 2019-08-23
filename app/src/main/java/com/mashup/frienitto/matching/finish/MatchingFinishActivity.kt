@@ -6,14 +6,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mashup.frienitto.R
 import com.mashup.frienitto.base.BaseActivity
 import com.mashup.frienitto.data.Mission
-import com.mashup.frienitto.data.UserPreview
-import com.mashup.frienitto.databinding.ActivityRoomCloseBinding
+import com.mashup.frienitto.databinding.ActivityMatchingFinishBinding
 import org.jetbrains.anko.toast
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class MatchingFinishActivity : BaseActivity<ActivityRoomCloseBinding>() {
+class MatchingFinishActivity : BaseActivity<ActivityMatchingFinishBinding>() {
     override val layoutResourceId: Int
-        get() = R.layout.activity_room_close
+        get() = R.layout.activity_matching_finish
 
     private val viewModel: MatchingFinishViewModel by viewModel()
 

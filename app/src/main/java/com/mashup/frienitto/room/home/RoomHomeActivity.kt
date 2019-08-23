@@ -87,6 +87,15 @@ class RoomHomeActivity : BaseActivity<ActivityRoomHomeBinding>() {
         )
 
         addDisposable(
+                viewModel.deleteRoom.subscribe {
+                    if (it) {
+                        RxBus.publish(RxEvent.EventRefreshEvent())
+                        finish()
+                    }
+                }
+        )
+
+        addDisposable(
             viewModel.commonError.subscribe {
                 if (it) {
                     toast(R.string.error_unkown)

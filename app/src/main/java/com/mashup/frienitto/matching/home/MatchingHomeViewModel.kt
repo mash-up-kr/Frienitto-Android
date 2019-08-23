@@ -47,16 +47,20 @@ class MatchingHomeViewModel(private val userRepository: UserRepository, private 
                         var nowTime = format.format(Date(now))
                         var d2 = format.parse(nowTime)
                         var diff = d1.time - d2.time
-                        convertSecondsToHMmSs(diff / 1000)
-                        addDisposable(
-                            Observable.interval(1, TimeUnit.SECONDS)
-                                .map { o ->
-                                    now = System.currentTimeMillis()
-                                    nowTime = format.format(Date(now))
-                                    d2 = format.parse(nowTime)
-                                    diff = d1.time - d2.time
-                                }
-                                .subscribe { convertSecondsToHMmSs(diff / 1000) })
+                        if (diff > 0) {
+                            convertSecondsToHMmSs(diff / 1000)
+                            addDisposable(
+                                Observable.interval(1, TimeUnit.SECONDS)
+                                    .map { o ->
+                                        now = System.currentTimeMillis()
+                                        nowTime = format.format(Date(now))
+                                        d2 = format.parse(nowTime)
+                                        diff = d1.time - d2.time
+                                    }
+                                    .subscribe { convertSecondsToHMmSs(diff / 1000) })
+                        } else {
+                            convertSecondsToHMmSs(0);
+                        }
                         missionData.value = response.data.first { data -> data.fromUserInfo.id == it.user.id }
                         dissmissLoadingDialog()
                         Log.d("csh Success", response.toString())

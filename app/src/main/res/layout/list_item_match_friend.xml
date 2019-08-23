@@ -40,14 +40,14 @@
                         android:layout_marginTop="20dp"
                         android:layout_marginEnd="44dp"
                         android:layout_marginBottom="8dp"
-                        app:userImage="@{item.imageCode}"/>
+                        app:userImage="@{item.toUserInfo.imageCode}"/>
 
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="32dp"
-                        android:text="@{item.}"
+                        android:text="@{item.toUserInfo.username}"
                         android:textColor="#646464"
                         android:textSize="18sp"/>
 
@@ -73,14 +73,14 @@
                         android:layout_marginTop="20dp"
                         android:layout_marginEnd="44dp"
                         android:layout_marginBottom="8dp"
-                        app:userImage="@{item.imageCode}"/>
+                        app:userImage="@{item.fromUserInfo.imageCode}"/>
 
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="32dp"
-                        android:text="@{item.userName}"
+                        android:text="@{item.fromUserInfo.username}"
                         android:textColor="#646464"
                         android:textSize="18sp"/>
 

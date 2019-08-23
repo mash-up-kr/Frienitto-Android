@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="roomModel"
             type="com.mashup.frienitto.data.ResponseRoomDetailData" />
@@ -21,15 +23,32 @@
         android:orientation="vertical"
         tools:context=".room.home.RoomHomeActivity">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="32dp"
-            android:text="@{roomModel.title}"
-            android:textColor="@color/white"
-            android:textSize="28sp"
-            android:textStyle="bold" />
+            android:layout_marginEnd="24dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{roomModel.title}"
+                android:textColor="@color/white"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:onClick="@{(view) -> viewModel.exitRoom()}"
+                android:text="퇴장하기"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -42,25 +61,25 @@
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatButton
+            style="@style/FrenttoButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="24dp"
-            android:backgroundTint="@color/orange"
-            android:text="@string/start_matching"
-            android:onClick="@{(view) -> viewModel.startMatching()}"
-            style="@style/FrenttoButton"
             android:background="@drawable/round"
+            android:backgroundTint="@color/orange"
+            android:onClick="@{(view) -> viewModel.startMatching()}"
+            android:text="@string/start_matching"
             android:visibility="@{viewModel.isManager ? View.VISIBLE : View.GONE, default=gone }" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginStart="14dp"
-            android:layout_marginEnd="14dp"
-            android:layout_marginTop="12dp"
             android:id="@+id/rv_room_home"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="14dp" />
     </LinearLayout>
 </layout>

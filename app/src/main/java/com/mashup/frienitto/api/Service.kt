@@ -1,6 +1,7 @@
 package com.mashup.frienitto.api
 
 import com.mashup.frienitto.data.*
+import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.http.*
 
@@ -41,6 +42,9 @@ interface Service {
     fun requestMatchingInfo(@Header("X-Authorization") token: String,
                           @Path("id") id: Int) : Single<ResponseMatchingInfo>
 
+    @HTTP(method = "DELETE", path = "api/v1/exit/room", hasBody = true)
+    fun requestDeleteRoom(@Header("X-Authorization") token: String,
+                            @Body body: RequestDeleteRoom) : Completable
 
     // Email
     @POST("api/v1/issue/code")
