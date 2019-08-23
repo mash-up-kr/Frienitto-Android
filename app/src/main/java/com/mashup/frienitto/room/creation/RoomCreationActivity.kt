@@ -33,15 +33,17 @@ class RoomCreationActivity(override val layoutResourceId: Int = R.layout.activit
                 .subscribe({
                     when (it) {
                         1 -> {
-                            ViewCompat.setBackgroundTintList(btn_end_date_1, ContextCompat.getColorStateList(this, R.color.navy))
-                            ViewCompat.setBackgroundTintList(btn_end_date_2, ContextCompat.getColorStateList(this, R.color.lightGray))
+                            //ViewCompat.setBackgroundTintList(btn_end_date_1, ContextCompat.getColorStateList(this, R.color.navy))
+                            //ViewCompat.setBackgroundTintList(btn_end_date_2, ContextCompat.getColorStateList(this, R.color.lightGray))
+                            ViewCompat.setBackground(btn_end_date_1,ContextCompat.getDrawable(this,R.drawable.selec))
+                            ViewCompat.setBackground(btn_end_date_2,ContextCompat.getDrawable(this,R.drawable.unselec))
                             btn_end_date_1.setTextColor(resources.getColor(R.color.white))
                             btn_end_date_2.setTextColor(resources.getColor(R.color.lightGray2))
 
                         }
                         2 -> {
-                            ViewCompat.setBackgroundTintList(btn_end_date_1, ContextCompat.getColorStateList(this, R.color.lightGray))
-                            ViewCompat.setBackgroundTintList(btn_end_date_2, ContextCompat.getColorStateList(this, R.color.navy))
+                            ViewCompat.setBackground(btn_end_date_1,ContextCompat.getDrawable(this,R.drawable.unselec))
+                            ViewCompat.setBackground(btn_end_date_2,ContextCompat.getDrawable(this,R.drawable.selec))
                             btn_end_date_1.setTextColor(resources.getColor(R.color.lightGray2))
                             btn_end_date_2.setTextColor(resources.getColor(R.color.white))
                         }

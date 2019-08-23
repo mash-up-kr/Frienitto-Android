@@ -68,7 +68,7 @@
         <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/listface_1"
+                app:roomCardImage="@{item.id}"
                 android:id="@+id/imageView"
                 android:layout_marginTop="89dp"
                 app:layout_constraintTop_toTopOf="parent"

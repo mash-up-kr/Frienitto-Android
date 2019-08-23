@@ -14,11 +14,11 @@ open class BaseViewModel : ViewModel() {
     }
 
     fun showLoadingDialog(){
-        showLoadingDialog.value = true
+        showLoadingDialog.postValue(true)
     }
 
     fun dissmissLoadingDialog(){
-        showLoadingDialog.value = false
+        showLoadingDialog.postValue(false)
     }
 
     override fun onCleared() {

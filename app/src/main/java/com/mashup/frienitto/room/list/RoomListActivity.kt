@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
 import com.mashup.frienitto.Constants
 import com.mashup.frienitto.R
 import com.mashup.frienitto.base.BaseActivity
@@ -36,6 +37,9 @@ class RoomListActivity(override val layoutResourceId: Int = R.layout.activity_ro
         setContentView(viewDataBinding.root)
         viewDataBinding.viewModel = viewModel
         viewDataBinding.lifecycleOwner = this
+
+        val snapHelper = LinearSnapHelper()
+        snapHelper.attachToRecyclerView(rv_room_list)
 
         rv_room_list.layoutManager = LinearLayoutManager(this).apply { orientation = LinearLayoutManager.HORIZONTAL }
         rv_room_list.adapter = adapter
@@ -75,6 +79,11 @@ class RoomListActivity(override val layoutResourceId: Int = R.layout.activity_ro
                     }
                 }, {})
         )
+
+        viewModel.showLoadingDialog.observe(this, Observer {
+            if(it) showProgress()
+            else dismissProgress()
+        })
 
     }
 
