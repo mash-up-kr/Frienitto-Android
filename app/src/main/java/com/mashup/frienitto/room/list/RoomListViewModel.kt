@@ -7,13 +7,10 @@ import com.mashup.frienitto.base.BaseViewModel
 import com.mashup.frienitto.data.RoomInfo
 import com.mashup.frienitto.repository.room.RoomRepository
 import com.mashup.frienitto.repository.user.UserRepository
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.debug
-import org.jetbrains.anko.info
-import java.security.PublicKey
 
 enum class RoomType {
     CREATION,
@@ -57,6 +54,10 @@ class RoomListViewModel(
             _userImage.postValue(it.user.image_code)
         }
 
+        getRoomList()
+    }
+
+    fun getRoomList() {
         addDisposable(
             roomRepository.getRoomList(userRepository.getUserInfo()?.token!!)
                 .subscribeOn(Schedulers.io())

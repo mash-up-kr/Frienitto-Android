@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class MatchingHomeViewModel(roomId: Int, private val userRepository: UserRepository, private val roomRepository: RoomRepository) :
+class MatchingHomeViewModel(private val userRepository: UserRepository, private val roomRepository: RoomRepository) :
     BaseViewModel() {
     val isManager = ObservableField<Boolean>(false)
     val dayText = ObservableField<String>()
@@ -29,9 +29,13 @@ class MatchingHomeViewModel(roomId: Int, private val userRepository: UserReposit
     init {
         showLoadingDialog()
         userRepository.getUserInfo()?.let {
-            Log.d("lolo", it.token + "   " + roomId)
+            if (roomRepository.roomId == null) {
+                dissmissLoadingDialog()
+                commonError.onNext(false)
+                return@let
+            }
             addDisposable(
-                roomRepository.getMatchingInfo(it.token, roomId)
+                roomRepository.getMatchingInfo(it.token, roomRepository.roomId!!)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ response ->

@@ -3,11 +3,8 @@ package com.mashup.frienitto
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatDialog
-import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
-import com.mashup.frienitto.data.RoomInfo
 import com.mashup.frienitto.login.LoginViewModel
 import com.mashup.frienitto.matching.home.MatchingHomeViewModel
 import com.mashup.frienitto.register.RegisterFragmentViewModel
@@ -15,19 +12,17 @@ import com.mashup.frienitto.register.RegisterViewModel
 import com.mashup.frienitto.repository.room.RoomRepository
 import com.mashup.frienitto.repository.user.UserRepository
 import com.mashup.frienitto.room.list.RoomListViewModel
-import com.mashup.frienitto.room.close.RoomCloseViewModel
+import com.mashup.frienitto.matching.finish.MatchingFinishViewModel
 import com.mashup.frienitto.room.creation.RoomCreationViewModel
 import com.mashup.frienitto.room.join.RoomJoinViewModel
 
 import com.mashup.frienitto.room.home.RoomHomeViewModel
 import com.mashup.frienitto.select.SelectViewModel
-import io.reactivex.Completable
 import kotlinx.android.synthetic.main.dialog_loading.*
 import org.koin.android.ext.koin.androidApplication
 import org.koin.core.module.Module
 import org.koin.dsl.module
 import org.koin.android.viewmodel.dsl.viewModel
-import org.koin.core.parameter.parametersOf
 
 val module: Module = module {
     viewModel { LoginViewModel(get(), get()) }
@@ -36,9 +31,9 @@ val module: Module = module {
     viewModel { RoomCreationViewModel(get(), get(), get()) }
     viewModel { RegisterFragmentViewModel(get()) }
     viewModel { RoomJoinViewModel(get(), get(), get()) }
-    viewModel { (roomId: Int) -> RoomHomeViewModel(roomId, get(), get()) }
-    viewModel { (roomId: Int) -> MatchingHomeViewModel(roomId, get(), get()) }
-    viewModel { RoomCloseViewModel() }
+    viewModel {RoomHomeViewModel(get(), get()) }
+    viewModel {MatchingHomeViewModel(get(), get()) }
+    viewModel { MatchingFinishViewModel(get(), get()) }
     viewModel { RoomListViewModel(androidApplication(), get(), get()) }
     single { RoomRepository() }
     single { UserRepository() }

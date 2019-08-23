@@ -1,5 +1,6 @@
 package com.mashup.frienitto.room.home
 
+import android.content.Context
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -13,8 +14,12 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import com.mashup.frienitto.Constants
+import com.mashup.frienitto.RxBus.RxBus
+import com.mashup.frienitto.RxBus.RxEvent
 import com.mashup.frienitto.matching.MatchingAnimationActivity
 import com.mashup.frienitto.adapter.setUserImage
+import com.mashup.frienitto.matching.home.MatchingHomeActivity
 import kotlinx.android.synthetic.main.dialog_user_datail_layout.view.*
 import org.jetbrains.anko.toast
 import org.koin.android.viewmodel.ext.android.getViewModel
@@ -71,15 +76,13 @@ class RoomHomeActivity : BaseActivity<ActivityRoomHomeBinding>() {
 
         addDisposable(
             viewModel.startMatching.subscribe {
-                //Todo 매칭 유무따라 보여지는 페이지 달라져야함
-//                if (it) {
-//                    startActivity(
-//                        Intent(
-//                            this,
-//                            MatchingAnimationActivity::class.java
-//                        ).apply { addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY) })
-//                    finish()
-//                }
+                if (it) {
+                    RxBus.publish(RxEvent.EventRefreshEvent())
+                    finish()
+                    val prefs = this.getSharedPreferences(Constants.FRENTTO_PREF, Context.MODE_PRIVATE)
+                    prefs.edit().putBoolean(viewModel.roomData.value?.id.toString(), true).apply()
+                    startActivity(Intent(this, MatchingAnimationActivity::class.java).apply { addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY) })
+                }
             }
         )
 
@@ -87,6 +90,9 @@ class RoomHomeActivity : BaseActivity<ActivityRoomHomeBinding>() {
             viewModel.commonError.subscribe {
                 if (it) {
                     toast(R.string.error_unkown)
+                } else {
+                    toast(R.string.error_unkown)
+                    finish()
                 }
             }
         )

@@ -7,7 +7,7 @@
 
         <variable
                 name="item"
-                type="com.mashup.frienitto.data.UserPreview"/>
+                type="com.mashup.frienitto.data.Mission"/>
     </data>
 
     <androidx.cardview.widget.CardView
@@ -47,7 +47,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="32dp"
-                        android:text="@{item.userName}"
+                        android:text="@{item.}"
                         android:textColor="#646464"
                         android:textSize="18sp"/>
 
