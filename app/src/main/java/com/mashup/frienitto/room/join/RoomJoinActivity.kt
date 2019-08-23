@@ -69,6 +69,10 @@ class RoomJoinActivity(override val layoutResourceId: Int = R.layout.activity_ro
             if(it) showProgress()
             else dismissProgress()
         })
+
+        viewModel.requestToast.observe(this, Observer {
+            toast(it)
+        })
     }
 
     private fun clearEditText(edit: EditText){

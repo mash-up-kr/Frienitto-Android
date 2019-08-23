@@ -25,6 +25,7 @@ class MatchingHomeViewModel(private val userRepository: UserRepository, private 
     val secText = ObservableField<String>()
     val commonError = PublishSubject.create<Boolean>()
     val missionData = MutableLiveData<Mission>()
+    val requestToast = MutableLiveData<String>()
 
     init {
         showLoadingDialog()
@@ -83,4 +84,5 @@ class MatchingHomeViewModel(private val userRepository: UserRepository, private 
         minText.set(String.format("%02d", m))
         secText.set(String.format("%02d", s))
     }
+
 }

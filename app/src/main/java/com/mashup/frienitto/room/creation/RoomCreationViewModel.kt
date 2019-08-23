@@ -16,6 +16,7 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import org.jetbrains.anko.AnkoLogger
+import retrofit2.HttpException
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -44,6 +45,8 @@ class RoomCreationViewModel(private val userRepository: UserRepository, private 
         get() = _btnActive
 
     val isFinish = MutableLiveData<Boolean>()
+
+    val requestToast = MutableLiveData<String>()
 
     init {
         _submitName.value = "방 생성하기"
@@ -89,12 +92,17 @@ class RoomCreationViewModel(private val userRepository: UserRepository, private 
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ response ->
-                        dismissLoadingDialog()
+
                         Log.d("csh Success", response?.msg)
                         Log.d("csh", "RoomID:" + response.data.id.toString())
-                        repository.roomId = response.data.id
-                        isFinish.value = true
+                        if (showSubmitToast(response.code)) {
+                            repository.roomId = response.data.id
+                            isFinish.value = true
+                        }
+                        dismissLoadingDialog()
                     }, { except ->
+                        if (except is HttpException)
+                            showSubmitToast(except.code())
                         dismissLoadingDialog()
                         Log.d("csh Error", except.message)
                     })
@@ -133,6 +141,37 @@ class RoomCreationViewModel(private val userRepository: UserRepository, private 
             }
         }
 
+    }
+
+    private fun showSubmitToast(code: Int) : Boolean {
+        when (code) {
+            200 -> {
+                requestToast.postValue("완료")
+            }
+            201 -> {
+                requestToast.postValue("방 생성 완료")
+            }
+            401 -> {
+                requestToast.postValue("인증되지 않은 사용자입니다.")
+            }
+            403 -> {
+                requestToast.postValue("Forbidden")
+            }
+            404 -> {
+                requestToast.postValue("등록된 방을 찾을 수 없습니다!")
+            }
+            405 -> {
+                requestToast.postValue("방 생성 코드가 적합하지 않습니다.")
+            }
+            409 -> {
+                requestToast.postValue("이미 존재하는 방 제목 입니다.")
+            }
+            else -> {
+                requestToast.postValue("알 수 없는 오류! ($code)")
+            }
+        }
+
+        return code / 100 == 2
     }
 
 }

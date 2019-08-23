@@ -12,6 +12,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
+import retrofit2.HttpException
 
 class LoginViewModel(private val userRepository: UserRepository, application: Application) :
     BaseAndroidViewModel(application) {
@@ -57,13 +58,40 @@ class LoginViewModel(private val userRepository: UserRepository, application: Ap
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
                     Log.d("Success", response.msg)
-                    userRepository.setUserInfo(context, response.data)
-                    isLogin.value = true
+                    if (showLoginToast(response.code)) {
+                        userRepository.setUserInfo(context, response.data)
+                        isLogin.value = true
+                    }
+
                     dismissLoadingDialog()
                 }, { except ->
                     Log.d("Error", except.message.toString())
+                    if (except is HttpException)
+                        showLoginToast(except.code())
                     dismissLoadingDialog()
                 })
         )
+    }
+
+    fun showLoginToast(code: Int) : Boolean {
+        when (code) {
+            200 -> {
+                requestToast.postValue("완료")
+            }
+            201 -> {
+                requestToast.postValue("Created")
+            }
+            401 -> {
+                requestToast.postValue("비밀번호가 틀렸습니다!")
+            }
+            403 -> {
+                requestToast.postValue("Forbidden")
+            }
+            404 -> {
+                requestToast.postValue("이메일을 찾을 수 없습니다!")
+            }
+
+        }
+        return code / 100 == 2
     }
 }

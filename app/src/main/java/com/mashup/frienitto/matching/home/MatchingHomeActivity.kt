@@ -40,6 +40,11 @@ class MatchingHomeActivity : BaseActivity<ActivityMatchingHomeBinding>() {
             if(it) showProgress()
             else dismissProgress()
         })
+
+
+        viewModel.requestToast.observe(this, Observer {
+            toast(it)
+        })
         //viewDataBinding.roomModel = RoomInfo(11, "마니또 방이름", "2020-01-02", "", viewModel.data.value!!)
     }
 

@@ -11,6 +11,7 @@ import com.mashup.frienitto.data.RequestSignUp
 import com.mashup.frienitto.repository.user.UserRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import retrofit2.HttpException
 import kotlin.random.Random
 
 class RegisterFragmentViewModel(private val userRepository: UserRepository) : BaseViewModel() {
@@ -39,6 +40,8 @@ class RegisterFragmentViewModel(private val userRepository: UserRepository) : Ba
 
     var info: String = ""
 
+    val requestToast = MutableLiveData<String>()
+
     fun goNextStep(state: Int) {
         when (state) {
             1 -> {
@@ -59,11 +62,16 @@ class RegisterFragmentViewModel(private val userRepository: UserRepository) : Ba
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({ response ->
                             Log.d("csh Success", response.toString())
-                            userRepository.setTokenizer(response.data.registerToken)
-                            registerStepCnt.value = 2
+                            if (showConfirmToast(response.code)) {
+                                userRepository.setTokenizer(response.data.registerToken)
+                                registerStepCnt.value = 2
+                            }
+
                             dissmissLoadingDialog()
                         }, { except ->
                             Log.d("csh Error", except.message)
+                            if (except is HttpException)
+                                showConfirmToast(except.code())
                             dissmissLoadingDialog()
                         })
         )
@@ -76,17 +84,20 @@ class RegisterFragmentViewModel(private val userRepository: UserRepository) : Ba
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({ response ->
-                            Log.d("csh Success", response?.msg)
-                            registerStepCnt.value = 1
+                            if (showRequestEmailToast(response.code)) {
+                                registerStepCnt.value = 1
+                            }
                             dissmissLoadingDialog()
                         }, { except ->
-                            Log.d("csh Error", except.message?.toString())
+                            if (except is HttpException)
+                                showRequestEmailToast(except.code())
+
                             dissmissLoadingDialog()
                         })
         )
     }
 
-    fun signIn() {
+    fun signUp() {
         showLoadingDialog()
         addDisposable(
             userRepository.signUp(userRepository.getTokenizer(), RequestSignUp(name, info, Random.nextInt(5) + 1, email.value.toString(), password))
@@ -94,10 +105,15 @@ class RegisterFragmentViewModel(private val userRepository: UserRepository) : Ba
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({ response ->
                             Log.d("csh Success", response.msg)
-                            signinComplete.value = true
+                            if (showSignInToast(response.code)) {
+                                signinComplete.value = true
+                            }
+
                             dissmissLoadingDialog()
                         }, { except ->
                             Log.d("csh Error", except.message?.toString())
+                            if (except is HttpException)
+                                showSignInToast(except.code())
                             dissmissLoadingDialog()
                         })
         )
@@ -150,5 +166,91 @@ class RegisterFragmentViewModel(private val userRepository: UserRepository) : Ba
         } else {
             isWriteCode.set(false)
         }
+    }
+
+    fun showRequestEmailToast(code: Int) : Boolean {
+        when (code) {
+            200 -> {
+                requestToast.postValue("메일 요청 완료")
+            }
+            201 -> {
+                requestToast.postValue("Created")
+            }
+            202 -> {
+                requestToast.postValue("Accepted")
+            }
+            401 -> {
+                requestToast.postValue("Unauthorized")
+            }
+            403 -> {
+                requestToast.postValue("Forbidden")
+            }
+            404 -> {
+                requestToast.postValue("Not Found")
+            }
+            409 -> {
+                requestToast.postValue("이미 등록된 이메일 입니다.")
+            }
+            5004 -> {
+                requestToast.postValue("메일 전송 실패")
+            }
+            else -> {
+                requestToast.postValue("알 수 없는 오류")
+            }
+        }
+
+        return code / 100 == 2
+    }
+
+    fun showSignInToast(code: Int) : Boolean {
+        when (code) {
+            200 -> {
+                requestToast.postValue("완료")
+            }
+            201 -> {
+                requestToast.postValue("Created")
+            }
+            401 -> {
+                requestToast.postValue("비밀번호가 틀렸습니다!")
+            }
+            403 -> {
+                requestToast.postValue("Forbidden")
+            }
+            404 -> {
+                requestToast.postValue("이메일을 찾을 수 없습니다!")
+            }
+            else -> {
+                requestToast.postValue("알 수 없는 오류")
+            }
+
+        }
+
+        return code / 100 == 2
+    }
+
+    fun showConfirmToast(code: Int) : Boolean {
+        when (code) {
+            200 -> {
+                requestToast.postValue("완료")
+            }
+            201 -> {
+                requestToast.postValue("Created")
+            }
+            401 -> {
+                requestToast.postValue("인증 코드가 맞지 않습니다.")
+            }
+            403 -> {
+                requestToast.postValue("Forbidden")
+            }
+            404 -> {
+                requestToast.postValue("Not Found")
+            }
+            else -> {
+                requestToast.postValue("알 수 없는 오류")
+            }
+
+        }
+
+        return code / 100 == 2
     }
 }
