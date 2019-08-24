@@ -110,5 +110,9 @@ class RoomHomeActivity : BaseActivity<ActivityRoomHomeBinding>() {
             if (it) showProgress()
             else dismissProgress()
         })
+
+        viewModel.requestToast.observe(this, Observer {
+            toast(it)
+        })
     }
 }

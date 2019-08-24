@@ -19,6 +19,7 @@ import kotlin.collections.ArrayList
 class MatchingFinishViewModel(private val userRepository: UserRepository, private val roomRepository: RoomRepository) : BaseViewModel() {
     val data = MutableLiveData<List<Mission>>()
     val commonError = PublishSubject.create<Boolean>()
+    val requestToast = MutableLiveData<String>()
 
     init {
         showLoadingDialog()
@@ -44,4 +45,6 @@ class MatchingFinishViewModel(private val userRepository: UserRepository, privat
             )
         }
     }
+
+
 }

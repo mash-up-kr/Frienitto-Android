@@ -9,6 +9,8 @@ import com.mashup.frienitto.R
 import com.mashup.frienitto.base.BaseFragment
 import com.mashup.frienitto.databinding.FragmentEmailAuthBinding
 import kotlinx.android.synthetic.main.fragment_email_auth.*
+import org.jetbrains.anko.support.v4.toast
+import org.jetbrains.anko.toast
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class EmailAuthFragment : BaseFragment<FragmentEmailAuthBinding>() {
@@ -35,6 +37,10 @@ class EmailAuthFragment : BaseFragment<FragmentEmailAuthBinding>() {
         viewModel.showLoadingDialog.observe(this, Observer {
             if(it) (activity as RegisterActivity).showProgress()
             else (activity as RegisterActivity).dismissProgress()
+        })
+
+        viewModel.requestToast.observe(this, Observer {
+            toast(it)
         })
     }
 }

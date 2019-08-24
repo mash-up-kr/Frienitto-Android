@@ -31,6 +31,11 @@ class MatchingFinishActivity : BaseActivity<ActivityMatchingFinishBinding>() {
             //TODO onclick
         }
 
+
+        viewModel.requestToast.observe(this, Observer {
+            toast(it)
+        })
+
         addDisposable(
             viewModel.commonError.subscribe {
                 if (it) {

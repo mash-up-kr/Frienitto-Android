@@ -64,7 +64,7 @@
             android:background="@drawable/round"
             android:backgroundTint="@{viewModel.isWriteAllData ? @color/orange : @color/gray}"
             android:enabled="@{viewModel.isWriteAllData}"
-            android:onClick="@{(view) -> viewModel.signIn()}"
+            android:onClick="@{(view) -> viewModel.signUp()}"
             android:text="@string/complete"
             android:textColor="@color/white" />
 
