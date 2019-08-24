@@ -145,12 +145,12 @@ class RoomCreationViewModel(private val userRepository: UserRepository, private 
 
     private fun showSubmitToast(code: Int) : Boolean {
         when (code) {
-            200 -> {
-                requestToast.postValue("완료")
-            }
-            201 -> {
-                requestToast.postValue("방 생성 완료")
-            }
+//            200 -> {
+//                requestToast.postValue("완료")
+//            }
+//            201 -> {
+//                requestToast.postValue("방 생성 완료")
+//            }
             401 -> {
                 requestToast.postValue("인증되지 않은 사용자입니다.")
             }
@@ -166,9 +166,9 @@ class RoomCreationViewModel(private val userRepository: UserRepository, private 
             409 -> {
                 requestToast.postValue("이미 존재하는 방 제목 입니다.")
             }
-            else -> {
-                requestToast.postValue("알 수 없는 오류! ($code)")
-            }
+//            else -> {
+//                requestToast.postValue("알 수 없는 오류! ($code)")
+//            }
         }
 
         return code / 100 == 2

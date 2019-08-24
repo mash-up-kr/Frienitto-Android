@@ -170,15 +170,15 @@ class RegisterFragmentViewModel(private val userRepository: UserRepository) : Ba
 
     fun showRequestEmailToast(code: Int) : Boolean {
         when (code) {
-            200 -> {
-                requestToast.postValue("메일 요청 완료")
-            }
-            201 -> {
-                requestToast.postValue("Created")
-            }
-            202 -> {
-                requestToast.postValue("Accepted")
-            }
+//            200 -> {
+//                requestToast.postValue("메일 요청 완료")
+//            }
+//            201 -> {
+//                requestToast.postValue("Created")
+//            }
+//            202 -> {
+//                requestToast.postValue("Accepted")
+//            }
             401 -> {
                 requestToast.postValue("Unauthorized")
             }
@@ -204,12 +204,12 @@ class RegisterFragmentViewModel(private val userRepository: UserRepository) : Ba
 
     fun showSignInToast(code: Int) : Boolean {
         when (code) {
-            200 -> {
-                requestToast.postValue("완료")
-            }
-            201 -> {
-                requestToast.postValue("Created")
-            }
+//            200 -> {
+//                requestToast.postValue("완료")
+//            }
+//            201 -> {
+//                requestToast.postValue("Created")
+//            }
             401 -> {
                 requestToast.postValue("비밀번호가 틀렸습니다!")
             }
@@ -230,12 +230,12 @@ class RegisterFragmentViewModel(private val userRepository: UserRepository) : Ba
 
     fun showConfirmToast(code: Int) : Boolean {
         when (code) {
-            200 -> {
-                requestToast.postValue("완료")
-            }
-            201 -> {
-                requestToast.postValue("Created")
-            }
+//            200 -> {
+//                requestToast.postValue("완료")
+//            }
+//            201 -> {
+//                requestToast.postValue("Created")
+//            }
             401 -> {
                 requestToast.postValue("인증 코드가 맞지 않습니다.")
             }

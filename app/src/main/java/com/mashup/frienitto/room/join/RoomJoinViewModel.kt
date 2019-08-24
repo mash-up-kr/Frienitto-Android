@@ -104,12 +104,12 @@ class RoomJoinViewModel(
 
     private fun showJoinRoomToast(code: Int) : Boolean {
         when (code) {
-            200 -> {
-                requestToast.postValue("완료")
-            }
-            201 -> {
-                requestToast.postValue("Created")
-            }
+//            200 -> {
+//                requestToast.postValue("완료")
+//            }
+//            201 -> {
+//                requestToast.postValue("Created")
+//            }
             401 -> {
                 requestToast.postValue("인증 되지 않은 사용자입니다.")
             }
@@ -125,9 +125,9 @@ class RoomJoinViewModel(
             409 -> {
                 requestToast.postValue("입장 가능한 시간이 아닙니다.")
             }
-            else -> {
-                requestToast.postValue("알 수 없는 오류")
-            }
+//            else -> {
+//                requestToast.postValue("알 수 없는 오류")
+//            }
 
         }
 

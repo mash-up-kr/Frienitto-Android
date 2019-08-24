@@ -75,12 +75,12 @@ class LoginViewModel(private val userRepository: UserRepository, application: Ap
 
     fun showLoginToast(code: Int) : Boolean {
         when (code) {
-            200 -> {
-                requestToast.postValue("완료")
-            }
-            201 -> {
-                requestToast.postValue("Created")
-            }
+//            200 -> {
+//                requestToast.postValue("완료")
+//            }
+//            201 -> {
+//                requestToast.postValue("Created")
+//            }
             401 -> {
                 requestToast.postValue("비밀번호가 틀렸습니다!")
             }

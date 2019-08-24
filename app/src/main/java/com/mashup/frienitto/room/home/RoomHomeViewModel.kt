@@ -42,12 +42,12 @@ class RoomHomeViewModel(
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ response ->
                         dissmissLoadingDialog()
-                        Log.d("csh Success", response.toString())
+                        Log.d("Success", response.toString())
                         roomData.value = response.data
                         data.value = response.data.participant
                         isManager.set(response.data.isOwner)
                     }, { except ->
-                        Log.d("csh Error", except.toString())
+                        Log.d("Error", except.toString())
                         dissmissLoadingDialog()
                         commonError.onNext(true)
                     })
@@ -58,20 +58,19 @@ class RoomHomeViewModel(
     fun startMatching() {
         showLoadingDialog()
         userRepository.getUserInfo()?.let {
-            Log.d("lolo", it.token + "   " + roomData.value!!.id + "   " + it.user.id)
             addDisposable(
                 roomRepository.matchingStart(it.token, RequestMatchingStart(roomData.value!!.id, "USER"))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ response ->
-                        Log.d("csh Success", response.toString())
+                        Log.d("Success", response.toString())
                         if (showStartMatchToast(response.code)) {
 
                         }
                         dissmissLoadingDialog()
                         startMatching.onNext(true)
                     }, { except ->
-                        Log.d("csh Error", except.toString())
+                        Log.d("Error", except.toString())
                         if (except is HttpException)
                             showStartMatchToast(except.code())
                         dissmissLoadingDialog()
@@ -107,12 +106,12 @@ class RoomHomeViewModel(
 
     private fun showStartMatchToast(code: Int) : Boolean {
         when (code) {
-            200 -> {
-                requestToast.postValue("완료")
-            }
-            201 -> {
-                requestToast.postValue("Created")
-            }
+//            200 -> {
+//                requestToast.postValue("완료")
+//            }
+//            201 -> {
+//                requestToast.postValue("Created")
+//            }
             400 -> {
                 requestToast.postValue("매칭을 시작하려면 매칭 인원이 2명 이상이어야 합니다")
             }
@@ -128,9 +127,9 @@ class RoomHomeViewModel(
             5003 -> {
                 requestToast.postValue("해당 요청에서 미션 타입이 적절하지 않습니다.")
             }
-            else -> {
-                requestToast.postValue("알 수 없는 오류! ($code)")
-            }
+//            else -> {
+//                requestToast.postValue("알 수 없는 오류! ($code)")
+//            }
         }
 
         return code / 100 == 2
