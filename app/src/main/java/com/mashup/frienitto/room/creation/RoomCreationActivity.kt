@@ -15,6 +15,7 @@ import com.mashup.frienitto.room.list.RoomListActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_creation_room.*
 import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.toast
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class RoomCreationActivity(override val layoutResourceId: Int = R.layout.activity_creation_room) :
@@ -93,6 +94,10 @@ class RoomCreationActivity(override val layoutResourceId: Int = R.layout.activit
         viewModel.showLoadingDialog.observe(this, Observer {
             if(it) showProgress()
             else dismissProgress()
+        })
+
+        viewModel.requestToast.observe(this, Observer {
+            toast(it)
         })
     }
 
